@@ -1,3 +1,8 @@
+# ======= Config
+
+WEATHER_API_KEY = ''
+TODOIST_API_KEY = ''
+
 # ======= Import
 
 import sys, os, time, traceback
@@ -15,6 +20,7 @@ white = 1
 fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
 fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
+fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
 
 # ======= Utils
 
@@ -59,22 +65,43 @@ def img_convert(img_file,X_new,Y_new):
 
 # ======= Render
 
+def renderDate(epd):
+    # get date
+    # https://arrow.readthedocs.io/en/stable/guide.html#format
+    now = arrow.now(tz='Asia/Ho_Chi_Minh')
+    date = now.format('dddd, D/MMMM')
+
+    # render date
+    clear_display(epd)
+    draw.text((0, 0), date, font = fontBody, fill = black)
+    update_display()
+
+def renderWeather(epd):
+    # get weather
+
+    # render date
+    clear_display(epd)
+    draw.text((200, 0), '\uf095', font = fontBody, fill = black)
+    update_display()
+
+def renderTasks(epd):
+    # get tasks
+    tasks = ["Ford", "Volvo", "BMW"]
+
+    # render tasks
+    clear_display(epd)
+    for j in range(0, len(tasks)):
+        draw.text((0, j * 16), tasks(j), font = fontBody, fill = black)
+    update_display()
 
 try:
     print("Starting...")
     epd = init()
     time.sleep(2)
 
-    # get date
-    # https://arrow.readthedocs.io/en/stable/guide.html#format
-    now = arrow.now(tz='Asia/Ho_Chi_Minh')
-    date = now.format('dddd, D/MMMM')
-
-    # Drawing date
-    clear_display(epd)
-    draw.text((0, 0), date, font = fontBody, fill = black)
-    update_display()
-
+    renderDate(epd)
+    renderWeather(epd)
+    renderTasks(epd)
 
 # # Drawing Line
 #     clear_display(epd)
