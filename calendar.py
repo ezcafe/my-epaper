@@ -6,12 +6,12 @@ TODOIST_API_KEY = ''
 # ======= Import
 
 import sys, os, time, traceback
-# picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/resources"
-# libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib" # Set according to your git download
-picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
-libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
+picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/pic"
+libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib" # Set according to your git download
+# picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
+# libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 if os.path.exists(libdir): sys.path.append(libdir)
-from waveshare_epd import epd4in2
+from waveshare_epd import epd4in2_V2
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 
 import datetime
@@ -22,18 +22,18 @@ white = 1
 fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
 fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
 fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
-fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
+# fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
 
 # ======= Utils
 
 def init():
-    epd = epd4in2.EPD()
+    epd = epd4in2_V2.EPD()
     epd.init(epd.FULL_UPDATE)
     epd.Clear(0xFF)
     return epd
 
 def on_exit():
-    epd4in2.epdconfig.module_exit()
+    epd4in2_V2.epdconfig.module_exit()
     exit()
 
 def on_error(e):
