@@ -1,20 +1,28 @@
 # ======= Config
 
 WEATHER_API_KEY = ''
+WEATHER_BASE_URL = 'https://api.openweathermap.org/data/3.0/onecall'
+WEATHER_LOCATION = 'XXXXXXXX'  # Name of location
+WEATHER_LATITUDE = 'XXXXXXXX'  # Latitude
+WEATHER_LONGITUDE = 'XXXXXXXX'  # Longitude
+WEATHER_UNITS = 'imperial' # imperial or metric
+
 TODOIST_API_KEY = ''
 
 # ======= Import
 
-import sys, os, time, traceback
+import sys, os
 picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/pic"
 libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib" # Set according to your git download
 # picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
 # libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
+# picdir = os.path.join(os.path.dirname(__file__), 'resources')
+# libdir = os.path.join(os.path.dirname(__file__), 'lib')
 if os.path.exists(libdir): sys.path.append(libdir)
+
+import datetime, time, traceback, logging
 from waveshare_epd import epd4in2_V2
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
-
-import datetime
 
 black = 0
 white = 1
@@ -27,43 +35,31 @@ fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
 # ======= Utils
 
 def init():
+    logging.info("Init and Clear...")
     epd = epd4in2_V2.EPD()
-    epd.init(epd.FULL_UPDATE)
-    epd.Clear(0xFF)
+    epd.init()
+    epd.Clear()
     return epd
 
 def on_exit():
-    epd4in2_V2.epdconfig.module_exit()
+    logging.info("Exit...")
+    epd4in2_V2.epdconfig.module_exit(cleanup=True)
     exit()
 
 def on_error(e):
-    print(e)
+    logging.info(e)
 
 def go_to_sleep(epd):
-    clear_display(epd)
+    logging.info("Sleep...")
     epd.sleep()
 
-def clear_display(epd):
-    global image, draw
-    epd.Clear(0xFF)
-    image = Image.new('1', (epd.height, epd.width), 255)
-    draw = ImageDraw.Draw(image)
-    epd.display(epd.getbuffer(image))
+def get_draw():
+    Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+    draw = ImageDraw.Draw(Himage)
+    return draw
 
-def update_display():
-    epd.display(epd.getbuffer(image))
-    time.sleep(2)
-
-def img_convert(img_file,X_new,Y_new):
-    img = Image.open(img_file)
-    # increase contrast
-    enhancer = ImageEnhance.Contrast(img)
-    contrast = 5 #increase contrast. contrast = 1 means not performing manipulation
-    img = enhancer.enhance(contrast)
-
-    img = img.convert('1') # convert to black & white
-    img = img.resize((X_new,Y_new), Image.LANCZOS) # resize to new X,Y
-    return img
+def update_display(epd, image):
+    epd.display_Fast(epd.getbuffer(image))
 
 # ======= Render
 
@@ -72,127 +68,42 @@ def renderDate(epd):
     date = datetime.datetime.now().strftime('%A, %d/%m')
 
     # render date
-    clear_display(epd)
+    draw = get_draw()
     draw.text((0, 0), date, font = fontBody, fill = black)
-    update_display()
+    update_display(epd, draw)
 
 def renderWeather(epd):
     # get weather
 
     # render date
-    clear_display(epd)
+    draw = get_draw()
     draw.text((200, 0), '\uf095', font = fontBody, fill = black)
-    update_display()
+    update_display(epd, draw)
 
 def renderTasks(epd):
     # get tasks
     tasks = ["Ford", "Volvo", "BMW"]
 
     # render tasks
-    clear_display(epd)
+    draw = get_draw()
     for j in range(0, len(tasks)):
         draw.text((0, j * 16), tasks(j), font = fontBody, fill = black)
-    update_display()
+    update_display(epd, draw)
 
 try:
-    print("Starting...")
+    logging.info("Starting...")
     epd = init()
-    time.sleep(2)
 
     renderDate(epd)
     renderWeather(epd)
     renderTasks(epd)
 
-# # Drawing Line
-#     clear_display(epd)
-#     draw.text((0, 0), 'Test 2) Draw line', font = fontBody, fill = black)
-#     draw.line([(0,20),(50,100)], fill = 0,width = 5)
-#     epd.display(epd.getbuffer(image))
-#     time.sleep(2)
-
-# # Draw Rectangles
-#     clear_display(epd)
-#     draw.text((0, 0), 'Test 3) Draw Rectangles', font = fontBody, fill = black)
-#     draw.rectangle([(0,20),(50,60)],outline = black)
-#     draw.rectangle([(50,20),(100,60)],fill = black)
-#     update_display()
-
-# # Draw Chords
-#     clear_display(epd)
-#     draw.text((0, 0), 'Test 4) Draw Chords', font = fontBody, fill = black)
-#     draw.chord((0, 20, 100, 70), 0, 360, fill = black)
-#     draw.ellipse((0, 70, 100, 120), outline = black)
-#     update_display()
-
-# # Draw Pie Slices
-#     clear_display(epd)
-#     draw.text((0, 0), 'Test 4) Draw Pie Slices', font = fontBody, fill = black)
-#     draw.pieslice((0, 20, 100, 110), 90, 180, outline = black)
-#     draw.pieslice((0, 20, 100, 110), 180, 270, fill = black)
-#     update_display()
-
-# # Draw Polygons
-#     clear_display(epd)
-#     draw.text((0, 0), 'Test 5) Draw Polygons', font = fontBody, fill = black)
-#     draw.polygon([(0,20),(110,60),(150,35)],outline = black)
-#     draw.polygon([(190,20),(190,60),(150,40)],fill = black)
-#     update_display()
-
-# # Draw Bitmap
-#     clear_display(epd)
-#     image = Image.open(os.path.join(picdir, '4in2.bmp'))
-#     update_display()
-
-# # Draw smaller bitmap
-#     clear_display(epd)
-#     bmp = Image.open(os.path.join(picdir, '100x100.bmp'))
-#     image.paste(bmp, (20,20))
-#     draw.text((0, 0), 'Test 7) Smaller Bitmap', font = fontBody, fill = black)
-#     update_display()
-
-# # Draw custom image
-#     clear_display(epd)
-#     img = img_convert("peppe8o-logo.jpg",64,64)
-#     image.paste(img, (20,20))
-#     draw.text((0, 0), 'Test 8) Custom image', font = fontBody, fill = black)
-#     update_display()
-
-# # Draw partial Updates
-#     clear_display(epd)
-#     draw.text((0, 0), 'Test 9) Partial Updates', font = fontBody, fill = black)
-#     epd.displayPartBaseImage(epd.getbuffer(image))
-#     epd.init(epd.PART_UPDATE)
-
-#     num = 0
-#     start_time=time.time()
-#     elapsed = time.time()-start_time
-#     while (time.time()-start_time) <= 10:
-#         elapsed=time.time()-start_time
-#         progress = int(220-int(elapsed*10))
-#         draw.rectangle((120, 70, progress, 75), fill = black)
-#         draw.rectangle((progress, 70, 220, 75), fill = white)
-#         draw.rectangle([(progress,70),(220,75)],outline = black)
-
-#         draw.rectangle((120, 80, 220, 105), fill = white)
-#         draw.text((120, 80), time.strftime('%H:%M:%S'), font = fontTitle, fill = black)
-#         epd.displayPartial(epd.getbuffer(image))
-#         time.sleep(0.2)
-#     epd.init(epd.FULL_UPDATE)
-#     time.sleep(2)
-
-# # Tests finished
-#     clear_display(epd)
-#     draw.text((0, 0), 'Tests finished', font = fontBody, fill = 0)
-#     draw.text((0, 15), 'Visit peppe8o.com for more tutorials', font = fontBody, fill = 0)
-#     update_display()
-
-    print("Ending...")
     go_to_sleep(epd)
 
 except IOError as e:
-    print("Unknown error:")
+    logging.info("Error:")
     on_error(e)
 
 except KeyboardInterrupt:
-    print("Ctrl + c:")
+    logging.info("Ctrl + c:")
     on_exit()
