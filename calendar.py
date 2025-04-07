@@ -6,13 +6,15 @@ TODOIST_API_KEY = ''
 # ======= Import
 
 import sys, os, time, traceback
-picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/resources"
-libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib" # Set according to your git download
+# picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/resources"
+# libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib" # Set according to your git download
+picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
+libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 if os.path.exists(libdir): sys.path.append(libdir)
 from waveshare_epd import epd4in2
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 
-import arrow
+import datetime
 
 black = 0
 white = 1
@@ -67,9 +69,7 @@ def img_convert(img_file,X_new,Y_new):
 
 def renderDate(epd):
     # get date
-    # https://arrow.readthedocs.io/en/stable/guide.html#format
-    now = arrow.now(tz='Asia/Ho_Chi_Minh')
-    date = now.format('dddd, D/MMMM')
+    date = datetime.datetime.now().strftime('%A, %d/%m')
 
     # render date
     clear_display(epd)
