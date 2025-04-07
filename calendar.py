@@ -13,7 +13,7 @@ TODOIST_API_KEY = ''
 
 import sys, os
 picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/pic"
-libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib" # Set according to your git download
+libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib"
 # picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
 # libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 # picdir = os.path.join(os.path.dirname(__file__), 'resources')
