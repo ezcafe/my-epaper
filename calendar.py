@@ -27,7 +27,7 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback
 
-logging.basicConfig(level=logging.DEBUG
+logging.basicConfig(level=logging.DEBUG)
 
 # ======= Utils
 
@@ -77,7 +77,7 @@ def renderTasks(draw):
 
     # render tasks
     for j in range(0, len(tasks)):
-        draw.text((0, j * 16), tasks(j), font = fontBody, fill = black
+        draw.text((0, j * 16), tasks(j), font = fontBody, fill = black)
 
 try:
     logging.info("Starting...")
