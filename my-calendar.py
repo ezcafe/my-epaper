@@ -104,7 +104,7 @@ try:
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         # get date
-        date = datetime.datetime.now().strftime('%A, %d/%m')
+        # date = datetime.datetime.now().strftime('%A, %d/%m')
         # render date
         draw.text((0, 0), "date", font = fontBody, fill = black)
         # renderDate(draw)
