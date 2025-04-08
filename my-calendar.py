@@ -4,7 +4,7 @@
 # ======= Config
 
 WEATHER_API_KEY = 'bd7687c19648b628d77527713a59bc47'
-WEATHER_BASE_URL = 'https://api.openweathermap.org/data/3.0/onecall'
+WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
 WEATHER_LATITUDE = '10.7863809'  # Latitude
 WEATHER_LONGITUDE = '106.7781079'  # Longitude
 WEATHER_UNITS = 'metric' # imperial or metric
@@ -88,18 +88,16 @@ def fetch_weather_data():
 # Process weather data
 def process_weather_data(data):
     try:
-        current = data['current']
-        daily = data['daily'][0]
+        current = data['main']
+        # https://openweathermap.org/current
         weather_data = {
             "temp_current": current['temp'],
             "feels_like": current['feels_like'],
             "humidity": current['humidity'],
-            "wind": current['wind_speed'],
-            "report": current['weather'][0]['description'].title(),
-            "icon_code": current['weather'][0]['icon'],
-            "temp_max": daily['temp']['max'],
-            "temp_min": daily['temp']['min'],
-            "precip_percent": daily['pop'] * 100,
+            "report": data['weather'][0]['description'],
+            "icon_code": data['weather'][0]['icon'],
+            "temp_max": current['temp_max'],
+            "temp_min": current['temp_min'],
         }
         logging.info("Weather data processed successfully.")
         return weather_data
@@ -111,10 +109,34 @@ def renderWeather(draw):
     # get weather
     data = fetch_weather_data()
     weather_data = process_weather_data(data)
+    logging.info(weather_data['icon_code'])
+
+    weatherIconMapping = {
+        '01d': "\ea02",
+        '01n': "\ea01",
+        '02d': "\ea03",
+        '02n': "\ea04",
+        '03d': "\ea05",
+        '03n': "\ea06",
+        '04d': "\ea07",
+        '04n': "\ea08",
+        '09d': "\ea09",
+        '09n': "\ea0a",
+        '10d': "\ea0b",
+        '10n': "\ea0c",
+        '11d': "\ea0d",
+        '11n': "\ea0e",
+        '1232n': "\ea0f",
+        '13d': "\ea10",
+        '13n': "\ea11",
+        '50d': "\ea12",
+        '50n': "\ea13",
+    }
+
+    logging.info(weatherIconMapping[weather_data['icon_code']])
 
     # render date https://erikflowers.github.io/weather-icons/
-    draw.text((200, 0), weather_data['icon_code'], font = fontWeather, fill = black)
-    logging.info(weather_data['icon_code'])
+    draw.text((200, 0), weatherIconMapping[weather_data['icon_code']], font = fontWeather, fill = black)
 
 def renderTasks(draw):
     # get tasks
