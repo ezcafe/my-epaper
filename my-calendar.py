@@ -63,7 +63,7 @@ def renderDate(draw):
     date = datetime.datetime.now().strftime('%A, %d/%m')
 
     # render date
-    draw.text((0, 0), date, font = fontBody, fill = black)
+    draw.text((0, 0), 'date', font = fontBody, fill = black)
 
 def renderWeather(draw):
     # get weather
@@ -103,10 +103,9 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        draw.text((0, 0), 'AAAAAA', font = fontBody, fill = black)
-        # renderDate(draw)
-        # renderWeather(draw)
-        # renderTasks(draw)
+        renderDate(draw)
+        renderWeather(draw)
+        renderTasks(draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
