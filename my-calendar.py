@@ -103,9 +103,10 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        renderDate(draw)
-        renderWeather(draw)
-        renderTasks(draw)
+        draw.text((0, 0), 'AAAAAA', font = fontBody, fill = black)
+        # renderDate(draw)
+        # renderWeather(draw)
+        # renderTasks(draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
