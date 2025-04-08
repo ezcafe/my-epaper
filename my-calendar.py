@@ -106,10 +106,10 @@ try:
         # get date
         date = datetime.datetime.now().strftime('%A, %d/%m')
         # render date
-        draw.text((0, 0), 'AAAAA111', font = fontBody, fill = black)
-        renderDate(draw)
-        renderWeather(draw)
-        renderTasks(draw)
+        draw.text((0, 0), date, font = fontBody, fill = black)
+        # renderDate(draw)
+        # renderWeather(draw)
+        # renderTasks(draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
