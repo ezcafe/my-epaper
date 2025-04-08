@@ -105,7 +105,12 @@ try:
         draw = ImageDraw.Draw(Himage)
         # renderDate(draw)
         # renderWeather(draw)
-        renderTasks(draw)
+        # renderTasks(draw)
+        # get tasks
+        tasks = ["Ford", "Volvo", "BMW"]
+        # render tasks
+        for j in range(0, len(tasks)):
+            draw.text((0, j * 16), tasks(j), font = fontBody, fill = black)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
