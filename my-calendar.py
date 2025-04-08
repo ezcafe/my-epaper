@@ -3,7 +3,7 @@
 
 # ======= Config
 
-WEATHER_API_KEY = '50a816e10ff54f5dbff234827220106'
+WEATHER_API_KEY = 'bd7687c19648b628d77527713a59bc47'
 WEATHER_BASE_URL = 'https://api.openweathermap.org/data/3.0/onecall'
 WEATHER_LATITUDE = '10.7863809'  # Latitude
 WEATHER_LONGITUDE = '106.7781079'  # Longitude
