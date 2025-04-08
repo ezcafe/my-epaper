@@ -34,6 +34,11 @@ logging.basicConfig(level=logging.DEBUG)
 black = 0
 white = 1
 
+fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
+fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
+fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
+
 def init():
     logging.info("Init and Clear...")
     epd = epd4in2_V2.EPD()
@@ -82,11 +87,6 @@ def renderTasks(draw):
 try:
     logging.info("Starting...")
     epd = init()
-
-    fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
-    fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
-    # fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
 
     if 0:
         logging.info("E-paper refresh")
