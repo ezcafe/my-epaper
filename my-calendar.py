@@ -81,13 +81,13 @@ def renderTasks(draw):
 
 try:
     logging.info("Starting...")
-    epd = init()
-
-    fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
-    fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-    fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
-    # fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
-
+    epd = epd4in2_V2.EPD()
+    logging.info("init and Clear")
+    epd.init()
+    epd.Clear()
+font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
+    font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
     if 0:
         logging.info("E-paper refresh")
         epd.init()
