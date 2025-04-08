@@ -74,7 +74,7 @@ def renderWeather(draw):
     # get weather
 
     # render date
-    draw.text((200, 0), '\uf095', font = fontBody, fill = black)
+    draw.text((200, 0), '\uf095', font = fontWeather, fill = black)
 
 def renderTasks(draw):
     # get tasks
