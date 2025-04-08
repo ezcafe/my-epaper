@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+
 # ======= Config
 
 WEATHER_API_KEY = ''
@@ -11,28 +14,25 @@ TODOIST_API_KEY = ''
 
 # ======= Import
 
-import sys, os
-picdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/pic"
-libdir = "/home/ezcafe/e-Paper/RaspberryPi_JetsonNano/python/lib"
-# picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources')
-# libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
-# picdir = os.path.join(os.path.dirname(__file__), 'resources')
-# libdir = os.path.join(os.path.dirname(__file__), 'lib')
-if os.path.exists(libdir): sys.path.append(libdir)
+import sys
+import os
+picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
+libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
+if os.path.exists(libdir):
+    sys.path.append(libdir)
 
-import datetime, time, traceback, logging
+import logging
 from waveshare_epd import epd4in2_V2
-from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+import time
+from PIL import Image,ImageDraw,ImageFont
+import traceback
+
+logging.basicConfig(level=logging.DEBUG
+
+# ======= Utils
 
 black = 0
 white = 1
-
-fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
-fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
-# fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
-
-# ======= Utils
 
 def init():
     logging.info("Init and Clear...")
@@ -50,53 +50,64 @@ def on_error(e):
     logging.info(e)
 
 def go_to_sleep(epd):
-    logging.info("Sleep...")
+    logging.info("Clear...")
+    epd.init()
+    epd.Clear()
+    logging.info("Goto Sleep...")
     epd.sleep()
-
-def get_draw():
-    Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-    draw = ImageDraw.Draw(Himage)
-    return draw
-
-def update_display(epd, image):
-    epd.display_Fast(epd.getbuffer(image))
 
 # ======= Render
 
-def renderDate(epd):
+def renderDate(draw):
     # get date
     date = datetime.datetime.now().strftime('%A, %d/%m')
 
     # render date
-    draw = get_draw()
     draw.text((0, 0), date, font = fontBody, fill = black)
-    update_display(epd, draw)
 
-def renderWeather(epd):
+def renderWeather(draw):
     # get weather
 
     # render date
-    draw = get_draw()
     draw.text((200, 0), '\uf095', font = fontBody, fill = black)
-    update_display(epd, draw)
 
-def renderTasks(epd):
+def renderTasks(draw):
     # get tasks
     tasks = ["Ford", "Volvo", "BMW"]
 
     # render tasks
-    draw = get_draw()
     for j in range(0, len(tasks)):
-        draw.text((0, j * 16), tasks(j), font = fontBody, fill = black)
-    update_display(epd, draw)
+        draw.text((0, j * 16), tasks(j), font = fontBody, fill = black
 
 try:
     logging.info("Starting...")
     epd = init()
 
-    renderDate(epd)
-    renderWeather(epd)
-    renderTasks(epd)
+    fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 15)
+    fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+    fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 32)
+    # fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 32)
+
+    if 0:
+        logging.info("E-paper refresh")
+        epd.init()
+        Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+        draw = ImageDraw.Draw(Himage)
+        renderDate(draw)
+        renderWeather(draw)
+        renderTasks(draw)
+        epd.display(epd.getbuffer(Himage))
+        time.sleep(2)
+    else:
+        logging.info("E-paper refreshes quickly")
+        epd.init_fast(epd.Seconds_1_5S)
+        Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+        draw = ImageDraw.Draw(Himage)
+        renderDate(draw)
+        renderWeather(draw)
+        renderTasks(draw)
+        epd.display_Fast(epd.getbuffer(Himage))
+        time.sleep(2)
 
     go_to_sleep(epd)
 
