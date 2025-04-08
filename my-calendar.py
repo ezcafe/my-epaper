@@ -65,7 +65,8 @@ def go_to_sleep(epd):
 
 def renderDate(draw):
     # get date
-    date = datetime.datetime.now().strftime('%A, %d/%m')
+    currentDate = datetime.datetime.now()
+    date = currentDate.strftime('%A, %d/%m')
 
     # render date
     draw.text((0, 0), date, font = fontBody, fill = black)
@@ -73,7 +74,7 @@ def renderDate(draw):
 def renderWeather(draw):
     # get weather
 
-    # render date
+    # render date https://erikflowers.github.io/weather-icons/
     draw.text((200, 0), '\uf00d', font = fontWeather, fill = black)
 
 def renderTasks(draw):
@@ -103,7 +104,7 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        # renderDate(draw)
+        renderDate(draw)
         renderWeather(draw)
         renderTasks(draw)
         epd.display_Fast(epd.getbuffer(Himage))
