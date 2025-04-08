@@ -103,8 +103,7 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        date = datetime.datetime.now().strftime('%A, %d/%m')
-        draw.text((0, 0), date, font = fontBody, fill = black)
+        draw.text((10, 0), 'hello world', font = font24, fill = 0)
         # renderDate(draw)
         # renderWeather(draw)
         # renderTasks(draw)
