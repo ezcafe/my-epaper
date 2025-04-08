@@ -3,12 +3,11 @@
 
 # ======= Config
 
-WEATHER_API_KEY = ''
+WEATHER_API_KEY = '50a816e10ff54f5dbff234827220106'
 WEATHER_BASE_URL = 'https://api.openweathermap.org/data/3.0/onecall'
-WEATHER_LOCATION = 'XXXXXXXX'  # Name of location
-WEATHER_LATITUDE = 'XXXXXXXX'  # Latitude
-WEATHER_LONGITUDE = 'XXXXXXXX'  # Longitude
-WEATHER_UNITS = 'imperial' # imperial or metric
+WEATHER_LATITUDE = '10.7863809'  # Latitude
+WEATHER_LONGITUDE = '106.7781079'  # Longitude
+WEATHER_UNITS = 'metric' # imperial or metric
 
 TODOIST_API_KEY = ''
 
@@ -23,11 +22,14 @@ if os.path.exists(libdir):
 
 import logging
 from waveshare_epd import epd4in2_V2
-import time, datetime
+import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback
 
 logging.basicConfig(level=logging.DEBUG)
+
+import datetime
+import requests
 
 # ======= Utils
 
@@ -71,11 +73,48 @@ def renderDate(draw):
     # render date
     draw.text((0, 0), date, font = fontTitle, fill = black)
 
+# Fetch weather data
+def fetch_weather_data():
+    url = f"{WEATHER_BASE_URL}?lat={WEATHER_LATITUDE}&lon={WEATHER_LONGITUDE}&units={WEATHER_UNITS}&appid={WEATHER_API_KEY}"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        logging.info("Weather data fetched successfully.")
+        return response.json()
+    except requests.RequestException as e:
+        logging.error(f"Failed to fetch weather data: {e}")
+        raise
+
+# Process weather data
+def process_weather_data(data):
+    try:
+        current = data['current']
+        daily = data['daily'][0]
+        weather_data = {
+            "temp_current": current['temp'],
+            "feels_like": current['feels_like'],
+            "humidity": current['humidity'],
+            "wind": current['wind_speed'],
+            "report": current['weather'][0]['description'].title(),
+            "icon_code": current['weather'][0]['icon'],
+            "temp_max": daily['temp']['max'],
+            "temp_min": daily['temp']['min'],
+            "precip_percent": daily['pop'] * 100,
+        }
+        logging.info("Weather data processed successfully.")
+        return weather_data
+    except KeyError as e:
+        logging.error(f"Error processing weather data: {e}")
+        raise
+
 def renderWeather(draw):
     # get weather
+    data = fetch_weather_data()
+    weather_data = process_weather_data(data)
 
     # render date https://erikflowers.github.io/weather-icons/
-    draw.text((200, 0), '\uf00d', font = fontWeather, fill = black)
+    draw.text((200, 0), weather_data['icon_code'], font = fontWeather, fill = black)
+    logging.info(weather_data['icon_code'])
 
 def renderTasks(draw):
     # get tasks
