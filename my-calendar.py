@@ -23,7 +23,7 @@ if os.path.exists(libdir):
 
 import logging
 from waveshare_epd import epd4in2_V2
-import time
+import time, datetime
 from PIL import Image,ImageDraw,ImageFont
 import traceback
 
