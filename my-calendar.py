@@ -106,7 +106,7 @@ try:
         # get date
         date = datetime.datetime.now().strftime('%A, %d/%m')
         # render date
-        draw.text((0, 0), date, font = fontBody, fill = black)
+        draw.text((0, 0), 'date', font = fontBody, fill = black)
         renderDate(draw)
         renderWeather(draw)
         renderTasks(draw)
