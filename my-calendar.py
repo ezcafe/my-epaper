@@ -111,7 +111,7 @@ try:
         # render tasks
         # for j in range(0, len(tasks)):
         #     draw.text((0, j * 16), tasks(j), font = fontBody, fill = black)
-        draw.text((0, 0), tasks(0), font = fontBody, fill = black)
+        draw.text((0, 0), "Ford", font = fontBody, fill = black)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
