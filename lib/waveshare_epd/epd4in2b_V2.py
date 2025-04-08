@@ -2,7 +2,7 @@
 # * | File        :	  epd4in2bc.py
 # * | Author      :   Waveshare team
 # * | Function    :   Electronic paper driver
-# * | Info        :   https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2b_V2.py
+# * | Info        :
 # *----------------
 # * | This version:   V4.1
 # * | Date        :   2022-08-10
@@ -45,19 +45,19 @@ class EPD:
         self.width = EPD_WIDTH
         self.height = EPD_HEIGHT
         self.flag = 0
-
+        
         if (epdconfig.module_init(cleanup=True) != 0):
             return -1
-
+        
 
     # Hardware reset
     def reset(self):
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)
+        epdconfig.delay_ms(200) 
         epdconfig.digital_write(self.reset_pin, 0)
         epdconfig.delay_ms(5)
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)
+        epdconfig.delay_ms(200)   
 
     def send_command(self, command):
         epdconfig.digital_write(self.dc_pin, 0)
@@ -71,45 +71,45 @@ class EPD:
         epdconfig.DEV_SPI_write(data)
         epdconfig.digital_write(self.cs_pin, 1)
 
-    # send a lot of data
+    # send a lot of data   
     def send_data2(self, data):
         epdconfig.digital_write(self.dc_pin, 1)
         epdconfig.digital_write(self.cs_pin, 0)
         epdconfig.spi_writebyte2(data)
         epdconfig.digital_write(self.cs_pin, 1)
-
+        
     def ReadBusy(self):
         logger.debug("e-Paper busy")
         if(self.flag == 1):
-            while(epdconfig.digital_read(self.busy_pin) == 1):
-                epdconfig.delay_ms(100)
-
+            while(epdconfig.digital_read(self.busy_pin) == 1): 
+                epdconfig.delay_ms(100) 
+        
         else:
-            while(epdconfig.digital_read(self.busy_pin) == 0):
-                epdconfig.delay_ms(100)
+            while(epdconfig.digital_read(self.busy_pin) == 0): 
+                epdconfig.delay_ms(100) 
         logger.debug("e-Paper busy release")
 
     def TurnOnDisplay(self):
         if(self.flag == 1):
             self.send_command(0x22)
-            self.send_data(0xF7)
+            self.send_data(0xF7)	
             self.send_command(0x20)
             self.ReadBusy()
-
+        
         else:
             self.send_command(0x12)
-            epdconfig.delay_ms(100)
+            epdconfig.delay_ms(100) 
             self.ReadBusy()
-
+            
     def init(self):
         i = 0x00
         self.reset()
         self.send_command(0x2F)
         epdconfig.delay_ms(100)
         epdconfig.digital_write(self.dc_pin, 1)
-        epdconfig.digital_write(self.cs_pin, 0)
+        epdconfig.digital_write(self.cs_pin, 0) 
         i = epdconfig.DEV_SPI_read()
-        epdconfig.digital_write(self.cs_pin, 1)
+        epdconfig.digital_write(self.cs_pin, 1) 
         # print(i)
 
         if(i == 0x01):
@@ -119,28 +119,28 @@ class EPD:
             self.ReadBusy()
 
             self.send_command(0x3C)
-            self.send_data(0x05)
+            self.send_data(0x05)	
 
             self.send_command(0x18)
-            self.send_data(0x80)
+            self.send_data(0x80)	
 
-            self.send_command(0x11)
+            self.send_command(0x11)      
             self.send_data(0x03)
 
-            self.send_command(0x44)
+            self.send_command(0x44) 
             self.send_data(0x00)
             self.send_data(self.width//8-1)
 
-            self.send_command(0x45)
+            self.send_command(0x45)        
             self.send_data(0x00)
-            self.send_data(0x00)
-            self.send_data((self.height-1)%256)
+            self.send_data(0x00) 
+            self.send_data((self.height-1)%256)    
             self.send_data((self.height-1)//256)
 
             self.send_command(0x4E)
             self.send_data(0x00)
-            self.send_command(0x4F)
-            self.send_data(0x00)
+            self.send_command(0x4F)  
+            self.send_data(0x00)    
             self.send_data(0x00)
             self.ReadBusy()
 
@@ -151,7 +151,7 @@ class EPD:
 
             self.send_command(0x00)  # panel setting
             self.send_data(0x0f)
-
+        
         return 0
 
     def getbuffer(self, image):
@@ -184,31 +184,31 @@ class EPD:
             wide =  self.width // 8
         else :
             wide =  self.width // 8 + 1
-
+        
         if(self.flag == 1):
             self.send_command(0x24)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(imageblack[i + j * wide])
-
+                    self.send_data(imageblack[i + j * wide]) 
+                    
             self.send_command(0x26)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(~imagered[i + j * wide])
-
+                    self.send_data(~imagered[i + j * wide]) 
+        
         else:
             self.send_command(0x10)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(imageblack[i + j * wide])
-
+                    self.send_data(imageblack[i + j * wide]) 
+                    
             self.send_command(0x13)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(~imagered[i + j * wide])
+                    self.send_data(~imagered[i + j * wide]) 
 
         self.TurnOnDisplay()
-
+        
     def Clear(self):
         high = self.height
         if( self.width % 8 == 0) :
@@ -220,39 +220,39 @@ class EPD:
             self.send_command(0x24)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(0xff)
-
+                    self.send_data(0xff) 
+                    
             self.send_command(0x26)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(0x00)
-
+                    self.send_data(0x00) 
+        
         else:
             self.send_command(0x10)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(0xff)
-
+                    self.send_data(0xff) 
+                    
             self.send_command(0x13)
             for j in range(0, high):
                 for i in range(0, wide):
-                    self.send_data(0x00)
+                    self.send_data(0x00) 
 
         self.TurnOnDisplay()
 
     def sleep(self):
         if(self.flag == 1):
-            self.send_command(0X10)
+            self.send_command(0X10) 
             self.send_data(0x03)
-
+        
         else:
-            self.send_command(0X50)
-            self.send_data(0xf7)
+            self.send_command(0X50) 
+            self.send_data(0xf7)             
             self.send_command(0X02)
-            self.ReadBusy()
-            self.send_command(0X07)
+            self.ReadBusy() 
+            self.send_command(0X07) 
             self.send_data(0xA5)
-
+        
         epdconfig.delay_ms(2000)
         epdconfig.module_exit()
 ### END OF FILE ###

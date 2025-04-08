@@ -2,7 +2,7 @@
 # * | File        :   epd4in2.py
 # * | Author      :   Waveshare team
 # * | Function    :   Electronic paper driver
-# * | Info        :   https://github.com/waveshareteam/e-Paper/blob/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd/epd4in2.py
+# * | Info        :
 # *----------------
 # * | This version:   V4.2
 # * | Date        :   2022-10-29
@@ -243,7 +243,7 @@ class EPD:
         epdconfig.spi_writebyte([data])
         epdconfig.digital_write(self.cs_pin, 1)
 
-    # send a lot of data
+    # send a lot of data   
     def send_data2(self, data):
         epdconfig.digital_write(self.dc_pin, 1)
         epdconfig.digital_write(self.cs_pin, 0)
