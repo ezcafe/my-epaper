@@ -104,7 +104,7 @@ try:
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         # renderDate(draw)
-        # renderWeather(draw)
+        renderWeather(draw)
         renderTasks(draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
