@@ -3,6 +3,10 @@
 
 # ======= Import
 
+# /// script
+# dependencies = ["datetime", "requests", "waveshare_epd", "PIL", "logging", "dotenv"]
+# ///
+
 import sys
 import os
 picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
@@ -21,7 +25,7 @@ import requests
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv, dotenv_values
 load_dotenv()  # take environment variables
 
 # ======= Utils
