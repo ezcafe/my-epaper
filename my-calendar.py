@@ -483,7 +483,8 @@ def renderWeather(draw):
     weatherIcon = weatherIdToIcon[weatherId].icon
     # If we are not in the ranges mentioned above, add a day/night prefix.
     if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
-        icon = 'day-' + icon
+        weatherIcon = 'day-' + weatherIcon
+    logging.info(weatherIcon)
     weatherIconToText = {
         'day-sunny': "\f00d",
         'day-cloudy': "\f002",
@@ -1080,7 +1081,7 @@ def renderWeather(draw):
         'wu-unknown': "\f00d",
     }
 
-    logging.info(weatherIcon)
+
     logging.info(weatherIconToText[weatherIcon])
 
     # render date
