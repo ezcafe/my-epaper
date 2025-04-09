@@ -172,7 +172,7 @@ def renderWeather(draw):
         "902": "hurricane",
         "903": "snowflake-cold",
         "904": "hot",
-        "905": : "windy",
+        "905": "windy",
         "906": "hail",
         "951": "sunny",
         "952": "cloudy-gusts",
