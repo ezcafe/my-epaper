@@ -113,302 +113,83 @@ def renderWeather(draw):
     weatherId = weather_data['icon_code']
     logging.info(weatherId)
     weatherIdToIcon = {
-        "200": {
-            "label": "thunderstorm with light rain",
-            "icon": "storm-showers"
-        },
-        "201": {
-            "label": "thunderstorm with rain",
-            "icon": "storm-showers"
-        },
-        "202": {
-            "label": "thunderstorm with heavy rain",
-            "icon": "storm-showers"
-        },
-        "210": {
-            "label": "light thunderstorm",
-            "icon": "storm-showers"
-        },
-        "211": {
-            "label": "thunderstorm",
-            "icon": "thunderstorm"
-        },
-        "212": {
-            "label": "heavy thunderstorm",
-            "icon": "thunderstorm"
-        },
-        "221": {
-            "label": "ragged thunderstorm",
-            "icon": "thunderstorm"
-        },
-        "230": {
-            "label": "thunderstorm with light drizzle",
-            "icon": "storm-showers"
-        },
-        "231": {
-            "label": "thunderstorm with drizzle",
-            "icon": "storm-showers"
-        },
-        "232": {
-            "label": "thunderstorm with heavy drizzle",
-            "icon": "storm-showers"
-        },
-        "300": {
-            "label": "light intensity drizzle",
-            "icon": "sprinkle"
-        },
-        "301": {
-            "label": "drizzle",
-            "icon": "sprinkle"
-        },
-        "302": {
-            "label": "heavy intensity drizzle",
-            "icon": "sprinkle"
-        },
-        "310": {
-            "label": "light intensity drizzle rain",
-            "icon": "sprinkle"
-        },
-        "311": {
-            "label": "drizzle rain",
-            "icon": "sprinkle"
-        },
-        "312": {
-            "label": "heavy intensity drizzle rain",
-            "icon": "sprinkle"
-        },
-        "313": {
-            "label": "shower rain and drizzle",
-            "icon": "sprinkle"
-        },
-        "314": {
-            "label": "heavy shower rain and drizzle",
-            "icon": "sprinkle"
-        },
-        "321": {
-            "label": "shower drizzle",
-            "icon": "sprinkle"
-        },
-        "500": {
-            "label": "light rain",
-            "icon": "rain"
-        },
-        "501": {
-            "label": "moderate rain",
-            "icon": "rain"
-        },
-        "502": {
-            "label": "heavy intensity rain",
-            "icon": "rain"
-        },
-        "503": {
-            "label": "very heavy rain",
-            "icon": "rain"
-        },
-        "504": {
-            "label": "extreme rain",
-            "icon": "rain"
-        },
-        "511": {
-            "label": "freezing rain",
-            "icon": "rain-mix"
-        },
-        "520": {
-            "label": "light intensity shower rain",
-            "icon": "showers"
-        },
-        "521": {
-            "label": "shower rain",
-            "icon": "showers"
-        },
-        "522": {
-            "label": "heavy intensity shower rain",
-            "icon": "showers"
-        },
-        "531": {
-            "label": "ragged shower rain",
-            "icon": "showers"
-        },
-        "600": {
-            "label": "light snow",
-            "icon": "snow"
-        },
-        "601": {
-            "label": "snow",
-            "icon": "snow"
-        },
-        "602": {
-            "label": "heavy snow",
-            "icon": "snow"
-        },
-        "611": {
-            "label": "sleet",
-            "icon": "sleet"
-        },
-        "612": {
-            "label": "shower sleet",
-            "icon": "sleet"
-        },
-        "615": {
-            "label": "light rain and snow",
-            "icon": "rain-mix"
-        },
-        "616": {
-            "label": "rain and snow",
-            "icon": "rain-mix"
-        },
-        "620": {
-            "label": "light shower snow",
-            "icon": "rain-mix"
-        },
-        "621": {
-            "label": "shower snow",
-            "icon": "rain-mix"
-        },
-        "622": {
-            "label": "heavy shower snow",
-            "icon": "rain-mix"
-        },
-        "701": {
-            "label": "mist",
-            "icon": "sprinkle"
-        },
-        "711": {
-            "label": "smoke",
-            "icon": "smoke"
-        },
-        "721": {
-            "label": "haze",
-            "icon": "day-haze"
-        },
-        "731": {
-            "label": "sand, dust whirls",
-            "icon": "cloudy-gusts"
-        },
-        "741": {
-            "label": "fog",
-            "icon": "fog"
-        },
-        "751": {
-            "label": "sand",
-            "icon": "cloudy-gusts"
-        },
-        "761": {
-            "label": "dust",
-            "icon": "dust"
-        },
-        "762": {
-            "label": "volcanic ash",
-            "icon": "smog"
-        },
-        "771": {
-            "label": "squalls",
-            "icon": "day-windy"
-        },
-        "781": {
-            "label": "tornado",
-            "icon": "tornado"
-        },
-        "800": {
-            "label": "clear sky",
-            "icon": "sunny"
-        },
-        "801": {
-            "label": "few clouds",
-            "icon": "cloudy"
-        },
-        "802": {
-            "label": "scattered clouds",
-            "icon": "cloudy"
-        },
-        "803": {
-            "label": "broken clouds",
-            "icon": "cloudy"
-        },
-        "804": {
-            "label": "overcast clouds",
-            "icon": "cloudy"
-        },
-        "900": {
-            "label": "tornado",
-            "icon": "tornado"
-        },
-        "901": {
-            "label": "tropical storm",
-            "icon": "hurricane"
-        },
-        "902": {
-            "label": "hurricane",
-            "icon": "hurricane"
-        },
-        "903": {
-            "label": "cold",
-            "icon": "snowflake-cold"
-        },
-        "904": {
-            "label": "hot",
-            "icon": "hot"
-        },
-        "905": {
-            "label": "windy",
-            "icon": "windy"
-        },
-        "906": {
-            "label": "hail",
-            "icon": "hail"
-        },
-        "951": {
-            "label": "calm",
-            "icon": "sunny"
-        },
-        "952": {
-            "label": "light breeze",
-            "icon": "cloudy-gusts"
-        },
-        "953": {
-            "label": "gentle breeze",
-            "icon": "cloudy-gusts"
-        },
-        "954": {
-            "label": "moderate breeze",
-            "icon": "cloudy-gusts"
-        },
-        "955": {
-            "label": "fresh breeze",
-            "icon": "cloudy-gusts"
-        },
-        "956": {
-            "label": "strong breeze",
-            "icon": "cloudy-gusts"
-        },
-        "957": {
-            "label": "high wind, near gale",
-            "icon": "cloudy-gusts"
-        },
-        "958": {
-            "label": "gale",
-            "icon": "cloudy-gusts"
-        },
-        "959": {
-            "label": "severe gale",
-            "icon": "cloudy-gusts"
-        },
-        "960": {
-            "label": "storm",
-            "icon": "thunderstorm"
-        },
-        "961": {
-            "label": "violent storm",
-            "icon": "thunderstorm"
-        },
-        "962": {
-            "label": "hurricane",
-            "icon": "cloudy-gusts"
-        }
+        "200": "storm-showers",
+        "201": "storm-showers",
+        "202": "storm-showers",
+        "210": "storm-showers",
+        "211": "thunderstorm",
+        "212": "thunderstorm",
+        "221": "thunderstorm",
+        "230": "storm-showers",
+        "231": "storm-showers",
+        "232": "storm-showers",
+        "300": "sprinkle",
+        "301": "sprinkle",
+        "302": "sprinkle",
+        "310": "sprinkle",
+        "311": "sprinkle",
+        "312": "sprinkle",
+        "313": "sprinkle",
+        "314": "sprinkle",
+        "321": "sprinkle",
+        "500": "rain",
+        "501": "rain",
+        "502": "rain",
+        "503": "rain",
+        "504": "rain",
+        "511": "rain-mix",
+        "520": "showers",
+        "521": "showers",
+        "522": "showers",
+        "531": "showers",
+        "600": "snow",
+        "601": "snow",
+        "602": "snow",
+        "611": "sleet",
+        "612": "sleet",
+        "615": "rain-mix",
+        "616": "rain-mix",
+        "620": "rain-mix",
+        "621": "rain-mix",
+        "622": "rain-mix",
+        "701": "sprinkle",
+        "711": "smoke",
+        "721": "day-haze",
+        "731": "cloudy-gusts",
+        "741": "fog",
+        "751": "cloudy-gusts",
+        "761": "dust",
+        "762": "smog",
+        "771": "day-windy",
+        "781": "tornado",
+        "800": "sunny",
+        "801": "cloudy",
+        "802": "cloudy",
+        "803": "cloudy",
+        "804": "cloudy",
+        "900": "tornado",
+        "901": "hurricane",
+        "902": "hurricane",
+        "903": "snowflake-cold",
+        "904": "hot",
+        "905": : "windy",
+        "906": "hail",
+        "951": "sunny",
+        "952": "cloudy-gusts",
+        "953": "cloudy-gusts",
+        "954": "cloudy-gusts",
+        "955": "cloudy-gusts",
+        "956": "cloudy-gusts",
+        "957": "cloudy-gusts",
+        "958": "cloudy-gusts",
+        "959": "cloudy-gusts",
+        "960": "thunderstorm",
+        "961": "thunderstorm",
+        "962": "cloudy-gusts",
     }
     logging.info("x")
     logging.info(weatherIdToIcon[weatherId])
-    weatherIcon = weatherIdToIcon[weatherId].icon
+    weatherIcon = weatherIdToIcon[weatherId]
     logging.info(weatherIcon)
     # If we are not in the ranges mentioned above, add a day/night prefix.
     if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
