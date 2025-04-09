@@ -1,11 +1,17 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-# ======= Import
+# ======= Config
 
-# /// script
-# dependencies = ["datetime", "requests", "waveshare_epd", "PIL", "logging", "dotenv"]
-# ///
+WEATHER_API_KEY = 'bd7687c19648b628d77527713a59bc47'
+WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
+WEATHER_LATITUDE = '10.7863809'  # Latitude
+WEATHER_LONGITUDE = '106.7781079'  # Longitude
+WEATHER_UNITS = 'metric' # imperial or metric
+
+TODOIST_API_KEY = ''
+
+# ======= Import
 
 import sys
 import os
@@ -14,19 +20,16 @@ libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
+import logging
 from waveshare_epd import epd4in2_V2
 import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback
 
-import datetime
-import requests
-
-import logging
 logging.basicConfig(level=logging.DEBUG)
 
-from dotenv import load_dotenv, dotenv_values
-load_dotenv()  # take environment variables
+import datetime
+import requests
 
 # ======= Utils
 
@@ -73,7 +76,7 @@ def renderDate(draw):
 
 # Fetch weather data
 def fetch_weather_data():
-    url = f"{os.getenv('WEATHER_BASE_URL')}?lat={os.getenv('WEATHER_LATITUDE')}&lon={os.getenv('WEATHER_LONGITUDE')}&units={os.getenv('WEATHER_UNITS')}&appid={os.getenv('WEATHER_API_KEY')}"
+    url = f"{WEATHER_BASE_URL}?lat={WEATHER_LATITUDE}&lon={WEATHER_LONGITUDE}&units={WEATHER_UNITS}&appid={WEATHER_API_KEY}"
     try:
         response = requests.get(url)
         response.raise_for_status()
