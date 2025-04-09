@@ -72,7 +72,7 @@ def renderDate(draw):
     date = currentDate.strftime('%A, %d/%m')
 
     # render date
-    draw.text((48, 0), date, font = fontHeadline, fill = black)
+    draw.text((48, 8), date, font = fontHeadline, fill = black)
 
 # Fetch weather data
 def fetch_weather_data():
@@ -187,17 +187,10 @@ def renderWeather(draw):
         "961": "thunderstorm",
         "962": "cloudy-gusts",
     }
-    logging.info("x")
-    logging.info(weatherIdToIcon["800"])
-    logging.info("y")
-    logging.info(weatherIdToIcon[str(weatherId)])
-    logging.info("z")
     weatherIcon = weatherIdToIcon[str(weatherId)]
-    logging.info(weatherIcon)
     # If we are not in the ranges mentioned above, add a day/night prefix.
     if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
         weatherIcon = 'day-' + weatherIcon
-    logging.info(weatherIcon)
     weatherIconToText = {
         'day-sunny': "\uf00d",
         'day-cloudy': "\uf002",
@@ -794,11 +787,8 @@ def renderWeather(draw):
         'wu-unknown': "\uf00d",
     }
 
-
-    logging.info(weatherIconToText[weatherIcon])
-
     # render date
-    draw.text((0, 0), weatherIconToText[weatherIcon], font = fontWeather, fill = black)
+    draw.text((16, 0), weatherIconToText[weatherIcon], font = fontWeather, fill = black)
 
 def renderTasks(draw):
     # get tasks
