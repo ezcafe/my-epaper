@@ -480,7 +480,9 @@ def renderWeather(draw):
             "icon": "cloudy-gusts"
         }
         }
+    logging.info(weatherIdToIcon[weatherId])
     weatherIcon = weatherIdToIcon[weatherId].icon
+    logging.info(weatherIcon)
     # If we are not in the ranges mentioned above, add a day/night prefix.
     if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
         weatherIcon = 'day-' + weatherIcon
