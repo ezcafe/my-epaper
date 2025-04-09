@@ -788,7 +788,7 @@ def renderWeather(draw):
     }
 
     # render date
-    draw.text((16, 0), weatherIconToText[weatherIcon], font = fontWeather, fill = black)
+    draw.text((14, 0), weatherIconToText[weatherIcon], font = fontWeather, fill = black)
 
 def renderTasks(draw):
     # get tasks
