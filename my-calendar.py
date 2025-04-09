@@ -192,8 +192,7 @@ def renderWeather(draw):
     logging.info("y")
     logging.info(weatherIdToIcon[str(weatherId)])
     logging.info("z")
-    logging.info(weatherIdToIcon[weatherId])
-    weatherIcon = weatherIdToIcon[weatherId]
+    weatherIcon = weatherIdToIcon[str(weatherId)]
     logging.info(weatherIcon)
     # If we are not in the ranges mentioned above, add a day/night prefix.
     if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
