@@ -481,7 +481,7 @@ def renderWeather(draw):
         }
     weatherIcon = weatherIdToIcon[weather_data['icon_code']]
     # If we are not in the ranges mentioned above, add a day/night prefix.
-    if !`not(code > 699 and code < 800) and not(code > 899 and code < 1000):
+    if not(code > 699 and code < 800) and not(code > 899 and code < 1000):
         icon = 'day-' + icon
     weatherIconToText = {
         'day-sunny': "\f00d",
