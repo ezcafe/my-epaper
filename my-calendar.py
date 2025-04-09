@@ -72,7 +72,7 @@ def renderDate(draw):
     date = currentDate.strftime('%A, %d/%m')
 
     # render date
-    draw.text((48, 8), date, font = fontHeadline, fill = black)
+    draw.text((48, 6), date, font = fontHeadline, fill = black)
 
 # Fetch weather data
 def fetch_weather_data():
