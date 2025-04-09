@@ -110,7 +110,8 @@ def renderWeather(draw):
     # get weather
     data = fetch_weather_data()
     weather_data = process_weather_data(data)
-    logging.info(weather_data['icon_code'])
+    weatherId = weather_data['icon_code']
+    logging.info(weatherId)
 
     weatherIdToIcon = {
         "200": {
@@ -479,9 +480,9 @@ def renderWeather(draw):
             "icon": "cloudy-gusts"
         }
         }
-    weatherIcon = weatherIdToIcon[weather_data['icon_code']]
+    weatherIcon = weatherIdToIcon[weatherId].icon
     # If we are not in the ranges mentioned above, add a day/night prefix.
-    if not(code > 699 and code < 800) and not(code > 899 and code < 1000):
+    if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
         icon = 'day-' + icon
     weatherIconToText = {
         'day-sunny': "\f00d",
@@ -1082,8 +1083,8 @@ def renderWeather(draw):
     logging.info(weatherIcon)
     logging.info(weatherIconToText[weatherIcon])
 
-    # render date https://erikflowers.github.io/weather-icons/
-    draw.text((0, 0), weatherIconMapping[weather_data['icon_code']], font = fontWeather, fill = black)
+    # render date
+    draw.text((0, 0), weatherIconToText[weatherIcon], font = fontWeather, fill = black)
 
 def renderTasks(draw):
     # get tasks
