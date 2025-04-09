@@ -190,6 +190,8 @@ def renderWeather(draw):
     logging.info("x")
     logging.info(weatherIdToIcon["800"])
     logging.info("y")
+    logging.info(weatherIdToIcon[str(weatherId)])
+    logging.info("z")
     logging.info(weatherIdToIcon[weatherId])
     weatherIcon = weatherIdToIcon[weatherId]
     logging.info(weatherIcon)
