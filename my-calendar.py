@@ -40,7 +40,7 @@ fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22)
 fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
 fontSupportText = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14)
 fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-fontWeather = ImageFont.truetype(os.path.join(picdir, 'WeatherIcons.ttf'), 24)
+fontWeather = ImageFont.truetype(os.path.join(picdir, 'owfont-regular.ttf'), 24)
 
 def init():
     logging.info("Init and Clear...")
@@ -96,7 +96,7 @@ def process_weather_data(data):
             "feels_like": current['feels_like'],
             "humidity": current['humidity'],
             "report": data['weather'][0]['description'],
-            "icon_code": data['weather'][0]['icon'],
+            "icon_code": data['weather'][0]['id'],
             "temp_max": current['temp_max'],
             "temp_min": current['temp_min'],
         }
@@ -134,10 +134,10 @@ def renderWeather(draw):
         '50n': "\ea13",
     }
 
-    logging.info(weatherIconMapping[weather_data['icon_code']])
+    logging.info(weather_data['icon_code'])
 
     # render date https://erikflowers.github.io/weather-icons/
-    draw.text((0, 0), weatherIconMapping[weather_data['icon_code']], font = fontWeather, fill = black)
+    draw.text((0, 0), weather_data['icon_code'], font = fontWeather, fill = black)
 
 def renderTasks(draw):
     # get tasks
