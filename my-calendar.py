@@ -803,6 +803,8 @@ def renderTasks(draw):
     for j in range(0, len(tasks)):
         draw.text((0, j * 16 + 45), tasks[j], font = fontBody, fill = black)
 
+    draw.line((0, 120, 100, 120), fill = 0)
+
 try:
     logging.info("Starting...")
     epd = init()
