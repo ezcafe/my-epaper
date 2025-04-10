@@ -93,6 +93,7 @@ def fetch_weather_data():
 # Process weather data
 def process_weather_data(data):
     try:
+        logging.info(data)
         current = data['main']
 
         weatherId = data['weather'][0]['id']
