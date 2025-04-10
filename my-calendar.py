@@ -74,7 +74,8 @@ def renderDate(draw):
     # render date
     draw.text((48, 18), date, font = fontHeadline, fill = black)
     draw.rectangle((48, 0, 150, 64), outline = 0)
-    draw.rectangle((52, 8, 146, 48), outline = 0)
+    draw.rectangle((56, 8, 142, 56), outline = 0)
+    draw.rectangle((0, 0, 48, 64), outline = 0)
     draw.rectangle((12, 12, 36, 36), outline = 0)
 
 # Fetch weather data
@@ -803,10 +804,10 @@ def renderTasks(draw):
     # render tasks
     for j in range(0, len(tasks)):
         draw.text((0, j * 56 + 64), tasks[j], font = fontBody, fill = black)
+        draw.line((0, j * 56 + 64, 150, j * 56 + 64), fill = 0)
+        draw.rectangle((8, j * 56 + 64 + 8, 142, j * 56 + 64 + 48), outline = 0)
 
-    draw.line((0, 120, 100, 120), fill = 0)
-    draw.line((0, 176, 100, 176), fill = 0)
-    draw.line((0, 232, 100, 232), fill = 0)
+
 
 try:
     logging.info("Starting...")
