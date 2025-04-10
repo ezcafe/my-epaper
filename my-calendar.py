@@ -74,7 +74,7 @@ def renderDate(draw):
     # render date
     draw.text((48, 18), date, font = fontHeadline, fill = black)
     draw.rectangle((48, 0, 150, 64), outline = 0)
-    draw.rectangle((56, 8, 142, 56), outline = 0)
+    draw.rectangle((56, 20, 142, 44), outline = 0)
     draw.rectangle((0, 0, 48, 64), outline = 0)
     draw.rectangle((12, 20, 36, 44), outline = 0)
 
@@ -805,7 +805,7 @@ def renderTasks(draw):
     for j in range(0, len(tasks)):
         draw.text((16, j * 56 + 64 + 17), tasks[j], font = fontBody, fill = black)
         draw.line((0, j * 56 + 64, 150, j * 56 + 64), fill = 0)
-        draw.rectangle((16, j * 56 + 64 + 8, 134, j * 56 + 64 + 48), outline = 0)
+        draw.rectangle((16, j * 56 + 64 + 16, 134, j * 56 + 64 + 40), outline = 0)
 
 
 
