@@ -77,6 +77,8 @@ def renderDate(draw):
     draw.line((0, 8, 100, 8), fill = 0)
     draw.line((0, 56, 100, 56), fill = 0)
     draw.line((0, 64, 100, 64), fill = 0)
+    draw.line((0, 8, 48, 8), fill = 0)
+    draw.line((0, 56, 48, 56), fill = 0)
 
 # Fetch weather data
 def fetch_weather_data():
@@ -794,7 +796,7 @@ def renderWeather(draw):
     weather_data = process_weather_data(data)
 
     # render date
-    draw.text((16, 18), weather_data['icon_code'], font = fontWeather, fill = black)
+    draw.text((12, 18), weather_data['icon_code'], font = fontWeather, fill = black)
     # draw.line((12, 0, 12, 100), fill = 0)
 
 def renderTasks(draw):
