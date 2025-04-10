@@ -73,9 +73,9 @@ def renderDate(draw):
 
     # render date
     draw.text((48, 5), date, font = fontHeadline, fill = black)
-    draw.line((48, 5, 48, 100), fill = 0)
-    draw.line((48, 59, 48, 100), fill = 0)
-    draw.line((48, 64, 48, 100), fill = 0)
+    draw.line((48, 5, 100, 5), fill = 0)
+    draw.line((48, 59, 100, 59), fill = 0)
+    draw.line((48, 64, 100, 64), fill = 0)
 
 # Fetch weather data
 def fetch_weather_data():
