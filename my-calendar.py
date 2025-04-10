@@ -803,7 +803,7 @@ def renderTasks(draw):
 
     # render tasks
     for j in range(0, len(tasks)):
-        draw.text((0, j * 56 + 64 + 10), tasks[j], font = fontBody, fill = black)
+        draw.text((0, j * 56 + 64 + 15), tasks[j], font = fontBody, fill = black)
         draw.line((0, j * 56 + 64, 150, j * 56 + 64), fill = 0)
         draw.rectangle((8, j * 56 + 64 + 8, 142, j * 56 + 64 + 48), outline = 0)
 
