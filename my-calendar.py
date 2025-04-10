@@ -72,7 +72,7 @@ def renderDate(draw):
     date = currentDate.strftime('%A, %d/%m')
 
     # render date
-    draw.text((48, 5), date, font = fontHeadline, fill = black)
+    draw.text((48, 15), date, font = fontHeadline, fill = black)
     draw.line((0, 0, 100, 0), fill = 0)
     draw.line((0, 5, 100, 5), fill = 0)
     draw.line((0, 59, 100, 59), fill = 0)
@@ -798,14 +798,15 @@ def renderWeather(draw):
 
 def renderTasks(draw):
     # get tasks
-    tasks = ["Ford", "Volvo", "BMW"]
+    tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals"]
 
     # render tasks
     for j in range(0, len(tasks)):
-        draw.text((0, j * 16 + 45), tasks[j], font = fontBody, fill = black)
+        draw.text((0, j * 56), tasks[j], font = fontBody, fill = black)
 
     draw.line((0, 120, 100, 120), fill = 0)
-    draw.line((0, 176, 100, 120), fill = 0)
+    draw.line((0, 176, 100, 176), fill = 0)
+    draw.line((0, 232, 100, 232), fill = 0)
 
 try:
     logging.info("Starting...")
