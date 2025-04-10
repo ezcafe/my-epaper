@@ -73,6 +73,8 @@ def renderDate(draw):
 
     # render date
     draw.text((48, 5), date, font = fontHeadline, fill = black)
+    draw.line((48, 5, 70, 100), fill = 0)
+    draw.line((48, 64, 70, 100), fill = 0)
 
 # Fetch weather data
 def fetch_weather_data():
@@ -790,6 +792,7 @@ def renderWeather(draw):
 
     # render date
     draw.text((12, 0), weatherIconToText[weatherIcon], font = fontWeather, fill = black)
+    draw.line((12, 0, 70, 100), fill = 0)
 
 def renderTasks(draw):
     # get tasks
