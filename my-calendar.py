@@ -49,8 +49,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 import datetime
 import requests
-from weather_icons import weatherIdToIcon
-from weather_icon_mapping import weatherIconToText
+from openweathermap_to_weathericons import convert_icon_to_weathericon
 
 # ======= Utils
 
@@ -116,12 +115,8 @@ def process_weather_data(data):
         logging.debug(data)
         current = data['main']
 
-        weatherId = data['weather'][0]['id']
-
-        weatherIcon = weatherIdToIcon[str(weatherId)]
-        # If we are not in the ranges mentioned above, add a day/night prefix.
-        if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
-            weatherIcon = 'day-' + weatherIcon
+        weather_icon_code = data['weather'][0]['icon']  # Get OpenWeatherMap icon code
+        weather_icon_text = convert_icon_to_weathericon(weather_icon_code)
 
         # https://openweathermap.org/current
         weather_data = {
@@ -129,7 +124,7 @@ def process_weather_data(data):
             "feels_like": current['feels_like'],
             "humidity": current['humidity'],
             "report": data['weather'][0]['description'],
-            "icon_code": weatherIconToText[weatherIcon],
+            "icon_code": weather_icon_text,
             "temp_max": current['temp_max'],
             "temp_min": current['temp_min'],
         }
