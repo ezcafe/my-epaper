@@ -30,6 +30,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 import datetime
 import requests
+from weather_icons import weatherIdToIcon
 
 # ======= Utils
 
@@ -95,81 +96,7 @@ def process_weather_data(data):
         current = data['main']
 
         weatherId = data['weather'][0]['id']
-        weatherIdToIcon = {
-            "200": "storm-showers",
-            "201": "storm-showers",
-            "202": "storm-showers",
-            "210": "storm-showers",
-            "211": "thunderstorm",
-            "212": "thunderstorm",
-            "221": "thunderstorm",
-            "230": "storm-showers",
-            "231": "storm-showers",
-            "232": "storm-showers",
-            "300": "sprinkle",
-            "301": "sprinkle",
-            "302": "sprinkle",
-            "310": "sprinkle",
-            "311": "sprinkle",
-            "312": "sprinkle",
-            "313": "sprinkle",
-            "314": "sprinkle",
-            "321": "sprinkle",
-            "500": "rain",
-            "501": "rain",
-            "502": "rain",
-            "503": "rain",
-            "504": "rain",
-            "511": "rain-mix",
-            "520": "showers",
-            "521": "showers",
-            "522": "showers",
-            "531": "showers",
-            "600": "snow",
-            "601": "snow",
-            "602": "snow",
-            "611": "sleet",
-            "612": "sleet",
-            "615": "rain-mix",
-            "616": "rain-mix",
-            "620": "rain-mix",
-            "621": "rain-mix",
-            "622": "rain-mix",
-            "701": "sprinkle",
-            "711": "smoke",
-            "721": "day-haze",
-            "731": "cloudy-gusts",
-            "741": "fog",
-            "751": "cloudy-gusts",
-            "761": "dust",
-            "762": "smog",
-            "771": "day-windy",
-            "781": "tornado",
-            "800": "sunny",
-            "801": "cloudy",
-            "802": "cloudy",
-            "803": "cloudy",
-            "804": "cloudy",
-            "900": "tornado",
-            "901": "hurricane",
-            "902": "hurricane",
-            "903": "snowflake-cold",
-            "904": "hot",
-            "905": "windy",
-            "906": "hail",
-            "951": "sunny",
-            "952": "cloudy-gusts",
-            "953": "cloudy-gusts",
-            "954": "cloudy-gusts",
-            "955": "cloudy-gusts",
-            "956": "cloudy-gusts",
-            "957": "cloudy-gusts",
-            "958": "cloudy-gusts",
-            "959": "cloudy-gusts",
-            "960": "thunderstorm",
-            "961": "thunderstorm",
-            "962": "cloudy-gusts",
-        }
+
         weatherIcon = weatherIdToIcon[str(weatherId)]
         # If we are not in the ranges mentioned above, add a day/night prefix.
         if not(weatherId > 699 and weatherId < 800) and not(weatherId > 899 and weatherId < 1000):
@@ -803,8 +730,8 @@ def renderTasks(draw):
 
     # render tasks
     for j in range(0, len(tasks)):
-        draw.text((16, j * 56 + 64 + 19), tasks[j], font = fontBody, fill = black)
-        draw.line((0, j * 56 + 64, 150, j * 56 + 64), fill = 0)
+        draw.text((16, j * 56 + 64 + 20), tasks[j], font = fontBody, fill = black)
+        draw.line((0, j * 56 + 64 + 56, 150, j * 56 + 64 + 56), fill = 0)
         draw.rectangle((16, j * 56 + 64 + 16, 134, j * 56 + 64 + 40), outline = 0)
 
 
