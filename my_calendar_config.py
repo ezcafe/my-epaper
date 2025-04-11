@@ -12,13 +12,6 @@ UI_MODE = 'normal'  # 'compact' or 'normal'
 
 # DO NOT CHANGE THE FOLLOWING
 
-import sys
-import os
-picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
-if os.path.exists(libdir):
-    sys.path.append(libdir)
-
 FILL_BLACK = 0
 FILL_WHITE = 1
 

@@ -12,7 +12,9 @@ def renderAppBar(draw, icon, text):
 def renderList(draw, items, count):
     for j in range(0, count):
         itemPosition = j * CONFIG['listItemHeight'] + CONFIG['appBarHeight']
-        draw.text((16, itemPosition + CONFIG['listItemTitleOffset']), items[j], font = FONTS['body'], fill = FILL_BLACK)
+        itemValue = items[j]
+        draw.text((16, itemPosition + CONFIG['listItemTitleOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
+        draw.text((48, itemPosition + CONFIG['listItemTitleOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItemHeight'], 150, itemPosition + CONFIG['listItemHeight']), fill = FILL_BLACK)
         draw.rectangle((16, itemPosition + (CONFIG['listItemHeight'] - 16) / 2, 134, itemPosition + ((CONFIG['listItemHeight'] - 16) / 2) + 16), outline = FILL_BLACK)
 

@@ -2,6 +2,13 @@
 # -*- coding:utf-8 -*-
 
 # ======= Import
+import sys
+import os
+picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
+libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
+if os.path.exists(libdir):
+    sys.path.append(libdir)
+
 from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 
 import logging
@@ -95,7 +102,13 @@ def renderWeatherAndDate(draw):
 
 def renderTasks(draw):
     # get tasks
-    tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals", 'IIIIIIIIIIIII', 'another task']
+    tasks = [
+        {"title": "Prepare runsheet", "due": datetime.datetime.now()},
+        {"title": "Approve TSR", "due": datetime.datetime.now()},
+        {"title": "Ask for conflict approvals", "due": datetime.datetime.now()},
+        {"title": "IIIIIIIIIIIII", "due": datetime.datetime.now()},
+        {"title": "another task", "due": datetime.datetime.now()}
+    ]
 
     # render tasks
     itemCount = max(len(tasks), CONFIG['taskItemCount'])
