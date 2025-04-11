@@ -16,12 +16,14 @@ UI_MODES = {
     'compact': {
         'appBarHeight': 56,
         'appBarTitleOffset': 16,
+        'taskItemCount': 5,
         'taskItemHeight': 48,
         'taskItemTitleOffset': 16,
     },
     'normal': {
         'appBarHeight': 64,
         'appBarTitleOffset': 20,
+        'taskItemCount': 4,
         'taskItemHeight': 56,
         'taskItemTitleOffset': 20,
     },
@@ -149,10 +151,11 @@ def renderWeather(draw):
 
 def renderTasks(draw):
     # get tasks
-    tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals", 'IIIIIIIIIIIII']
+    tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals", 'IIIIIIIIIIIII', 'another task']
 
     # render tasks
-    for j in range(0, len(tasks)):
+    itemCount = max(len(tasks), uiConfig['taskItemCount'])
+    for j in range(0, itemCount):
         itemPosition = j * uiConfig['taskItemHeight'] + uiConfig['appBarHeight']
         draw.text((16, itemPosition + uiConfig['taskItemTitleOffset']), tasks[j], font = fontBody, fill = black)
         draw.line((0, itemPosition + uiConfig['taskItemHeight'], 150, itemPosition + uiConfig['taskItemHeight']), fill = 0)
