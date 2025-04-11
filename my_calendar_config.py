@@ -29,7 +29,7 @@ CONFIG = {
         'taskItemCount': 5,
         'listItemHeight': 48,
         'listItemTitleOffset': 16,
-        'listItemTitleWithSupportTextOffset': 11,
+        'listItemTitleWithSupportTextOffset': 9,
         'listItemSupportTextOffset': 27,
     },
     'normal': {
@@ -38,7 +38,7 @@ CONFIG = {
         'taskItemCount': 4,
         'listItemHeight': 56,
         'listItemTitleOffset': 20,
-        'listItemTitleWithSupportTextOffset': 15,
+        'listItemTitleWithSupportTextOffset': 13,
         'listItemSupportTextOffset': 29,
     },
 }[UI_MODE]
