@@ -1,35 +1,6 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
-# ======= Config
-
-WEATHER_API_KEY = 'bd7687c19648b628d77527713a59bc47'
-WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
-WEATHER_LATITUDE = '10.7863809'  # Latitude
-WEATHER_LONGITUDE = '106.7781079'  # Longitude
-WEATHER_UNITS = 'metric' # imperial or metric
-
-TODOIST_API_KEY = ''
-
-UI_MODE = 'normal'  # 'compact' or 'normal'
-UI_MODES = {
-    'compact': {
-        'appBarHeight': 56,
-        'appBarTitleOffset': 16,
-        'taskItemCount': 5,
-        'taskItemHeight': 48,
-        'taskItemTitleOffset': 16,
-    },
-    'normal': {
-        'appBarHeight': 64,
-        'appBarTitleOffset': 20,
-        'taskItemCount': 4,
-        'taskItemHeight': 56,
-        'taskItemTitleOffset': 20,
-    },
-}
-
-
 # ======= Import
 
 import sys
@@ -50,6 +21,7 @@ logging.basicConfig(level=logging.DEBUG)
 import datetime
 import requests
 from openweathermap_to_weathericons import convert_icon_to_weathericon
+from my_calendar_config import UI_MODE, UI_MODES, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 
 # ======= Utils
 
