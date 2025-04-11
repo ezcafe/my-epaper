@@ -29,8 +29,8 @@ CONFIG = {
         'taskItemCount': 5,
         'listItemHeight': 48,
         'listItemTitleOffset': 16,
-        'listItemTitleWithSupportTextOffset': 13,
-        'listItemSupportTextOffset': 29,
+        'listItemTitleWithSupportTextOffset': 11,
+        'listItemSupportTextOffset': 27,
     },
     'normal': {
         'appBarHeight': 64,
@@ -38,8 +38,8 @@ CONFIG = {
         'taskItemCount': 4,
         'listItemHeight': 56,
         'listItemTitleOffset': 20,
-        'listItemTitleWithSupportTextOffset': 17,
-        'listItemSupportTextOffset': 31,
+        'listItemTitleWithSupportTextOffset': 15,
+        'listItemSupportTextOffset': 29,
     },
 }[UI_MODE]
 
