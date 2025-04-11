@@ -32,6 +32,7 @@ CONFIG = {
     },
 }[UI_MODE]
 
+import os
 from PIL import ImageFont
 FONTS = {
     'headline': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22),
