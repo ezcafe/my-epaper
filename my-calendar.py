@@ -75,8 +75,6 @@ def renderDate(draw):
     draw.text((48, 18), date, font = fontHeadline, fill = black)
     draw.rectangle((48, 0, 150, 64), outline = 0)
     draw.rectangle((56, 20, 142, 44), outline = 0)
-    draw.rectangle((0, 0, 48, 64), outline = 0)
-    draw.rectangle((12, 20, 36, 44), outline = 0)
 
 # Fetch weather data
 def fetch_weather_data():
@@ -795,12 +793,13 @@ def renderWeather(draw):
     weather_data = process_weather_data(data)
 
     # render date
-    draw.text((12, 15), weather_data['icon_code'], font = fontWeather, fill = black)
-    # draw.line((12, 0, 12, 100), fill = 0)
+    draw.text((11, 15), weather_data['icon_code'], font = fontWeather, fill = black)
+    draw.rectangle((0, 0, 48, 64), outline = 0)
+    draw.rectangle((12, 20, 36, 44), outline = 0)
 
 def renderTasks(draw):
     # get tasks
-    tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals"]
+    tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals", 'IIIIIIIIIIIII']
 
     # render tasks
     for j in range(0, len(tasks)):
