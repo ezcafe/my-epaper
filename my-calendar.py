@@ -11,7 +11,7 @@ WEATHER_UNITS = 'metric' # imperial or metric
 
 TODOIST_API_KEY = ''
 
-UI_MODE = 'compact'  # 'compact' or 'normal'
+UI_MODE = 'normal'  # 'compact' or 'normal'
 UI_MODES = {
     'compact': {
         'appBarHeight': 56,
@@ -94,7 +94,7 @@ def renderDate(draw):
     # render date
     draw.text((48, uiConfig['appBarTitleOffset']), date, font = fontHeadline, fill = black)
     draw.rectangle((48, 0, 150, uiConfig['appBarHeight']), outline = 0)
-    draw.rectangle((56, 20, 142, 44), outline = 0)
+    draw.rectangle((48 + 8, (uiConfig['appBarHeight'] - 24) / 2, 142, ((uiConfig['appBarHeight'] - 24) / 2) + 24), outline = 0)
 
 # Fetch weather data
 def fetch_weather_data():
@@ -145,7 +145,7 @@ def renderWeather(draw):
     # render date
     draw.text((11, 15), weather_data['icon_code'], font = fontWeather, fill = black)
     draw.rectangle((0, 0, 48, uiConfig['appBarHeight']), outline = 0)
-    draw.rectangle((12, 20, 36, 44), outline = 0)
+    draw.rectangle((12, (uiConfig['appBarHeight'] - 24) / 2, 36, ((uiConfig['appBarHeight'] - 24) / 2) + 24), outline = 0)
 
 def renderTasks(draw):
     # get tasks
@@ -155,8 +155,8 @@ def renderTasks(draw):
     for j in range(0, len(tasks)):
         itemPosition = j * uiConfig['taskItemHeight'] + uiConfig['appBarHeight']
         draw.text((16, itemPosition + uiConfig['taskItemTitleOffset']), tasks[j], font = fontBody, fill = black)
-        draw.line((0, itemPosition + 56, 150, itemPosition + 56), fill = 0)
-        draw.rectangle((16, itemPosition + 16, 134, itemPosition + 40), outline = 0)
+        draw.line((0, itemPosition + uiConfig['taskItemHeight'], 150, itemPosition + uiConfig['taskItemHeight']), fill = 0)
+        draw.rectangle((16, itemPosition + (uiConfig['taskItemHeight'] - 16) / 2, 134, itemPosition + ((uiConfig['taskItemHeight'] - 16) / 2) + 16), outline = 0)
 
 
 
