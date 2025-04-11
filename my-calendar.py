@@ -3,37 +3,22 @@
 
 # ======= Import
 
-import sys
-import os
-picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
-if os.path.exists(libdir):
-    sys.path.append(libdir)
-
 import logging
 from waveshare_epd import epd4in2_V2
 import time
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image, ImageDraw
 import traceback
 
 logging.basicConfig(level=logging.DEBUG)
 
 import datetime
 import requests
+
 from openweathermap_to_weathericons import convert_icon_to_weathericon
-from my_calendar_config import UI_MODE, UI_MODES, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
+from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
+from my_calendar_ui import renderAppBar, renderList
 
 # ======= Utils
-
-black = 0
-white = 1
-uiConfig = UI_MODES[UI_MODE]
-
-fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22)
-fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
-fontSupportText = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14)
-fontTitle = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-fontWeather = ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 24)
 
 def init():
     logging.info("Init and Clear...")
@@ -58,16 +43,6 @@ def go_to_sleep(epd):
     epd.sleep()
 
 # ======= Render
-
-def renderDate(draw):
-    # get date
-    currentDate = datetime.datetime.now()
-    date = currentDate.strftime('%A, %d/%m')
-
-    # render date
-    draw.text((48, uiConfig['appBarTitleOffset']), date, font = fontHeadline, fill = black)
-    draw.rectangle((48, 0, 150, uiConfig['appBarHeight']), outline = 0)
-    draw.rectangle((48 + 8, (uiConfig['appBarHeight'] - 24) / 2, 142, ((uiConfig['appBarHeight'] - 24) / 2) + 24), outline = 0)
 
 # Fetch weather data
 def fetch_weather_data():
@@ -106,28 +81,25 @@ def process_weather_data(data):
         logging.error(f"Error processing weather data: {e}")
         raise
 
-def renderWeather(draw):
+def renderWeatherAndDate(draw):
     # get weather
     data = fetch_weather_data()
     weather_data = process_weather_data(data)
 
+    # get date
+    currentDate = datetime.datetime.now()
+    date = currentDate.strftime('%A, %d/%m')
+
     # render date
-    draw.text((11, 15), weather_data['icon_code'], font = fontWeather, fill = black)
-    draw.rectangle((0, 0, 48, uiConfig['appBarHeight']), outline = 0)
-    draw.rectangle((12, (uiConfig['appBarHeight'] - 24) / 2, 36, ((uiConfig['appBarHeight'] - 24) / 2) + 24), outline = 0)
+    renderAppBar(draw, weather_data['icon_code'], date)
 
 def renderTasks(draw):
     # get tasks
     tasks = ["Prepare runsheet", "Approve TSR", "Ask for conflict approvals", 'IIIIIIIIIIIII', 'another task']
 
     # render tasks
-    itemCount = max(len(tasks), uiConfig['taskItemCount'])
-    for j in range(0, itemCount):
-        itemPosition = j * uiConfig['taskItemHeight'] + uiConfig['appBarHeight']
-        draw.text((16, itemPosition + uiConfig['taskItemTitleOffset']), tasks[j], font = fontBody, fill = black)
-        draw.line((0, itemPosition + uiConfig['taskItemHeight'], 150, itemPosition + uiConfig['taskItemHeight']), fill = 0)
-        draw.rectangle((16, itemPosition + (uiConfig['taskItemHeight'] - 16) / 2, 134, itemPosition + ((uiConfig['taskItemHeight'] - 16) / 2) + 16), outline = 0)
-
+    itemCount = max(len(tasks), CONFIG['taskItemCount'])
+    renderList(draw, tasks, itemCount)
 
 
 try:
@@ -139,8 +111,7 @@ try:
         epd.init()
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        renderDate(draw)
-        renderWeather(draw)
+        renderWeatherAndDate(draw)
         renderTasks(draw)
         epd.display(epd.getbuffer(Himage))
         time.sleep(2)
@@ -149,8 +120,7 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
-        renderDate(draw)
-        renderWeather(draw)
+        renderWeatherAndDate(draw)
         renderTasks(draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
