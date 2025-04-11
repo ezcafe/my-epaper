@@ -11,6 +11,23 @@ WEATHER_UNITS = 'metric' # imperial or metric
 
 TODOIST_API_KEY = ''
 
+UI_MODE = 'normal'  # 'compact' or 'normal'
+UI_MODES = {
+    'compact': {
+        'appBarHeight': 56,
+        'appBarTitleOffset': 20,
+        'taskItemHeight': 48,
+        'taskItemTitleOffset': 20,
+    },
+    'normal': {
+        'appBarHeight': 64,
+        'appBarTitleOffset': 20,
+        'taskItemHeight': 56,
+        'taskItemTitleOffset': 20,
+    },
+}
+
+
 # ======= Import
 
 import sys
@@ -37,6 +54,7 @@ from weather_icon_mapping import weatherIconToText
 
 black = 0
 white = 1
+uiConfig = UI_MODES[UI_MODE]
 
 fontHeadline = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22)
 fontBody = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
@@ -74,8 +92,8 @@ def renderDate(draw):
     date = currentDate.strftime('%A, %d/%m')
 
     # render date
-    draw.text((48, 20), date, font = fontHeadline, fill = black)
-    draw.rectangle((48, 0, 150, 64), outline = 0)
+    draw.text((48, uiConfig['appBarTitleOffset']), date, font = fontHeadline, fill = black)
+    draw.rectangle((48, 0, 150, uiConfig['appBarHeight']), outline = 0)
     draw.rectangle((56, 20, 142, 44), outline = 0)
 
 # Fetch weather data
@@ -126,7 +144,7 @@ def renderWeather(draw):
 
     # render date
     draw.text((11, 15), weather_data['icon_code'], font = fontWeather, fill = black)
-    draw.rectangle((0, 0, 48, 64), outline = 0)
+    draw.rectangle((0, 0, 48, uiConfig['appBarHeight']), outline = 0)
     draw.rectangle((12, 20, 36, 44), outline = 0)
 
 def renderTasks(draw):
@@ -135,9 +153,10 @@ def renderTasks(draw):
 
     # render tasks
     for j in range(0, len(tasks)):
-        draw.text((16, j * 56 + 64 + 20), tasks[j], font = fontBody, fill = black)
-        draw.line((0, j * 56 + 64 + 56, 150, j * 56 + 64 + 56), fill = 0)
-        draw.rectangle((16, j * 56 + 64 + 16, 134, j * 56 + 64 + 40), outline = 0)
+        itemPosition = j * uiConfig['taskItemHeight'] + uiConfig['appBarHeight']
+        draw.text((16, itemPosition + uiConfig['taskItemTitleOffset']), tasks[j], font = fontBody, fill = black)
+        draw.line((0, itemPosition + 56, 150, itemPosition + 56), fill = 0)
+        draw.rectangle((16, itemPosition + 16, 134, itemPosition + 40), outline = 0)
 
 
 
