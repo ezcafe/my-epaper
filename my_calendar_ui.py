@@ -14,7 +14,7 @@ def renderList(draw, items, count):
         itemPosition = j * CONFIG['listItemHeight'] + CONFIG['appBarHeight']
         itemValue = items[j]
 
-        if not itemValue['due']:
+        if itemValue['due'] is not None:
             draw.text((16, itemPosition + CONFIG['listItemTitleWithSupportTextOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
             draw.line((0, itemPosition + CONFIG['listItemHeight'], 150, itemPosition + CONFIG['listItemHeight']), fill = FILL_BLACK)
             draw.rectangle((16, itemPosition + (CONFIG['listItemHeight'] - 16 - 14 - 2) / 2, 134, itemPosition + ((CONFIG['listItemHeight'] - 16 - 14 - 2) / 2) + 16), outline = FILL_BLACK)
