@@ -15,9 +15,9 @@ UI_MODE = 'compact'  # 'compact' or 'normal'
 UI_MODES = {
     'compact': {
         'appBarHeight': 56,
-        'appBarTitleOffset': 18,
+        'appBarTitleOffset': 16,
         'taskItemHeight': 48,
-        'taskItemTitleOffset': 18,
+        'taskItemTitleOffset': 16,
     },
     'normal': {
         'appBarHeight': 64,
