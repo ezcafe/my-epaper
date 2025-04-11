@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # ======= Import
+from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 
 import logging
 from waveshare_epd import epd4in2_V2
@@ -15,7 +16,6 @@ import datetime
 import requests
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
-from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 from my_calendar_ui import renderAppBar, renderList
 
 # ======= Utils
