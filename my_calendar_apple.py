@@ -49,26 +49,26 @@ def get_apple_calendar_events(calendar_name, start_date, end_date):
         logging.debug(f"Calendar '{calendar_name}' not found.")
         return None
 
-def get_apple_calendar_todos(calendar_name, start_date, end_date):
-    client = get_caldav_client()
-    principal = client.principal()
-    calendars = principal.calendars()
+# def get_apple_calendar_todos(calendar_name, start_date, end_date):
+#     client = get_caldav_client()
+#     principal = client.principal()
+#     calendars = principal.calendars()
 
-    calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
+#     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
-    acceptable_component_types = calendar.get_supported_components()
-    logging.debug(f"Supported component types: {acceptable_component_types}")
+#     acceptable_component_types = calendar.get_supported_components()
+#     logging.debug(f"Supported component types: {acceptable_component_types}")
 
-    if calendar:
-        if "VTODO" in acceptable_component_types:
-            todos = calendar.search(start=start_date, end=end_date, todo=True, expand=True)
-            return todos
-        else:
-            logging.debug("VTODO component is not supported.")
-            return None
-    else:
-        logging.debug(f"Calendar '{calendar_name}' not found.")
-        return None
+#     if calendar:
+#         if "VTODO" in acceptable_component_types:
+#             todos = calendar.search(start=start_date, end=end_date, todo=True, expand=True)
+#             return todos
+#         else:
+#             logging.debug("VTODO component is not supported.")
+#             return None
+#     else:
+#         logging.debug(f"Calendar '{calendar_name}' not found.")
+#         return None
 
 def add_event_to_calendar(calendar_name, summary, start_time, end_time):
     client = get_caldav_client()
