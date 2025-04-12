@@ -21,13 +21,13 @@ def renderOneLineList(draw, items, count):
         itemValue = items[j]
 
         draw.text((16, itemPosition + itemConfig['height'] / 2), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
-        if itemValue['due'] is not None:
-            draw.text((viewport['width'] - 48/2, itemPosition + itemConfig['height'] / 2), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        if itemValue['date'] is not None:
+            draw.text((viewport['width'] - 48/2, itemPosition + itemConfig['height'] / 2), itemValue['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
         draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)
         if showBorder:
             draw.line((0, itemPosition + itemConfig['height'] / 2, viewport['width'], itemPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
             draw.line((16, itemPosition, 16, itemPosition + itemConfig['height']), fill = FILL_BLACK)
-            if itemValue['due'] is not None:
+            if itemValue['date'] is not None:
                 draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
@@ -39,14 +39,14 @@ def renderTwoLinesList(draw, items, count):
         titlePosition = itemPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['supportTextHeight']) / 2 + itemConfig['titleHeight']/2
         supportTextPosition = itemPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['supportTextHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['supportTextHeight']/2
         draw.text((16, titlePosition), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
-        if itemValue['due'] is not None:
-            draw.text((viewport['width'] - 48/2, itemPosition + itemConfig['height'] / 2), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
-        draw.text((16, supportTextPosition), itemValue['project'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        if itemValue['date'] is not None:
+            draw.text((viewport['width'] - 48/2, itemPosition + itemConfig['height'] / 2), itemValue['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        draw.text((16, supportTextPosition), itemValue['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
         draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)
         if showBorder:
             draw.line((0, titlePosition, viewport['width'], titlePosition), fill = FILL_BLACK)
             draw.line((0, supportTextPosition, viewport['width'], supportTextPosition), fill = FILL_BLACK)
             draw.line((16, itemPosition, 16, itemPosition + itemConfig['height']), fill = FILL_BLACK)
-            if itemValue['due'] is not None:
+            if itemValue['date'] is not None:
                 draw.line((viewport['width'] - 48, itemPosition + itemConfig['height'] / 2, viewport['width'], itemPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
                 draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + itemConfig['height']), fill = FILL_BLACK)

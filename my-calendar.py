@@ -100,15 +100,16 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data['icon_code'], date)
 
-def renderTasks(draw):
+def renderEvents(draw):
+    events = []
     # get tasks
     calendar_name = "QQ Home"
-    start_date = datetime.datetime.now()
-    end_date = start_date + datetime.timedelta(days=1)
-    events = get_apple_calendar_events(calendar_name, start_date, end_date)
-    if events:
+    calendar_start_date = datetime.datetime.now()
+    calendar_end_date = calendar_start_date + datetime.timedelta(days=1)
+    calendar_events = get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
+    if calendar_events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
-        for event in events:
+        for calendar_event in calendar_events:
             # logging.debug(f"icalendar_component - {event.icalendar_component['DESCRIPTION']}")
             # logging.debug(f"vevent - {event.instance.vevent}")
             # logging.debug(f"summary - {event.instance.vevent.summary.value}")
@@ -117,24 +118,21 @@ def renderTasks(draw):
             # endDate = event.instance.vevent.dtend.value
             # if endDate:
             #     logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
-            for component in event.icalendar_instance.walk():
+            for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
-                logging.debug(f"summary - {component.get('summary')}")
-                logging.debug(f"description - {component.get('description')}")
+                events.append({
+                    "title": component.get("summary"),
+                    "subtitle": component.get("description"),
+                    "date": component.get("dtstart").dt,
+                    "dtend": component.get("dtend").dt,
+                    "dtstamp": component.get("dtstamp").dt
+                })
 
-    tasks = [
-        {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
-        {"title": "Approve TSR", "project": "Release 14/4", "due": datetime.datetime.now()},
-        {"title": "Ask for conflict approvals", "project": "Release 22/4", "due": None},
-        {"title": "IIIIIIIIIIIII", "project": "Release 22/4", "due": datetime.datetime.now()},
-        {"title": "another task", "project": "Release 22/4", "due": None}
-    ]
-
-    # render tasks
-    itemCount = min(len(tasks), CONFIG['taskItemCount'])
-    # renderOneLineList(draw, tasks, itemCount)
-    renderTwoLinesList(draw, tasks, itemCount)
+    # render events
+    itemCount = min(len(events), CONFIG['taskItemCount'])
+    # renderOneLineList(draw, events, itemCount)
+    renderTwoLinesList(draw, events, itemCount)
 
 
 try:
@@ -147,7 +145,7 @@ try:
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         renderWeatherAndDate(draw)
-        renderTasks(draw)
+        renderEvents(draw)
         epd.display(epd.getbuffer(Himage))
         time.sleep(2)
     else:
@@ -156,7 +154,7 @@ try:
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)
         renderWeatherAndDate(draw)
-        renderTasks(draw)
+        renderEvents(draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
