@@ -1,6 +1,6 @@
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = False
+showBorder = True
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
@@ -15,17 +15,17 @@ def renderAppBar(draw, icon, text):
         draw.rectangle((48, 0, 150, CONFIG['appBar']['height']), outline = 0)
         draw.rectangle((48 + 8, (CONFIG['appBar']['height'] - 24) / 2, 142, ((CONFIG['appBar']['height'] - 24) / 2) + 24), outline = 0)
 
-def renderList(draw, items, count):
+def renderOneLineList(draw, items, count):
     for j in range(0, count):
         itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         itemValue = items[j]
 
-        draw.text((0, itemPosition + CONFIG['listItem']['1LineTitleOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['title'], fill = FILL_BLACK)
-        draw.text((64, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
+        draw.text((16, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
+        draw.text((viewport['width'] - CONFIG['listItem']['height'], itemPosition + CONFIG['listItem']['1LineSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['title'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
-            draw.rectangle((0, itemPosition + (CONFIG['listItem']['height'] - 24) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 24) / 2) + 24), outline = FILL_BLACK)
-            draw.rectangle((64, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
+            draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
+            draw.rectangle((viewport['width'] - CONFIG['listItem']['height'], itemPosition + (CONFIG['listItem']['height'] - 24) / 2, viewport['width'], itemPosition + ((CONFIG['listItem']['height'] - 24) / 2) + 24), outline = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
     for j in range(0, count):

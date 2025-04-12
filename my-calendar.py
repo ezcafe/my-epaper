@@ -22,7 +22,7 @@ import requests
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
 from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
-from my_calendar_ui import renderAppBar, renderList, renderTwoLinesList
+from my_calendar_ui import renderAppBar, renderOneLineList, renderTwoLinesList
 
 # ======= Utils
 
@@ -111,7 +111,7 @@ def renderTasks(draw):
 
     # render tasks
     itemCount = min(len(tasks), CONFIG['taskItemCount'])
-    renderList(draw, tasks, itemCount)
+    renderOneLineList(draw, tasks, itemCount)
     # renderTwoLinesList(draw, tasks, itemCount)
 
 
