@@ -27,8 +27,8 @@ def renderOneLineList(draw, items, count):
         if showBorder:
             draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
             # draw.rectangle((viewport['width'] - CONFIG['listItem']['height'], itemPosition + (CONFIG['listItem']['height'] - 14) / 2, viewport['width'], itemPosition + ((CONFIG['listItem']['height'] - 14) / 2) + 14), outline = FILL_BLACK)
-            draw.line((viewport['width'] - CONFIG['listItem']['height'], itemPosition + (CONFIG['listItem']['height'] - 14) / 2, viewport['width'], itemPosition + (CONFIG['listItem']['height'] - 14) / 2), fill = FILL_BLACK)
-            draw.line((viewport['width'] - CONFIG['listItem']['height'] / 2, itemPosition, viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
+            draw.line((viewport['width'] - 48, itemPosition + CONFIG['listItem']['height'] / 2, viewport['width'], itemPosition + CONFIG['listItem']['height'] / 2), fill = FILL_BLACK)
+            draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
     for j in range(0, count):
