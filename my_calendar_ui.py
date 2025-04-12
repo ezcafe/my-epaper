@@ -68,7 +68,7 @@ def renderItemDetails(draw, item):
 
     datePosition = appBarHeight + 16
     if item['timeStart'] is not None:
-        titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap'] * 2
+        titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
         dateText = item['timeStart'].strftime('%H:%M')
         if item['timeEnd'] is not None:
             dateText += ' - ' + item['timeEnd'].strftime('%H:%M')
@@ -76,11 +76,11 @@ def renderItemDetails(draw, item):
             dateText = 'All Day'
         draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), dateText, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     else:
-        titlePosition = appBarHeight + 16
+        titlePosition = datePosition
 
     draw.text((16, titlePosition + itemConfig['titleHeight'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
 
-    subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap'] * 2
+    subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap'] *3
     subtitleText = ''
     if item['subtitle'] is not None:
         subtitleText += f"Note: '{item['subtitle']}'"
