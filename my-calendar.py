@@ -158,7 +158,7 @@ def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
         displayCount = min(eventCount, CONFIG['taskItemCount'])
         logging.debug(f"Display count: {displayCount}")
         # renderOneLineList(eventListDraw, remaining_events, displayCount)
-        renderTwoLinesList(mainDraw, remaining_events, displayCount)
+        renderTwoLinesList(eventListDraw, remaining_events, displayCount)
 
 try:
     logging.debug("Starting...")
@@ -178,7 +178,7 @@ try:
         epd.init()
 
         renderWeatherAndDate(mainDraw)
-        renderEvents(mainDraw, eventDetailsDraw, eventListImage)
+        renderEvents(mainDraw, eventDetailsDraw, eventListDraw)
         mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
         mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
         epd.display(epd.getbuffer(mainImage))
@@ -188,7 +188,7 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
 
         renderWeatherAndDate(mainDraw)
-        renderEvents(mainDraw, eventDetailsDraw, eventListImage)
+        renderEvents(mainDraw, eventDetailsDraw, eventListDraw)
         mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
         mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
         epd.display_Fast(epd.getbuffer(mainImage))
