@@ -16,27 +16,29 @@ def renderAppBar(draw, icon, text):
         draw.rectangle((48 + 8, (CONFIG['appBar']['height'] - 24) / 2, 142, ((CONFIG['appBar']['height'] - 24) / 2) + 24), outline = 0)
 
 def renderOneLineList(draw, items, count):
+    itemConfig = CONFIG['listItem']
     for j in range(0, count):
-        itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
+        itemPosition = j * itemConfig['height'] + CONFIG['appBar']['height']
         itemValue = items[j]
 
-        draw.text((16, itemPosition + CONFIG['listItem']['height'] / 2), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
-        draw.text((viewport['width'] - 48/2, itemPosition + CONFIG['listItem']['height'] / 2), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
-        draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
+        draw.text((16, itemPosition + itemConfig['height'] / 2), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((viewport['width'] - 48/2, itemPosition + itemConfig['height'] / 2), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)
         if showBorder:
-            draw.line((0, itemPosition + CONFIG['listItem']['height'] / 2, viewport['width'], itemPosition + CONFIG['listItem']['height'] / 2), fill = FILL_BLACK)
-            draw.line((16, itemPosition, 16, itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
-            draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
+            draw.line((0, itemPosition + itemConfig['height'] / 2, viewport['width'], itemPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
+            draw.line((16, itemPosition, 16, itemPosition + itemConfig['height']), fill = FILL_BLACK)
+            draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
+    itemConfig = CONFIG['listItem']
     for j in range(0, count):
-        itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
+        itemPosition = j * itemConfig['height'] + CONFIG['appBar']['height']
         itemValue = items[j]
 
-        draw.text((16, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2 + 16/2), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
-        draw.text((16, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2 + 16 + CONFIG['listItem']['linesGap']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
-        draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
+        draw.text((16, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16/2), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16 + itemConfig['linesGap']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)
         if showBorder:
-            draw.line((0, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2 + 16/2, viewport['width'], itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2), fill = FILL_BLACK)
-            draw.line((0, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2 + 16 + CONFIG['listItem']['linesGap'], viewport['width'], itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2  + 16 + CONFIG['listItem']['linesGap']), fill = FILL_BLACK)
-            draw.line((16, itemPosition, 16, itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
+            draw.line((0, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16/2, viewport['width'], itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16/2), fill = FILL_BLACK)
+            draw.line((0, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16 + itemConfig['linesGap'], viewport['width'], itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16 + itemConfig['linesGap']), fill = FILL_BLACK)
+            draw.line((16, itemPosition, 16, itemPosition + itemConfig['height']), fill = FILL_BLACK)
