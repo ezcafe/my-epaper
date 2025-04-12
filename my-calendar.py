@@ -148,14 +148,12 @@ def renderEvents(eventDetailsDraw, mainDraw):
     viewport = {'width': 400, 'height': 300}
 
     selected_event = normalized_events[0]
-    logging.debug(f"Selected events: {selected_event}")
     if selected_event is not None:
         mainDraw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
         renderItemDetails(eventDetailsDraw, selected_event)
 
     remaining_events = normalized_events[1]
     eventCount = len(remaining_events)
-    logging.debug(f"Remaining events: {remaining_events}")
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
         # renderOneLineList(mainDraw, remaining_events, displayCount)
@@ -177,7 +175,7 @@ try:
 
         renderWeatherAndDate(mainDraw)
         renderEvents(eventDetailsDraw, mainDraw)
-        mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
+        # mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
         epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
@@ -186,7 +184,7 @@ try:
 
         renderWeatherAndDate(mainDraw)
         renderEvents(eventDetailsDraw, mainDraw)
-        mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
+        # mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
         epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 
