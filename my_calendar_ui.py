@@ -40,7 +40,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
     subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['subtitleHeight']/2
     draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((viewport['width'] - 48/2, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        draw.text((viewport['width'] - 48/2, itemTopPosition + itemConfig['height'] / 2), formatTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
     if item['subtitle'] is not None:
         draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     draw.line((0, itemTopPosition + itemConfig['height'], viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
@@ -62,18 +62,24 @@ def renderTwoLinesList(draw, items, count):
         else:
             renderOneLineListItem(draw, item, itemTopPosition)
 
+def formatTime(timeStart, timeEnd):
+    if timeStart is not None:
+        timeText = timeStart.strftime('%H:%M')
+        if timeEnd is not None:
+            timeText += ' - ' + timeEnd.strftime('%H:%M')
+            if timeText == '00:00 - 00:00':
+                timeText = 'All Day'
+    else:
+        timeText = ''
+    return timeText
+
 def renderItemDetails(draw, item):
     itemConfig = CONFIG['listItem']
 
     datePosition = 16
     if item['timeStart'] is not None:
         titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
-        dateText = item['timeStart'].strftime('%H:%M')
-        if item['timeEnd'] is not None:
-            dateText += ' - ' + item['timeEnd'].strftime('%H:%M')
-        if dateText == '00:00 - 00:00':
-            dateText = 'All Day'
-        draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), dateText, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), formatTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     else:
         titlePosition = datePosition
 
