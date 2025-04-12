@@ -101,7 +101,7 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data['icon_code'], date)
 
-def renderEvents(draw):
+def renderEvents(moved_draw, draw):
     events = []
 
     # get events
@@ -128,7 +128,7 @@ def renderEvents(draw):
     eventCount = len(events)
 
     if eventCount > 0:
-        renderItemDetails(draw, events[0])
+        renderItemDetails(moved_draw, events[0])
 
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
@@ -144,11 +144,15 @@ try:
     Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
 
+    moved_image = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height']), 255)
+    Himage.paste(moved_image, (0, CONFIG['appBar']['height']))
+    moved_draw = ImageDraw.Draw(moved_image)
+
     if 0:
         logging.debug("E-paper refresh")
         epd.init()
         renderWeatherAndDate(draw)
-        renderEvents(draw)
+        renderEvents(moved_draw, draw)
         epd.display(epd.getbuffer(Himage))
         time.sleep(2)
     else:
@@ -156,7 +160,7 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
 
         renderWeatherAndDate(draw)
-        renderEvents(draw)
+        renderEvents(moved_draw, draw)
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
