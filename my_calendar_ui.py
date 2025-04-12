@@ -22,7 +22,7 @@ def renderOneLineList(draw, items, count):
 
         draw.text((16, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
         draw.text((viewport['width'] - CONFIG['listItem']['height'], itemPosition + CONFIG['listItem']['1LineSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
-        draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_GRAY)
+        draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), FILL_GRAY)
         if showBorder:
             draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
             draw.rectangle((viewport['width'] - CONFIG['listItem']['height'], itemPosition + (CONFIG['listItem']['height'] - 14) / 2, viewport['width'], itemPosition + ((CONFIG['listItem']['height'] - 14) / 2) + 14), outline = FILL_BLACK)
@@ -33,7 +33,7 @@ def renderTwoLinesList(draw, items, count):
         itemValue = items[j]
 
         draw.text((16, itemPosition + CONFIG['listItem']['2LinesBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
-        draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_GRAY)
+        draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), FILL_GRAY)
         if showBorder:
             draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2) + 16), outline = FILL_BLACK)
 
