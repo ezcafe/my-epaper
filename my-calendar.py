@@ -166,10 +166,10 @@ try:
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     mainDraw = ImageDraw.Draw(mainImage)
 
-    eventDetailsImage = Image.new('1', math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1, 255)
+    eventDetailsImage = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1), 255)
     eventDetailsDraw = ImageDraw.Draw(eventDetailsImage)
 
-    eventListImage = Image.new('1', math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1, 255)
+    eventListImage = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1), 255)
     eventListDraw = ImageDraw.Draw(eventListImage)
 
     if 0:
