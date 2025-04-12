@@ -29,6 +29,8 @@ def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count, listLeftPosition = 0):
+    draw.line((viewport['width'] / 2, 0, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
+
     for j in range(1, count):
         itemTopPosition = (j - 1) * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         renderOneLineListItem(draw, items[j], itemTopPosition, listLeftPosition)
@@ -54,6 +56,8 @@ def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
+    draw.line((viewport['width'] / 2, 0, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
+
     for j in range(1, count):
         itemTopPosition = (j - 1) * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
@@ -87,8 +91,6 @@ def renderItemDetails(draw, item):
         subtitleText += f"\nLocation: '{item['location']}'"
 
     draw.multiline_text((16, subtitlePosition), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK)
-
-    draw.line((viewport['width'] / 2, 0, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
 
     if showBorder:
         draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)

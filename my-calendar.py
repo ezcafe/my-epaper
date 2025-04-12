@@ -144,7 +144,7 @@ try:
     Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     draw = ImageDraw.Draw(Himage)
 
-    moved_image = Image.new('1', (math.ceil(epd.width / 2) + 1, epd.height - CONFIG['appBar']['height']), 255)
+    moved_image = Image.new('1', (math.ceil(epd.width / 2) - 1, epd.height - CONFIG['appBar']['height']), 255)
     moved_draw = ImageDraw.Draw(moved_image)
 
     if 0:
