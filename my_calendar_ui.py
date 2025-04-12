@@ -63,10 +63,9 @@ def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
             renderOneLineListItem(draw, item, itemTopPosition, listLeftPosition)
 
 def renderItemDetails(draw, item):
-    appBarHeight = CONFIG['appBar']['height']
     itemConfig = CONFIG['listItem']
 
-    datePosition = appBarHeight + 16
+    datePosition = 16
     if item['timeStart'] is not None:
         titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
         dateText = item['timeStart'].strftime('%H:%M')
@@ -89,7 +88,7 @@ def renderItemDetails(draw, item):
 
     draw.multiline_text((16, subtitlePosition), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK)
 
-    draw.line((viewport['width'] / 2, appBarHeight, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
+    draw.line((viewport['width'] / 2, 0, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
 
     if showBorder:
         draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)
