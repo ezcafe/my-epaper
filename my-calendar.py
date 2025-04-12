@@ -9,8 +9,6 @@ libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
-WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
-
 import logging
 from waveshare_epd import epd4in2_V2
 import time
@@ -20,13 +18,13 @@ import traceback
 logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime, timedelta
-import requests
+
 import math
 
-from openweathermap_to_weathericons import convert_icon_to_weathericon
 from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
 from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
 from my_calendar_apple import get_apple_calendar_events
+from my_calendar_weather import fetch_weather_data, process_weather_data
 
 # ======= Utils
 
@@ -52,49 +50,6 @@ def go_to_sleep(epd):
     epd.sleep()
 
 # ======= Render
-
-# Fetch weather data
-def fetch_weather_data():
-    WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
-    url = f"{WEATHER_BASE_URL}?lat={WEATHER_LATITUDE}&lon={WEATHER_LONGITUDE}&units={WEATHER_UNITS}&appid={WEATHER_API_KEY}"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        logging.debug("Weather data fetched successfully.")
-        return response.json()
-    except requests.RequestException as e:
-        logging.error(f"Failed to fetch weather data: {e}")
-        raise
-
-# Process weather data
-def process_weather_data(data):
-    try:
-        logging.debug(data)
-        current = data['main']
-
-        weather_icon_code = data['weather'][0]['icon']  # Get OpenWeatherMap icon code
-        weather_icon_text = convert_icon_to_weathericon(weather_icon_code)
-
-        weather_temp_unit = '°'
-        if WEATHER_UNITS == "imperial":
-            weather_temp_unit = "F"
-        weather_temp = f"{math.floor(current['temp'])}{weather_temp_unit}"
-
-        # https://openweathermap.org/current
-        weather_data = {
-            "temp_current": weather_temp,
-            "feels_like": current['feels_like'],
-            "humidity": current['humidity'],
-            "report": data['weather'][0]['description'],
-            "icon_code": weather_icon_text,
-            "temp_max": current['temp_max'],
-            "temp_min": current['temp_min'],
-        }
-        logging.debug("Weather data processed successfully.")
-        return weather_data
-    except KeyError as e:
-        logging.error(f"Error processing weather data: {e}")
-        raise
 
 def renderWeatherAndDate(draw):
     # get weather
