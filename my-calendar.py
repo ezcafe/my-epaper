@@ -101,7 +101,7 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data['icon_code'], date)
 
-def renderEvents(moved_draw, draw):
+def renderEvents(detailsDraw, draw):
     events = []
 
     # get events
@@ -128,41 +128,39 @@ def renderEvents(moved_draw, draw):
     eventCount = len(events)
 
     if eventCount > 0:
-        renderItemDetails(moved_draw, events[0])
+        renderItemDetails(detailsDraw, events[0])
 
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
         # renderOneLineList(draw, events, displayCount)
         renderTwoLinesList(draw, events, displayCount, viewport['width'] / 2)
 
-
-
 try:
     logging.debug("Starting...")
     epd = init()
 
-    Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-    draw = ImageDraw.Draw(Himage)
+    mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
+    mainDraw = ImageDraw.Draw(mainImage)
 
-    moved_image = Image.new('1', (math.ceil(epd.width / 2) - 2, epd.height - CONFIG['appBar']['height']), 255)
-    moved_draw = ImageDraw.Draw(moved_image)
+    detailsImage = Image.new('1', (math.ceil(epd.width / 2) - 16, epd.height - CONFIG['appBar']['height'] - 1), 255)
+    detailsDraw = ImageDraw.Draw(detailsImage)
 
     if 0:
         logging.debug("E-paper refresh")
         epd.init()
-        renderWeatherAndDate(draw)
-        renderEvents(moved_draw, draw)
-        Himage.paste(moved_image, (0, CONFIG['appBar']['height']))
-        epd.display(epd.getbuffer(Himage))
+        renderWeatherAndDate(mainDraw)
+        renderEvents(detailsDraw, mainDraw)
+        mainImage.paste(detailsImage, (0, CONFIG['appBar']['height'] + 1))
+        epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
         logging.debug("E-paper refreshes quickly")
         epd.init_fast(epd.Seconds_1_5S)
 
-        renderWeatherAndDate(draw)
-        renderEvents(moved_draw, draw)
-        Himage.paste(moved_image, (0, CONFIG['appBar']['height'] + 1))
-        epd.display_Fast(epd.getbuffer(Himage))
+        renderWeatherAndDate(mainDraw)
+        renderEvents(detailsDraw, mainDraw)
+        mainImage.paste(detailsImage, (0, CONFIG['appBar']['height'] + 1))
+        epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 
     go_to_sleep(epd)
