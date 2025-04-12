@@ -105,8 +105,8 @@ def renderTasks(draw):
         {"title": "Prepare runsheet", "due": datetime.datetime.now()},
         {"title": "Approve TSR", "due": datetime.datetime.now()},
         {"title": "Ask for conflict approvals", "due": None},
-        {"title": "IIIIIIIIIIIII", "due": None},
-        {"title": "another task", "due": datetime.datetime.now()}
+        {"title": "IIIIIIIIIIIII", "due": datetime.datetime.now()},
+        {"title": "another task", "due": None}
     ]
 
     # render tasks
