@@ -18,3 +18,4 @@ Add these lines to ~/.bashrc
 
 export APPLE_ID='your_apple_id@icloud.com'
 export APPLE_PASSWORD='your_app_specific_password'
+export WEATHER_API_KEY='your_api_key'

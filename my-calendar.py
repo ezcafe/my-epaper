@@ -53,6 +53,8 @@ def go_to_sleep(epd):
 
 # Fetch weather data
 def fetch_weather_data():
+    WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
+    WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
     url = f"{WEATHER_BASE_URL}?lat={WEATHER_LATITUDE}&lon={WEATHER_LONGITUDE}&units={WEATHER_UNITS}&appid={WEATHER_API_KEY}"
     try:
         response = requests.get(url)
