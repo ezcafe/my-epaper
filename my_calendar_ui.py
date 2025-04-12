@@ -21,11 +21,11 @@ def renderList(draw, items, count):
         itemValue = items[j]
 
         draw.text((0, itemPosition + CONFIG['listItem']['1LineTitleOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['title'], fill = FILL_BLACK)
-        draw.text((56, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
+        draw.text((64, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
             draw.rectangle((0, itemPosition + (CONFIG['listItem']['height'] - 24) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 24) / 2) + 24), outline = FILL_BLACK)
-            draw.rectangle((56, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
+            draw.rectangle((64, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
     for j in range(0, count):
