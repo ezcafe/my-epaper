@@ -8,7 +8,7 @@ WEATHER_UNITS = 'metric' # imperial or metric
 
 TODOIST_API_KEY = ''
 
-UI_MODE = 'normal'  # 'compact' or 'normal'
+UI_MODE = 'compact'  # 'compact' or 'normal'
 
 # DO NOT CHANGE THE FOLLOWING
 
