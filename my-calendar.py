@@ -17,7 +17,7 @@ import traceback
 
 logging.basicConfig(level=logging.DEBUG)
 
-import datetime
+from datetime import datetime, timedelta
 import requests
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
@@ -104,7 +104,7 @@ def renderEvents(draw):
     events = []
 
     start_time = datetime.datetime.now()
-    stop_time = datetime.datetime.timedelta(days=1,microseconds=-1)
+    stop_time = timedelta(days=1,microseconds=-1)
     logging.debug(f"Start time: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     logging.debug(f"Stop time: {stop_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
