@@ -68,7 +68,7 @@ def formatListItemTime(timeStart, timeEnd):
     if timeStart is not None:
         timeText = timeStart.strftime('%H:%M')
         if timeEnd is not None:
-            if f'{timeText} - {timeEnd.strftime('%H:%M')}' == '00:00 - 00:00':
+            if f"{timeText} - {timeEnd.strftime('%H:%M')}" == '00:00 - 00:00':
                 timeText = 'All Day'
     else:
         timeText = ''
