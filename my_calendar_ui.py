@@ -48,5 +48,5 @@ def renderTwoLinesList(draw, items, count):
             draw.line((0, supportTextPosition, viewport['width'], supportTextPosition), fill = FILL_BLACK)
             draw.line((16, itemPosition, 16, itemPosition + itemConfig['height']), fill = FILL_BLACK)
             if itemValue['due'] is not None:
-                draw.line((viewport['width'] - 48, CONFIG['appBar']['height'] / 2, viewport['width'], CONFIG['appBar']['height'] / 2), fill = FILL_BLACK)
+                draw.line((viewport['width'] - 48, itemPosition + itemConfig['height'] / 2, viewport['width'], itemPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
                 draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + itemConfig['height']), fill = FILL_BLACK)
