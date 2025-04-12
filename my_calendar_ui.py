@@ -69,7 +69,7 @@ def renderItemDetails(draw, item):
     datePosition = appBarHeight + 16
     if item['date'] is not None:
         titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
-        draw.text((16, datePosition), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        draw.text((16, datePosition), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     else:
         titlePosition = appBarHeight + 16
 
@@ -84,7 +84,7 @@ def renderItemDetails(draw, item):
     if showBorder:
         draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)
         if item['date'] is not None:
-            draw.line((16, datePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
-        draw.line((16, titlePosition + itemConfig['titleHeight'] / 2, viewport['width'] / 2, itemConfig['titleHeight'] / 2), fill = FILL_BLACK)
+            draw.line((16, datePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, datePosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
+        draw.line((16, titlePosition + itemConfig['titleHeight'] / 2, viewport['width'] / 2, titlePosition + itemConfig['titleHeight'] / 2), fill = FILL_BLACK)
         if item['subtitle'] is not None:
             draw.line((16, subtitlePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, subtitlePosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
