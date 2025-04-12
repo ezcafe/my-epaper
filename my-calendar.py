@@ -101,40 +101,62 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data['icon_code'], date)
 
-def renderEvents(detailsDraw, mainDraw):
-    events = []
-
-    # get events
+def fetch_events():
     calendar_name = "QQ Home"
     calendar_start_date = datetime.now()
     calendar_end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
-    calendar_events = get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
+    return get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
+
+def process_events(calendar_events):
+    processed_events = []
     if calendar_events:
         for calendar_event in calendar_events:
             for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
                 logging.debug(f"Event: {component}")
-                events.append({
+                processed_events.append({
                     "title": component.get("summary"),
                     "subtitle": component.get("description"),
                     "timeStart": component.get("dtstart").dt,
                     "timeEnd": component.get("dtend").dt,
                     "location": component.get("location")
                 })
+    return processed_events
+
+def normalize_events(events):
+    selected_event = None
+    normalized_events = []
+    for event in events:
+        if event['timeStart'] is None or event['timeStart'].strftime('%H:%M') != '00:00' or event['timeEnd'] is None or event['timeEnd'].strftime('%H:%M') != '00:00':
+            selected_event = event
+        else:
+            normalized_events.append(event)
+
+    if selected_event is None:
+        selected_event = events[0]
+        normalized_events.pop(0)
+
+    return (selected_event, normalized_events)
+
+def renderEvents(eventDetailsDraw, mainDraw):
+    # get events
+    calendar_events = fetch_events()
+    processed_events = process_events(calendar_events)
+    normalized_events = normalize_events(processed_events)
 
     # render events
     viewport = {'width': 400, 'height': 300}
-    eventCount = len(events)
 
-    if eventCount > 0:
+    if normalized_events[0] is not None:
         mainDraw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
-        renderItemDetails(detailsDraw, events[0])
+        renderItemDetails(eventDetailsDraw, normalized_events[0])
 
+    eventCount = len(normalized_events[1])
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
-        # renderOneLineList(mainDraw, events, displayCount)
-        renderTwoLinesList(mainDraw, events, displayCount, viewport['width'] / 2)
+        # renderOneLineList(mainDraw, normalized_events[1], displayCount)
+        renderTwoLinesList(mainDraw, normalized_events[1], displayCount, viewport['width'] / 2)
 
 try:
     logging.debug("Starting...")
@@ -143,16 +165,16 @@ try:
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     mainDraw = ImageDraw.Draw(mainImage)
 
-    detailsImage = Image.new('1', (math.ceil(epd.width / 2) - 1, epd.height - CONFIG['appBar']['height'] - 1), 255)
-    detailsDraw = ImageDraw.Draw(detailsImage)
+    eventDetailsImage = Image.new('1', (math.ceil(epd.width / 2) - 1, epd.height - CONFIG['appBar']['height'] - 1), 255)
+    eventDetailsDraw = ImageDraw.Draw(eventDetailsImage)
 
     if 0:
         logging.debug("E-paper refresh")
         epd.init()
 
         renderWeatherAndDate(mainDraw)
-        renderEvents(detailsDraw, mainDraw)
-        mainImage.paste(detailsImage, (0, CONFIG['appBar']['height'] + 1))
+        renderEvents(eventDetailsDraw, mainDraw)
+        mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
         epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
@@ -160,8 +182,8 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
 
         renderWeatherAndDate(mainDraw)
-        renderEvents(detailsDraw, mainDraw)
-        mainImage.paste(detailsImage, (0, CONFIG['appBar']['height'] + 1))
+        renderEvents(eventDetailsDraw, mainDraw)
+        mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
         epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 
