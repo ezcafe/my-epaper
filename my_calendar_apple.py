@@ -60,8 +60,12 @@ def get_apple_calendar_todos(calendar_name, start_date, end_date):
     logging.debug(f"Supported component types: {acceptable_component_types}")
 
     if calendar:
-        todos = calendar.search(start=start_date, end=end_date, todo=True, expand=True)
-        return todos
+        if "VTODO" in acceptable_component_types:
+            todos = calendar.search(start=start_date, end=end_date, todo=True, expand=True)
+            return todos
+        else:
+            logging.debug("VTODO component is not supported.")
+            return None
     else:
         logging.debug(f"Calendar '{calendar_name}' not found.")
         return None
