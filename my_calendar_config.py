@@ -23,17 +23,17 @@ CONFIG = {
         'appBar': {
             'height': 48,
             'iconSize': 24,
-            'paddingLeft': 10,
-            'paddingRight': 10,
+            'paddingLeft': 5,
+            'paddingRight': 5,
         },
-        'visibleItemCount': 5,
+        'visibleItemCount': 6,
         'listItem': {
             'height': 36,
             'titleHeight': 16,
             'subtitleHeight': 14,
             'linesGap': 2,
-            'paddingLeft': 10,
-            'paddingRight': 10,
+            'paddingLeft': 5,
+            'paddingRight': 5,
         },
     },
     'normal': {
