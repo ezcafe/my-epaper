@@ -39,8 +39,8 @@ CONFIG = {
         'taskItemCount': 4,
         'listItemHeight': 56,
         'listItemTitleOffset': 20,
-        'listItemTitleWithSupportTextOffset': 12,
-        'listItemSupportTextOffset': 27,
+        'listItemTitleWithSupportTextOffset': 11,
+        'listItemSupportTextOffset': 29,
         'listItemLineGap': 4,
     },
 }[UI_MODE]
