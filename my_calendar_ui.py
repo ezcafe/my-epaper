@@ -29,7 +29,6 @@ def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count, listLeftPosition = 0):
-    logging.debug(f"Rendering {listLeftPosition} left in two lines list.")
     for j in range(0, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         renderOneLineListItem(draw, items[j], itemTopPosition, listLeftPosition)
@@ -55,8 +54,6 @@ def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
-    logging.debug(f"Rendering {listLeftPosition} left in two lines list.")
-    itemConfig = CONFIG['listItem']
     for j in range(0, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
@@ -64,3 +61,29 @@ def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
             renderTwoLinesListItem(draw, item, itemTopPosition, listLeftPosition)
         else:
             renderOneLineListItem(draw, item, itemTopPosition, listLeftPosition)
+
+def renderItemDetails(draw, item):
+    itemConfig = CONFIG['listItem']
+
+    datePosition = 16
+    if item['date'] is not None:
+        titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
+        draw.text((16, datePosition), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+    else:
+        titlePosition = 16
+
+    draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+
+    subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap']
+    if item['subtitle'] is not None:
+        draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+
+    draw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
+
+    if showBorder:
+        draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)
+        if item['date'] is not None:
+            draw.line((16, datePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
+        draw.line((16, titlePosition + itemConfig['titleHeight'] / 2, viewport['width'] / 2, itemConfig['titleHeight'] / 2), fill = FILL_BLACK)
+        if item['subtitle'] is not None:
+            draw.line((16, subtitlePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, subtitlePosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
