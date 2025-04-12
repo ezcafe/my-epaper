@@ -1,7 +1,7 @@
 import logging
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = False
+showBorder = True
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
@@ -82,11 +82,10 @@ def renderItemDetails(draw, item):
 
     subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap'] * 2
     subtitleText = ''
-
     if item['subtitle'] is not None:
         subtitleText += f"Note: '{item['subtitle']}'"
     if item['location'] is not None:
-        subtitleText += f"\n\nLocation: '{item['location']}'"
+        subtitleText += f"\nLocation: '{item['location']}'"
 
     draw.text((16, subtitlePosition + itemConfig['subtitleHeight'] / 2), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
 
@@ -97,5 +96,5 @@ def renderItemDetails(draw, item):
         if item['timeStart'] is not None:
             draw.line((16, datePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, datePosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
         draw.line((16, titlePosition + itemConfig['titleHeight'] / 2, viewport['width'] / 2, titlePosition + itemConfig['titleHeight'] / 2), fill = FILL_BLACK)
-        if item['subtitle'] is not None:
+        if item['subtitle'] is not None or item['location'] is not None:
             draw.line((16, subtitlePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, subtitlePosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
