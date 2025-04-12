@@ -21,7 +21,7 @@ def renderOneLineList(draw, items, count):
         itemValue = items[j]
 
         draw.text((16, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
-        draw.text((viewport['width'] - CONFIG['listItem']['height'], itemPosition + CONFIG['listItem']['1LineSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['title'], fill = FILL_BLACK)
+        draw.text((viewport['width'] - CONFIG['listItem']['height'], itemPosition + CONFIG['listItem']['1LineSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
             draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
