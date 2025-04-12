@@ -49,6 +49,28 @@ def get_apple_calendar_events(calendar_name, start_date, end_date):
         logging.debug(f"Calendar '{calendar_name}' not found.")
         return None
 
+def fetch_apple_calendar_events():
+    calendar_name = "QQ Home"
+    calendar_start_date = datetime.now()
+    calendar_end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
+    return get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
+
+def process_apple_calendar_events(calendar_events):
+    processed_events = []
+    if calendar_events:
+        for calendar_event in calendar_events:
+            for component in calendar_event.icalendar_instance.walk():
+                if component.name != "VEVENT":
+                    continue
+                processed_events.append({
+                    "title": component.get("summary"),
+                    "subtitle": component.get("description"),
+                    "timeStart": component.get("dtstart").dt,
+                    "timeEnd": component.get("dtend").dt,
+                    "location": component.get("location")
+                })
+    return processed_events
+
 # def get_apple_calendar_todos(calendar_name, start_date, end_date):
 #     client = get_caldav_client()
 #     principal = client.principal()

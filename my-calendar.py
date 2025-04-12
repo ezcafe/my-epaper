@@ -23,7 +23,7 @@ import math
 
 from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
 from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
-from my_calendar_apple import get_apple_calendar_events
+from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import fetch_weather_data, process_weather_data
 
 # ======= Utils
@@ -63,28 +63,6 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data, date)
 
-def fetch_events():
-    calendar_name = "QQ Home"
-    calendar_start_date = datetime.now()
-    calendar_end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
-    return get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
-
-def process_events(calendar_events):
-    processed_events = []
-    if calendar_events:
-        for calendar_event in calendar_events:
-            for component in calendar_event.icalendar_instance.walk():
-                if component.name != "VEVENT":
-                    continue
-                processed_events.append({
-                    "title": component.get("summary"),
-                    "subtitle": component.get("description"),
-                    "timeStart": component.get("dtstart").dt,
-                    "timeEnd": component.get("dtend").dt,
-                    "location": component.get("location")
-                })
-    return processed_events
-
 def normalize_events(events):
     selected_event = None
     normalized_events = []
@@ -102,8 +80,8 @@ def normalize_events(events):
 
 def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
     # get events
-    calendar_events = fetch_events()
-    processed_events = process_events(calendar_events)
+    calendar_events = fetch_apple_calendar_events()
+    processed_events = process_apple_calendar_events(calendar_events)
     normalized_events = normalize_events(processed_events)
 
     # render events
