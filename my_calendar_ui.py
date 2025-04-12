@@ -69,15 +69,15 @@ def renderItemDetails(draw, item):
     datePosition = appBarHeight + 16
     if item['date'] is not None:
         titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
-        draw.text((16, datePosition), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     else:
         titlePosition = appBarHeight + 16
 
-    draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text((16, titlePosition + itemConfig['titleHeight'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
 
     subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap']
     if item['subtitle'] is not None:
-        draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, subtitlePosition + itemConfig['subtitleHeight'] / 2), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
 
     draw.line((viewport['width'] / 2, appBarHeight, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
 
