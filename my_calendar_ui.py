@@ -1,5 +1,4 @@
 import logging
-import math
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
 showBorder = True
@@ -88,8 +87,6 @@ def renderItemDetails(draw, item):
         subtitleText += f"\nLocation: '{item['location']}'"
 
     draw.multiline_text((16, subtitlePosition), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK)
-
-    draw.line((math.floor(viewport['width'] / 2) - 1, CONFIG['appBar']['height'], math.floor(viewport['width'] / 2) - 1, viewport['height']), fill = FILL_BLACK)
 
     if showBorder:
         draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)
