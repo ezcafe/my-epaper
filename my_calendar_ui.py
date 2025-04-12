@@ -57,10 +57,7 @@ def renderTwoLinesList(draw, items, count):
     for j in range(0, count):
         itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
-        logging.debug(f"item - {item}")
         if item['subtitle'] is not None:
-            logging.debug(f"renderTwoLinesList - {item['title']} - {item['subtitle']}")
             renderTwoLinesListItem(draw, item, itemPosition)
         else:
-            logging.debug(f"renderOneLineList - {item['title']}")
             renderOneLineListItem(draw, item, itemPosition)
