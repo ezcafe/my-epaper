@@ -30,7 +30,7 @@ CONFIG = {
         'listItemHeight': 48,
         'listItemTitleOffset': 16,
         'listItemTitleWithSupportTextOffset': 8,
-        'listItemSupportTextOffset': 24,
+        'listItemSupportTextOffset': 25,
     },
     'normal': {
         'appBarHeight': 64,
@@ -39,7 +39,7 @@ CONFIG = {
         'listItemHeight': 56,
         'listItemTitleOffset': 20,
         'listItemTitleWithSupportTextOffset': 12,
-        'listItemSupportTextOffset': 26,
+        'listItemSupportTextOffset': 27,
     },
 }[UI_MODE]
 
