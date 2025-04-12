@@ -117,18 +117,11 @@ def renderTasks(draw):
             # endDate = event.instance.vevent.dtend.value
             # if endDate:
             #     logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
-            ical_text = event.data
-            logging.debug(f"ical_text - {ical_text}")
-            logging.debug(f"SUMMARY - {event.get('SUMMARY')}")
-            logging.debug(f"DESCRIPTION - {event.get('DESCRIPTION')}")
-            logging.debug(f"DTSTART - {event.get('DTSTART').dt.strftime('%H:%M')}")
-            logging.debug(f"DTEND - {event.get('DTEND').dt.strftime('%H:%M')}")
-            logging.debug(f"LOCATION - {event.get('LOCATION')}")
-            logging.debug(f"UID - {event.get('UID')}")
-            logging.debug(f"SEQUENCE - {event.get('SEQUENCE')}")
-            logging.debug(f"STATUS - {event.get('STATUS')}")
-            logging.debug(f"LAST-MODIFIED - {event.get('LAST-MODIFIED')}")
-            logging.debug(f"CREATED - {event.get('CREATED')}")
+            for component in event.icalendar_instance.walk():
+                if component.name != "VEVENT":
+                    continue
+                logging.debug(f"summary - {component.get("summary")}")
+                logging.debug(f"description - {component.get("description")}")
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
