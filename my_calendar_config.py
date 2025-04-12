@@ -30,6 +30,8 @@ CONFIG = {
             'titleHeight': 16,
             'subtitleHeight': 14,
             'linesGap': 2,
+            'marginLeft': 10,
+            'marginRight': 10,
         },
     },
     'normal': {
@@ -43,6 +45,8 @@ CONFIG = {
             'titleHeight': 16,
             'subtitleHeight': 14,
             'linesGap': 4,
+            'marginLeft': 16,
+            'marginRight': 16,
         },
     },
 }[UI_MODE]
