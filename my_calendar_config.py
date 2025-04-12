@@ -4,7 +4,7 @@ WEATHER_LATITUDE = '10.7863809'  # Latitude
 WEATHER_LONGITUDE = '106.7781079'  # Longitude
 WEATHER_UNITS = 'metric' # imperial or metric
 
-UI_MODE = 'normal'  # 'compact' or 'normal'
+UI_MODE = 'compact'  # 'compact' or 'normal'
 
 # DO NOT CHANGE THE FOLLOWING
 

@@ -1,7 +1,7 @@
 import logging
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = True
+showBorder = False
 
 def renderAppBar(draw, weather_data, text):
     app_bar_config = CONFIG['appBar']
