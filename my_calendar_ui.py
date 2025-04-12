@@ -20,13 +20,13 @@ def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
 
     draw.text((itemLeftPosition + 16, itemTopPosition + itemConfig['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((viewport['width'] - 48, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
+        draw.text((viewport['width'] - 16, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((itemLeftPosition, itemTopPosition + itemConfig['height'], viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((itemLeftPosition, itemTopPosition + itemConfig['height'] / 2, viewport['width'], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
         draw.line((itemLeftPosition + 16, itemTopPosition, itemLeftPosition + 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
         if item['timeStart'] is not None:
-            draw.line((viewport['width'] - 48, itemTopPosition, viewport['width'] - 48, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
+            draw.line((viewport['width'] - 16, itemTopPosition, viewport['width'] - 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count, listLeftPosition = 0):
     draw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
