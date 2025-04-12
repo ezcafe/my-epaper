@@ -23,7 +23,7 @@ import requests
 from openweathermap_to_weathericons import convert_icon_to_weathericon
 from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 from my_calendar_ui import renderAppBar, renderOneLineList, renderTwoLinesList
-from my_calendar_apple import discover_caldav_calendars, list_calendars, get_apple_calendar_events, add_event_to_calendar
+from my_calendar_apple import get_apple_calendar_events, get_apple_calendar_todos
 
 # ======= Utils
 
@@ -102,7 +102,7 @@ def renderWeatherAndDate(draw):
 
 def renderEvents(draw):
     events = []
-    # get tasks
+    # get events
     calendar_name = "QQ Home"
     calendar_start_date = datetime.datetime.now()
     calendar_end_date = calendar_start_date + datetime.timedelta(days=1)
@@ -110,12 +110,28 @@ def renderEvents(draw):
     if calendar_events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for calendar_event in calendar_events:
-            logging.debug(f"todos - {calendar_event.todos()}")
-            logging.debug(f"vevent - {calendar_event.instance.vevent}")
-
             for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
+                events.append({
+                    "title": component.get("summary"),
+                    "subtitle": component.get("description"),
+                    "date": component.get("dtstart").dt,
+                    "dtend": component.get("dtend").dt,
+                    "dtstamp": component.get("dtstamp").dt
+                })
+    # get todos
+    calendar_name = "QQ Home"
+    calendar_start_date = datetime.datetime.now()
+    calendar_end_date = calendar_start_date + datetime.timedelta(days=1)
+    calendar_todos = get_apple_calendar_todos(calendar_name, calendar_start_date, calendar_end_date)
+    if calendar_todos:
+        logging.debug(f"\nTodos in '{calendar_name}' for the next 7 days:")
+        for calendar_todo in calendar_todos:
+            for component in calendar_todo.icalendar_instance.walk():
+                if component.name != "VEVENT":
+                    continue
+                logging.debug(component)
                 events.append({
                     "title": component.get("summary"),
                     "subtitle": component.get("description"),
