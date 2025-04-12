@@ -111,8 +111,8 @@ def renderTasks(draw):
 
     # render tasks
     itemCount = min(len(tasks), CONFIG['taskItemCount'])
-    # renderList(draw, tasks, itemCount)
-    renderTwoLinesList(draw, tasks, itemCount)
+    renderList(draw, tasks, itemCount)
+    # renderTwoLinesList(draw, tasks, itemCount)
 
 
 try:

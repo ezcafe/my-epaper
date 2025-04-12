@@ -24,24 +24,34 @@ FILL_WHITE = 1
 
 CONFIG = {
     'compact': {
-        'appBarHeight': 56,
-        'appBarTitleOffset': 16,
+        'appBar': {
+            'height': 56,
+            'titleOffset': 16,
+        },
         'taskItemCount': 5,
-        'listItemHeight': 48,
-        'listItemTitleOffset': 16,
-        'listItemTitleWithSupportTextOffset': 8,
-        'listItemSupportTextOffset': 25,
-        'listItemLineGap': 2,
+        'listItem': {
+            'height': 48,
+            'titleOffset': 16,
+            '2LinesTitleOffset': 8,
+            '2LinesSupportTextOffset': 25,
+            'linesGap': 2,
+        },
+
+
     },
     'normal': {
-        'appBarHeight': 64,
-        'appBarTitleOffset': 20,
+        'appBar': {
+            'height': 64,
+            'titleOffset': 20,
+        },
         'taskItemCount': 4,
-        'listItemHeight': 56,
-        'listItemTitleOffset': 20,
-        'listItemTitleWithSupportTextOffset': 11,
-        'listItemSupportTextOffset': 30,
-        'listItemLineGap': 4,
+        'listItem': {
+            'height': 56,
+            'titleOffset': 20,
+            '2LinesTitleOffset': 11,
+            '2LinesSupportTextOffset': 30,
+            'linesGap': 4,
+        },
     },
 }[UI_MODE]
 
