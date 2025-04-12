@@ -117,23 +117,8 @@ def renderTasks(draw):
             # endDate = event.instance.vevent.dtend.value
             # if endDate:
             #     logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
-            for component in event.walk():
-                if component.name == "VEVENT":
-                    logging.debug (component.get('summary'))
-                    eventSummary.append(component.get('summary'))
-                    logging.debug (component.get('description'))
-                    eventDescription.append(component.get('description'))
-                    startDate = component.get('dtstart')
-                    logging.debug (startDate.dt.strftime('%m/%d/%Y %H:%M'))
-                    eventDateStart.append(startDate.dt.strftime('%m/%d/%Y'))
-                    eventTimeStart.append(startDate.dt.strftime('%H:%M'))
-                    endDate = component.get('dtend')
-                    logging.debug (endDate.dt.strftime('%m/%d/%Y %H:%M'))
-                    eventdateEnd.append(endDate.dt.strftime('%m/%d/%Y'))
-                    eventTimeEnd.append(endDate.dt.strftime('%H:%M'))
-                    dateStamp = component.get('dtstamp')
-                    logging.debug (dateStamp.dt.strftime('%m/%d/%Y %H:%M'))
-                    logging.debug ('')
+            ical_text = event.data
+            logging.debug(f"ical_text - {ical_text}")
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
