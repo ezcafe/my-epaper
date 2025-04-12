@@ -10,13 +10,13 @@ def renderAppBar(draw, weather_data, text):
     titlePosition = app_bar_config['height'] / 2
     draw.text(iconPosition, weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
     draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
-    draw.text((draw_size[0] - app_bar_config['marginRight'], titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
+    draw.text((draw_size[0] - app_bar_config['paddingRight'], titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, app_bar_config['height'], draw_size[0], app_bar_config['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, app_bar_config['height'] / 2, draw_size[0], app_bar_config['height'] / 2), fill = FILL_BLACK)
         draw.line((iconPosition[0], 0, iconPosition[0], app_bar_config['height']), fill = FILL_BLACK)
         draw.line((48, 0, 48, app_bar_config['height']), fill = FILL_BLACK)
-        draw.line((draw_size[0] - app_bar_config['marginRight'], 0, draw_size[0] - app_bar_config['marginRight'], app_bar_config['height']), fill = FILL_BLACK)
+        draw.line((draw_size[0] - app_bar_config['paddingRight'], 0, draw_size[0] - app_bar_config['paddingRight'], app_bar_config['height']), fill = FILL_BLACK)
 
 def renderOneLineListItem(draw, item, itemTopPosition):
     item_config = CONFIG['listItem']
@@ -24,13 +24,13 @@ def renderOneLineListItem(draw, item, itemTopPosition):
 
     draw.text((16, itemTopPosition + item_config['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((draw_size[0] - item_config['marginRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
+        draw.text((draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, itemTopPosition + item_config['height'], draw_size[0], itemTopPosition + item_config['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, itemTopPosition + item_config['height'] / 2, draw_size[0], itemTopPosition + item_config['height'] / 2), fill = FILL_BLACK)
         draw.line((16, itemTopPosition, 16, itemTopPosition + item_config['height']), fill = FILL_BLACK)
         if item['timeStart'] is not None:
-            draw.line((draw_size[0] - item_config['marginRight'], itemTopPosition, draw_size[0] - item_config['marginRight'], itemTopPosition + item_config['height']), fill = FILL_BLACK)
+            draw.line((draw_size[0] - item_config['paddingRight'], itemTopPosition, draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count):
     for j in range(0, count):
@@ -45,7 +45,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
     subtitlePosition = itemTopPosition + (item_config['height'] - item_config['titleHeight'] - item_config['linesGap'] - item_config['subtitleHeight']) / 2 + item_config['titleHeight'] + item_config['linesGap'] + item_config['subtitleHeight']/2
     draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((draw_size[0] - item_config['marginRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
+        draw.text((draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
     if item['subtitle'] is not None:
         draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     draw.line((0, itemTopPosition + item_config['height'], draw_size[0], itemTopPosition + item_config['height']), fill = FILL_BLACK)
@@ -55,8 +55,8 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
             draw.line((0, subtitlePosition, draw_size[0], subtitlePosition), fill = FILL_BLACK)
         draw.line((16, itemTopPosition, 16, itemTopPosition + item_config['height']), fill = FILL_BLACK)
         if item['timeStart'] is not None:
-            draw.line((draw_size[0] - 48, itemTopPosition + item_config['height'] / 2, draw_size[0] - item_config['marginRight'], itemTopPosition + item_config['height'] / 2), fill = FILL_BLACK)
-            draw.line((draw_size[0] - item_config['marginRight'], itemTopPosition, draw_size[0] - item_config['marginRight'], itemTopPosition + item_config['height']), fill = FILL_BLACK)
+            draw.line((draw_size[0] - 48, itemTopPosition + item_config['height'] / 2, draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), fill = FILL_BLACK)
+            draw.line((draw_size[0] - item_config['paddingRight'], itemTopPosition, draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
     for j in range(0, count):

@@ -23,8 +23,8 @@ CONFIG = {
         'appBar': {
             'height': 56,
             'iconSize': 24,
-            'marginLeft': 10,
-            'marginRight': 10,
+            'paddingLeft': 10,
+            'paddingRight': 10,
         },
         'visibleItemCount': 5,
         'listItem': {
@@ -32,8 +32,8 @@ CONFIG = {
             'titleHeight': 16,
             'subtitleHeight': 14,
             'linesGap': 2,
-            'marginLeft': 10,
-            'marginRight': 10,
+            'paddingLeft': 10,
+            'paddingRight': 10,
         },
     },
     'normal': {
@@ -47,8 +47,8 @@ CONFIG = {
             'titleHeight': 16,
             'subtitleHeight': 14,
             'linesGap': 4,
-            'marginLeft': 16,
-            'marginRight': 16,
+            'paddingLeft': 16,
+            'paddingRight': 16,
         },
     },
 }[UI_MODE]
