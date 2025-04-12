@@ -1,3 +1,4 @@
+import logging
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
 showBorder = False
@@ -28,9 +29,8 @@ def renderOneLineListItem(draw, item, itemPosition):
             draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count):
-    itemConfig = CONFIG['listItem']
     for j in range(0, count):
-        itemPosition = j * itemConfig['height'] + CONFIG['appBar']['height']
+        itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         renderOneLineListItem(draw, items[j], itemPosition)
 
 def renderTwoLinesListItem(draw, item, itemPosition):
@@ -53,14 +53,13 @@ def renderTwoLinesListItem(draw, item, itemPosition):
             draw.line((viewport['width'] - 48, itemPosition + itemConfig['height'] / 2, viewport['width'], itemPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
             draw.line((viewport['width'] - 48 / 2, itemPosition, viewport['width'] - 48 / 2, itemPosition + itemConfig['height']), fill = FILL_BLACK)
 
-
 def renderTwoLinesList(draw, items, count):
-    itemConfig = CONFIG['listItem']
     for j in range(0, count):
-        itemPosition = j * itemConfig['height'] + CONFIG['appBar']['height']
+        itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
-
         if item['subtitle'] is not None:
+            logging.debug(f"renderTwoLinesList - {item['title']} - {item['subtitle']}")
             renderTwoLinesListItem(draw, item, itemPosition)
         else:
+            logging.debug(f"renderOneLineList - {item['title']}")
             renderOneLineListItem(draw, item, itemPosition)
