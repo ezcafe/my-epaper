@@ -111,7 +111,7 @@ def renderTasks(draw):
         for event in events:
             logging.debug(f"- {event.instance.vevent.summary.value}")
             logging.debug(event.instance.vevent.summary)
-            logging.debug(event.instance.vevent)
+            logging.debug(event.instance.vevent.component.get("summary"))
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
