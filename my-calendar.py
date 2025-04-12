@@ -145,7 +145,6 @@ try:
     draw = ImageDraw.Draw(Himage)
 
     moved_image = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height']), 255)
-    Himage.paste(moved_image, (0, CONFIG['appBar']['height']))
     moved_draw = ImageDraw.Draw(moved_image)
 
     if 0:
@@ -153,6 +152,7 @@ try:
         epd.init()
         renderWeatherAndDate(draw)
         renderEvents(moved_draw, draw)
+        Himage.paste(moved_image, (0, CONFIG['appBar']['height']))
         epd.display(epd.getbuffer(Himage))
         time.sleep(2)
     else:
@@ -161,6 +161,7 @@ try:
 
         renderWeatherAndDate(draw)
         renderEvents(moved_draw, draw)
+        Himage.paste(moved_image, (0, CONFIG['appBar']['height']))
         epd.display_Fast(epd.getbuffer(Himage))
         time.sleep(2)
 
