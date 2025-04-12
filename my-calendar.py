@@ -22,7 +22,7 @@ import requests
 import math
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
-from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
+from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
 from my_calendar_apple import get_apple_calendar_events
 
@@ -141,9 +141,8 @@ try:
 
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     mainDraw = ImageDraw.Draw(mainImage)
-    mainDraw.line((epd.width / 2, CONFIG['appBar']['height'], epd.width / 2, epd.height), fill = FILL_BLACK)
 
-    detailsImage = Image.new('1', (math.ceil(epd.width / 2) - 1, epd.height - CONFIG['appBar']['height'] - 1), 255)
+    detailsImage = Image.new('1', (math.ceil(epd.width / 2) + 1, epd.height - CONFIG['appBar']['height'] - 1), 255)
     detailsDraw = ImageDraw.Draw(detailsImage)
 
     if 0:
