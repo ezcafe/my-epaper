@@ -42,7 +42,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
     subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['subtitleHeight']/2
     draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((drawSize[0] - 48/2, itemTopPosition + itemConfig['height'] / 2), formatTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        draw.text((drawSize[0] - 48/2, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
     if item['subtitle'] is not None:
         draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     draw.line((0, itemTopPosition + itemConfig['height'], drawSize[0], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
