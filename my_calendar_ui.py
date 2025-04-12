@@ -9,7 +9,7 @@ def renderAppBar(draw, weather_data, text):
     titlePosition = CONFIG['appBar']['height'] / 2
     draw.text(iconPosition, weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
     draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
-    draw.text((48, titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
+    draw.text((drawSize[0] - 16, titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, CONFIG['appBar']['height'], drawSize[0], CONFIG['appBar']['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, CONFIG['appBar']['height'] / 2, drawSize[0], CONFIG['appBar']['height'] / 2), fill = FILL_BLACK)
