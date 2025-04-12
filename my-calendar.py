@@ -109,14 +109,31 @@ def renderTasks(draw):
     if events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for event in events:
-            logging.debug(f"icalendar_component - {event.icalendar_component['DESCRIPTION']}")
-            logging.debug(f"vevent - {event.instance.vevent}")
-            logging.debug(f"summary - {event.instance.vevent.summary.value}")
-            # logging.debug(f"description - {event.instance.vevent.description}")
-            logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.strftime('%H:%M')}")
-            endDate = event.instance.vevent.dtend.value
-            if endDate:
-                logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
+            # logging.debug(f"icalendar_component - {event.icalendar_component['DESCRIPTION']}")
+            # logging.debug(f"vevent - {event.instance.vevent}")
+            # logging.debug(f"summary - {event.instance.vevent.summary.value}")
+            # # logging.debug(f"description - {event.instance.vevent.description}")
+            # logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.strftime('%H:%M')}")
+            # endDate = event.instance.vevent.dtend.value
+            # if endDate:
+            #     logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
+            for component in event.walk():
+                if component.name == "VEVENT":
+                    logging.debug (component.get('summary'))
+                    eventSummary.append(component.get('summary'))
+                    logging.debug (component.get('description'))
+                    eventDescription.append(component.get('description'))
+                    startDate = component.get('dtstart')
+                    logging.debug (startDate.dt.strftime('%m/%d/%Y %H:%M'))
+                    eventDateStart.append(startDate.dt.strftime('%m/%d/%Y'))
+                    eventTimeStart.append(startDate.dt.strftime('%H:%M'))
+                    endDate = component.get('dtend')
+                    logging.debug (endDate.dt.strftime('%m/%d/%Y %H:%M'))
+                    eventdateEnd.append(endDate.dt.strftime('%m/%d/%Y'))
+                    eventTimeEnd.append(endDate.dt.strftime('%H:%M'))
+                    dateStamp = component.get('dtstamp')
+                    logging.debug (dateStamp.dt.strftime('%m/%d/%Y %H:%M'))
+                    logging.debug ('')
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
