@@ -1,7 +1,7 @@
 import logging
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = True
+showBorder = False
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
