@@ -21,7 +21,7 @@ def renderOneLineListItem(draw, item, itemTopPosition):
 
     draw.text((16, itemTopPosition + itemConfig['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((drawSize[0] - 16, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
+        draw.text((drawSize[0] - 16, itemTopPosition + itemConfig['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, itemTopPosition + itemConfig['height'], drawSize[0], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, itemTopPosition + itemConfig['height'] / 2, drawSize[0], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
@@ -42,7 +42,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
     subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['subtitleHeight']/2
     draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((drawSize[0] - 48/2, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
+        draw.text((drawSize[0] - 48/2, itemTopPosition + itemConfig['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
     if item['subtitle'] is not None:
         draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     draw.line((0, itemTopPosition + itemConfig['height'], drawSize[0], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
@@ -64,7 +64,17 @@ def renderTwoLinesList(draw, items, count):
         else:
             renderOneLineListItem(draw, item, itemTopPosition)
 
-def formatTime(timeStart, timeEnd):
+def formatListItemTime(timeStart, timeEnd):
+    if timeStart is not None:
+        timeText = timeStart.strftime('%H:%M')
+        if timeEnd is not None:
+            if f'{timeText} - {timeEnd.strftime('%H:%M')}' == '00:00 - 00:00':
+                timeText = 'All Day'
+    else:
+        timeText = ''
+    return timeText
+
+def formatItemDetailsTime(timeStart, timeEnd):
     if timeStart is not None:
         timeText = timeStart.strftime('%H:%M')
         if timeEnd is not None:
@@ -82,7 +92,7 @@ def renderItemDetails(draw, item):
     datePosition = 16
     if item['timeStart'] is not None:
         titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
-        draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), formatTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), formatItemDetailsTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     else:
         titlePosition = datePosition
 
