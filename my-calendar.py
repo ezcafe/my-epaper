@@ -102,11 +102,11 @@ def renderWeatherAndDate(draw):
 def renderTasks(draw):
     # get tasks
     tasks = [
-        {"title": "Prepare runsheet", "due": datetime.datetime.now()},
-        {"title": "Approve TSR", "due": datetime.datetime.now()},
-        {"title": "Ask for conflict approvals", "due": None},
-        {"title": "IIIIIIIIIIIII", "due": datetime.datetime.now()},
-        {"title": "another task", "due": None}
+        {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
+        {"title": "Approve TSR", "project": "Release 14/4", "due": datetime.datetime.now()},
+        {"title": "Ask for conflict approvals", "project": "Release 22/4", "due": None},
+        {"title": "IIIIIIIIIIIII", "project": "Release 22/4", "due": datetime.datetime.now()},
+        {"title": "another task", "project": "Release 22/4", "due": None}
     ]
 
     # render tasks

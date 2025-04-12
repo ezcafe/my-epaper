@@ -1,6 +1,6 @@
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = True
+showBorder = false
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
@@ -41,7 +41,7 @@ def renderTwoLinesList(draw, items, count):
         draw.text((16, titlePosition), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
         if itemValue['due'] is not None:
             draw.text((viewport['width'] - 48/2, itemPosition + itemConfig['height'] / 2), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
-        draw.text((16, supportTextPosition), "TODO", font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, supportTextPosition), itemValue['project'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
         draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)
         if showBorder:
             draw.line((0, titlePosition, viewport['width'], titlePosition), fill = FILL_BLACK)
