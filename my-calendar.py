@@ -114,7 +114,6 @@ def process_events(calendar_events):
             for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
-                logging.debug(f"Event: {component}")
                 processed_events.append({
                     "title": component.get("summary"),
                     "subtitle": component.get("description"),
@@ -148,15 +147,19 @@ def renderEvents(eventDetailsDraw, mainDraw):
     # render events
     viewport = {'width': 400, 'height': 300}
 
-    if normalized_events[0] is not None:
+    selected_event = normalized_events[0]
+    logging.debug(f"Selected events: {selected_event}")
+    if selected_event is not None:
         mainDraw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
-        renderItemDetails(eventDetailsDraw, normalized_events[0])
+        renderItemDetails(eventDetailsDraw, selected_event)
 
-    eventCount = len(normalized_events[1])
+    remaining_events = normalized_events[1]
+    eventCount = len(remaining_events)
+    logging.debug(f"Remaining events: {remaining_events}")
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
-        # renderOneLineList(mainDraw, normalized_events[1], displayCount)
-        renderTwoLinesList(mainDraw, normalized_events[1], displayCount, viewport['width'] / 2)
+        # renderOneLineList(mainDraw, remaining_events, displayCount)
+        renderTwoLinesList(mainDraw, remaining_events, displayCount, viewport['width'] / 2)
 
 try:
     logging.debug("Starting...")
