@@ -110,7 +110,8 @@ def renderTasks(draw):
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for event in events:
             logging.debug(f"- {event.instance.vevent.summary.value}")
-            logging.debug(event)
+            logging.debug(event.instance.vevent.summary)
+            logging.debug(event.instance.vevent)
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},

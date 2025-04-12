@@ -43,7 +43,7 @@ def get_apple_calendar_events(calendar_name, start_date, end_date):
     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
     if calendar:
-        events = calendar.date_search(start=start_date, end=end_date)
+        events = calendar.search(start=start_date, end=end_date, event=True, expand=True)
         return events
     else:
         logging.debug(f"Calendar '{calendar_name}' not found.")
