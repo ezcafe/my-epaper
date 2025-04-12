@@ -4,16 +4,16 @@ showBorder = True
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
-    draw.text((11, 15), icon, font = FONTS['weather'], fill = FILL_BLACK)
+    iconPosition = ((48 - 24) / 2 + 24/2, (CONFIG['appBar']['height'] - 24) / 2 + 24/2)
+    titlePosition = CONFIG['appBar']['height'] / 2
+    draw.text(iconPosition, icon, font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
     draw.line((0, CONFIG['appBar']['height'], viewport['width'], CONFIG['appBar']['height']), fill = FILL_BLACK)
-    if showBorder:
-        draw.rectangle((0, 0, 48, CONFIG['appBar']['height']), outline = 0)
-        draw.rectangle((12, (CONFIG['appBar']['height'] - 24) / 2, 36, ((CONFIG['appBar']['height'] - 24) / 2) + 24), outline = 0)
 
-    draw.text((48, CONFIG['appBar']['titleOffset']), text, font = FONTS['headline'], fill = FILL_BLACK)
+    draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
     if showBorder:
-        draw.rectangle((48, 0, 150, CONFIG['appBar']['height']), outline = 0)
-        draw.rectangle((48 + 8, (CONFIG['appBar']['height'] - 24) / 2, 142, ((CONFIG['appBar']['height'] - 24) / 2) + 24), outline = 0)
+        draw.line((0, CONFIG['appBar']['height'] / 2, viewport['width'], CONFIG['appBar']['height']), fill = FILL_BLACK)
+        draw.line(((48 - 24) / 2 + 24/2, 0, (48 - 24) / 2 + 24/2, 0), fill = FILL_BLACK)
+        draw.line((48, CONFIG['appBar']['height'] / 2, 48, CONFIG['appBar']['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count):
     itemConfig = CONFIG['listItem']
