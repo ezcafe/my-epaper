@@ -23,9 +23,8 @@ CONFIG = {
         'appBar': {
             'height': 56,
             'iconSize': 24,
-            'titleOffset': 16,
         },
-        'taskItemCount': 5,
+        'visibleItemCount': 5,
         'listItem': {
             'height': 48,
             'titleHeight': 16,
@@ -37,9 +36,8 @@ CONFIG = {
         'appBar': {
             'height': 64,
             'iconSize': 24,
-            'titleOffset': 20,
         },
-        'taskItemCount': 4,
+        'visibleItemCount': 4,
         'listItem': {
             'height': 56,
             'titleHeight': 16,
