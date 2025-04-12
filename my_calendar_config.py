@@ -31,13 +31,12 @@ CONFIG = {
         'taskItemCount': 5,
         'listItem': {
             'height': 48,
+            'bodyOffset': 16,
             'titleOffset': 16,
-            '2LinesTitleOffset': 8,
+            '2LinesBodyOffset': 8,
             '2LinesSupportTextOffset': 25,
             'linesGap': 2,
         },
-
-
     },
     'normal': {
         'appBar': {
@@ -47,8 +46,9 @@ CONFIG = {
         'taskItemCount': 4,
         'listItem': {
             'height': 56,
+            'bodyOffset': 20,
             'titleOffset': 20,
-            '2LinesTitleOffset': 11,
+            '2LinesBodyOffset': 11,
             '2LinesSupportTextOffset': 30,
             'linesGap': 4,
         },
