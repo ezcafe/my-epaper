@@ -109,9 +109,12 @@ def renderTasks(draw):
     if events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for event in events:
-            logging.debug(f"- {event.instance.vevent.summary.value}")
-            logging.debug(event.instance.vevent.summary)
-            logging.debug(event.instance.vevent.component.get("summary"))
+            logging.debug(f"summary - {event.instance.vevent.summary.value}")
+            logging.debug(f"description - {event.instance.vevent.description.value}")
+            logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.dt.strftime("%m/%d/%Y %H:%M")}")
+            endDate = event.instance.vevent.dtend.value
+            if endDate and endDate.dt:
+                logging.debug(f"dtend - {endDate.dt.strftime("%m/%d/%Y %H:%M")}")
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
