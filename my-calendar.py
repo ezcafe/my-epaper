@@ -158,7 +158,7 @@ def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
         displayCount = min(eventCount, CONFIG['taskItemCount'])
         logging.debug(f"Display count: {displayCount}")
         # renderOneLineList(eventListDraw, remaining_events, displayCount)
-        renderTwoLinesList(eventListDraw, remaining_events, displayCount)
+        renderTwoLinesList(mainDraw, remaining_events, displayCount)
 
 try:
     logging.debug("Starting...")
