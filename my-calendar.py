@@ -94,7 +94,7 @@ def renderWeatherAndDate(draw):
     weather_data = process_weather_data(data)
 
     # get date
-    currentDate = datetime.datetime.now()
+    currentDate = datetime.now()
     date = currentDate.strftime('%A, %d/%m')
 
     # render date
@@ -103,7 +103,7 @@ def renderWeatherAndDate(draw):
 def renderEvents(draw):
     events = []
 
-    start_time = datetime.datetime.now()
+    start_time = datetime.now()
     stop_time = timedelta(days=1,microseconds=-1)
     logging.debug(f"Start time: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     logging.debug(f"Stop time: {stop_time.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -111,7 +111,7 @@ def renderEvents(draw):
 
     # get events
     calendar_name = "QQ Home"
-    calendar_start_date = datetime.datetime.now()
+    calendar_start_date = datetime.now()
     calendar_end_date = calendar_start_date + datetime.timedelta(days=1)
     calendar_events = get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
     if calendar_events:
