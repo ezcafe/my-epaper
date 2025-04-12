@@ -8,7 +8,7 @@ WEATHER_UNITS = 'metric' # imperial or metric
 
 TODOIST_API_KEY = ''
 
-UI_MODE = 'compact'  # 'compact' or 'normal'
+UI_MODE = 'normal'  # 'compact' or 'normal'
 
 # DO NOT CHANGE THE FOLLOWING
 
@@ -31,6 +31,7 @@ CONFIG = {
         'listItemTitleOffset': 16,
         'listItemTitleWithSupportTextOffset': 8,
         'listItemSupportTextOffset': 25,
+        'listItemLineGap': 2,
     },
     'normal': {
         'appBarHeight': 64,
@@ -40,6 +41,7 @@ CONFIG = {
         'listItemTitleOffset': 20,
         'listItemTitleWithSupportTextOffset': 12,
         'listItemSupportTextOffset': 27,
+        'listItemLineGap': 4,
     },
 }[UI_MODE]
 
