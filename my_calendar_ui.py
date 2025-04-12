@@ -29,7 +29,7 @@ def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count, listLeftPosition = 0):
-    for j in range(0, count):
+    for j in range(1, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         renderOneLineListItem(draw, items[j], itemTopPosition, listLeftPosition)
 
@@ -54,7 +54,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
-    for j in range(0, count):
+    for j in range(1, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
         if item['subtitle'] is not None:

@@ -22,7 +22,7 @@ import requests
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
 from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
-from my_calendar_ui import renderAppBar, renderOneLineList, renderTwoLinesList
+from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
 from my_calendar_apple import get_apple_calendar_events
 
 # ======= Utils
@@ -124,9 +124,16 @@ def renderEvents(draw):
 
     # render events
     viewport = {'width': 400, 'height': 300}
-    itemCount = min(len(events), CONFIG['taskItemCount'])
-    # renderOneLineList(draw, events, itemCount)
-    renderTwoLinesList(draw, events, itemCount, viewport['width'] / 2)
+    eventCount = len(events)
+
+    if eventCount > 0:
+        renderItemDetails(draw, events[0])
+
+    if eventCount > 1:
+        displayCount = min(eventCount, CONFIG['taskItemCount'])
+        # renderOneLineList(draw, events, displayCount)
+        renderTwoLinesList(draw, events, displayCount, viewport['width'] / 2)
+
 
 
 try:
