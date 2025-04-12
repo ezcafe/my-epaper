@@ -123,9 +123,10 @@ def renderEvents(draw):
                 })
 
     # render events
+    viewport = {'width': 400, 'height': 300}
     itemCount = min(len(events), CONFIG['taskItemCount'])
     # renderOneLineList(draw, events, itemCount)
-    renderTwoLinesList(draw, events, itemCount)
+    renderTwoLinesList(draw, events, itemCount, viewport['width'] / 2)
 
 
 try:
