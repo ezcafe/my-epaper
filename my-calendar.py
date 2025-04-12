@@ -117,8 +117,8 @@ def renderEvents(draw):
                 events.append({
                     "title": component.get("summary"),
                     "subtitle": component.get("description"),
-                    "date": component.get("dtstart").dt,
-                    "dtend": component.get("dtend").dt,
+                    "timeStart": component.get("dtstart").dt,
+                    "timeEnd": component.get("dtend").dt,
                     "dtstamp": component.get("dtstamp").dt
                 })
 
