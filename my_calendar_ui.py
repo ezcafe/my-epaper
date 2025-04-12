@@ -53,7 +53,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
             draw.line((viewport['width'] - 48, itemTopPosition + itemConfig['height'] / 2, viewport['width'], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
-def renderTwoLinesList(draw, items, count):
+def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
     for j in range(0, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
