@@ -156,7 +156,7 @@ def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
     if eventCount > 0:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
         # renderOneLineList(eventListDraw, remaining_events, displayCount)
-        renderTwoLinesList(eventListDraw, remaining_events, displayCount, viewport['width'] / 2)
+        renderTwoLinesList(mainDraw, remaining_events, displayCount, viewport['width'] / 2)
 
 try:
     logging.debug("Starting...")
@@ -178,7 +178,7 @@ try:
         renderWeatherAndDate(mainDraw)
         renderEvents(mainDraw, eventDetailsDraw, eventListImage)
         mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
-        mainImage.paste(eventListImage, (math.ceil(epd.width / 2), CONFIG['appBar']['height'] + 1))
+        mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
         epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
