@@ -109,7 +109,7 @@ def renderTasks(draw):
     if events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for event in events:
-            logging.debug(f"icalendar_component - {event.icalendar_component}")
+            logging.debug(f"icalendar_component - {event.icalendar_component['DESCRIPTION']}")
             logging.debug(f"vevent - {event.instance.vevent}")
             logging.debug(f"summary - {event.instance.vevent.summary.value}")
             # logging.debug(f"description - {event.instance.vevent.description}")
