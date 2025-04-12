@@ -101,7 +101,7 @@ def renderWeatherAndDate(draw):
     date = currentDate.strftime('%A, %d/%m')
 
     # render date
-    renderAppBar(draw, weather_data['icon_code'], date)
+    renderAppBar(draw, weather_data, date)
 
 def fetch_events():
     calendar_name = "QQ Home"

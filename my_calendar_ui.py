@@ -1,19 +1,21 @@
 import logging
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = False
+showBorder = True
 
-def renderAppBar(draw, icon, text):
+def renderAppBar(draw, weather_data, text):
     drawSize = draw.im.size
     iconPosition = ((48 - CONFIG['appBar']['iconSize']) / 2 + CONFIG['appBar']['iconSize'] / 2, (CONFIG['appBar']['height'] - CONFIG['appBar']['iconSize']) / 2 + CONFIG['appBar']['iconSize'] / 2)
     titlePosition = CONFIG['appBar']['height'] / 2
-    draw.text(iconPosition, icon, font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
+    draw.text(iconPosition, weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
     draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text((48, titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, CONFIG['appBar']['height'], drawSize[0], CONFIG['appBar']['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, CONFIG['appBar']['height'] / 2, drawSize[0], CONFIG['appBar']['height'] / 2), fill = FILL_BLACK)
         draw.line((iconPosition[0], 0, iconPosition[0], CONFIG['appBar']['height']), fill = FILL_BLACK)
         draw.line((48, 0, 48, CONFIG['appBar']['height']), fill = FILL_BLACK)
+        draw.line((drawSize[0] - 16, 0, drawSize[0] - 16, CONFIG['appBar']['height']), fill = FILL_BLACK)
 
 def renderOneLineListItem(draw, item, itemTopPosition):
     itemConfig = CONFIG['listItem']
