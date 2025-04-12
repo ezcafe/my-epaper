@@ -36,8 +36,8 @@ def renderOneLineList(draw, items, count, listLeftPosition = 0):
 def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
     itemConfig = CONFIG['listItem']
 
-    titlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['supportTextHeight']) / 2 + itemConfig['titleHeight']/2
-    subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['supportTextHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['supportTextHeight']/2
+    titlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight']/2
+    subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['subtitleHeight']/2
     draw.text((itemLeftPosition + 16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['date'] is not None:
         draw.text((viewport['width'] - 48/2, itemTopPosition + itemConfig['height'] / 2), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')

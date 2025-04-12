@@ -33,7 +33,7 @@ CONFIG = {
         'listItem': {
             'height': 48,
             'titleHeight': 16,
-            'supportTextHeight': 14,
+            'subtitleHeight': 14,
             'linesGap': 2,
         },
     },
@@ -47,7 +47,7 @@ CONFIG = {
         'listItem': {
             'height': 56,
             'titleHeight': 16,
-            'supportTextHeight': 14,
+            'subtitleHeight': 14,
             'linesGap': 4,
         },
     },
