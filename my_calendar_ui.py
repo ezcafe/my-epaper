@@ -82,7 +82,13 @@ def renderItemDetails(draw, item):
 
     subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap'] * 2
     if item['subtitle'] is not None:
-        draw.text((16, subtitlePosition + itemConfig['subtitleHeight'] / 2), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        locationPosition = subtitlePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap'] * 2
+        draw.text((16, subtitlePosition + itemConfig['subtitleHeight'] / 2), f"Note: '{item['subtitle']}'", font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+    else:
+        locationPosition = subtitlePosition
+
+    if item['location'] is not None:
+        draw.text((16, locationPosition + itemConfig['subtitleHeight'] / 2), f"Location: '{item['location']}'", font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
 
     draw.line((viewport['width'] / 2, appBarHeight, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
 
@@ -93,3 +99,5 @@ def renderItemDetails(draw, item):
         draw.line((16, titlePosition + itemConfig['titleHeight'] / 2, viewport['width'] / 2, titlePosition + itemConfig['titleHeight'] / 2), fill = FILL_BLACK)
         if item['subtitle'] is not None:
             draw.line((16, subtitlePosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, subtitlePosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)
+        if item['location'] is not None:
+            draw.line((16, locationPosition + itemConfig['subtitleHeight'] / 2, viewport['width'] / 2, locationPosition + itemConfig['subtitleHeight'] / 2), fill = FILL_BLACK)

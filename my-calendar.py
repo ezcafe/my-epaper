@@ -109,7 +109,6 @@ def renderEvents(draw):
     calendar_end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
     calendar_events = get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
     if calendar_events:
-        logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for calendar_event in calendar_events:
             for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
@@ -120,7 +119,7 @@ def renderEvents(draw):
                     "subtitle": component.get("description"),
                     "timeStart": component.get("dtstart").dt,
                     "timeEnd": component.get("dtend").dt,
-                    "dtstamp": component.get("dtstamp").dt
+                    "location": component.get("location")
                 })
 
     # render events
