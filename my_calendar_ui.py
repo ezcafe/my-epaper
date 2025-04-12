@@ -58,6 +58,6 @@ def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
         if item['subtitle'] is not None:
-            renderTwoLinesListItem(draw, item, itemTopPosition)
+            renderTwoLinesListItem(draw, item, itemTopPosition, listLeftPosition)
         else:
-            renderOneLineListItem(draw, item, itemTopPosition)
+            renderOneLineListItem(draw, item, itemTopPosition, listLeftPosition)
