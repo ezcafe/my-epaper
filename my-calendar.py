@@ -19,6 +19,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime, timedelta
 import requests
+import math
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
 from my_calendar_config import CONFIG, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
@@ -144,7 +145,7 @@ try:
     draw = ImageDraw.Draw(Himage)
 
     eventDetailsImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-    resizedImage = eventDetailsImage.resize((epd.width / 2, epd.height - CONFIG['appBar']['height']), Image.ANTIALIAS, box=(0, CONFIG['appBar']['height'], epd.width / 2, epd.height - CONFIG['appBar']['height']))
+    resizedImage = eventDetailsImage.resize((math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height']), Image.ANTIALIAS, box=(0, CONFIG['appBar']['height'], math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height']))
     eventDetailsDraw = ImageDraw.Draw(resizedImage)
 
     if 0:
