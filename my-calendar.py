@@ -78,7 +78,7 @@ def process_weather_data(data):
         weather_temp_unit = '°'
         if WEATHER_UNITS == "imperial":
             weather_temp_unit = "F"
-        weather_temp = f"{math.ceil(current['temp'])}{weather_temp_unit}"
+        weather_temp = f"{math.floor(current['temp'])}{weather_temp_unit}"
 
         # https://openweathermap.org/current
         weather_data = {
