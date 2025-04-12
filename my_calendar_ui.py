@@ -35,6 +35,7 @@ def renderOneLineList(draw, items, count):
 
 def renderTwoLinesListItem(draw, item, itemTopPosition ):
     itemConfig = CONFIG['listItem']
+    logging.debug(f"draw: {draw.im.size}")
 
     titlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight']/2
     subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['subtitleHeight']/2
