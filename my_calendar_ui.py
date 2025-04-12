@@ -1,6 +1,6 @@
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = False
+showBorder = True
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
@@ -24,7 +24,8 @@ def renderList(draw, items, count):
         draw.text((48, itemPosition + CONFIG['listItem']['bodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
-            draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
+            draw.rectangle((0, itemPosition + (CONFIG['listItem']['height'] - 24) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 24) / 2) + 24), outline = FILL_BLACK)
+            draw.rectangle((48, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
     for j in range(0, count):
