@@ -189,7 +189,7 @@ try:
         renderWeatherAndDate(mainDraw)
         renderEvents(mainDraw, eventDetailsDraw, eventListImage)
         mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
-        mainImage.paste(eventListImage, (math.ceil(epd.width / 2), CONFIG['appBar']['height'] + 1))
+        mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
         epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 
