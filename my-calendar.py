@@ -22,7 +22,7 @@ import requests
 import math
 
 from openweathermap_to_weathericons import convert_icon_to_weathericon
-from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_API_KEY, WEATHER_BASE_URL, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
+from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS, TODOIST_API_KEY
 from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
 from my_calendar_apple import get_apple_calendar_events
 
