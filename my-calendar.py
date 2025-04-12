@@ -101,7 +101,7 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data['icon_code'], date)
 
-def renderEvents(detailsDraw, draw):
+def renderEvents(detailsDraw, mainDraw):
     events = []
 
     # get events
@@ -132,8 +132,8 @@ def renderEvents(detailsDraw, draw):
 
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
-        # renderOneLineList(draw, events, displayCount)
-        renderTwoLinesList(draw, events, displayCount, viewport['width'] / 2)
+        # renderOneLineList(mainDraw, events, displayCount)
+        renderTwoLinesList(mainDraw, events, displayCount, viewport['width'] / 2)
 
 try:
     logging.debug("Starting...")
