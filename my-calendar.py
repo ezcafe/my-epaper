@@ -104,7 +104,7 @@ def renderEvents(draw):
     events = []
 
     start_time = datetime.now()
-    stop_time = datetime.now() + timedelta(days=1,microseconds=-1)
+    stop_time = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
     logging.debug(f"Start time: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     logging.debug(f"Stop time: {stop_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
