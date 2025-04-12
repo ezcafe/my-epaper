@@ -26,7 +26,7 @@ def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
         draw.line((itemLeftPosition, itemTopPosition + itemConfig['height'] / 2, viewport['width'], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
         draw.line((itemLeftPosition + 16, itemTopPosition, itemLeftPosition + 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
         if item['timeStart'] is not None:
-            draw.line((viewport['width'] - 48, itemTopPosition, viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
+            draw.line((viewport['width'] - 48, itemTopPosition, viewport['width'] - 48, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count, listLeftPosition = 0):
     draw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
