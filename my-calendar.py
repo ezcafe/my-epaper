@@ -103,16 +103,10 @@ def renderWeatherAndDate(draw):
 def renderEvents(draw):
     events = []
 
-    start_time = datetime.now()
-    stop_time = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
-    logging.debug(f"Start time: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    logging.debug(f"Stop time: {stop_time.strftime('%Y-%m-%d %H:%M:%S')}")
-
-
     # get events
     calendar_name = "QQ Home"
     calendar_start_date = datetime.now()
-    calendar_end_date = calendar_start_date + datetime.timedelta(days=1)
+    calendar_end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
     calendar_events = get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
     if calendar_events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
