@@ -1,6 +1,6 @@
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = False
+showBorder = True
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
@@ -21,7 +21,8 @@ def renderOneLineList(draw, items, count):
         itemValue = items[j]
 
         draw.text((16, itemPosition + CONFIG['listItem']['1LineBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
-        draw.text((viewport['width'] - CONFIG['listItem']['height'], itemPosition + CONFIG['listItem']['1LineSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
+        # draw.text((viewport['width'] - CONFIG['listItem']['height'], itemPosition + CONFIG['listItem']['1LineSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
+        draw.text((viewport['width'] - 48/2, itemPosition + CONFIG['listItem']['height'] / 2), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
             draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
