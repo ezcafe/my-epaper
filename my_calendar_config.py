@@ -32,7 +32,7 @@ CONFIG = {
         'listItem': {
             'height': 48,
             '1LineBodyOffset': 16,
-            '1LineSupportTextOffset': 10,
+            '1LineSupportTextOffset': 14,
             '2LinesBodyOffset': 8,
             '2LinesSupportTextOffset': 25,
             'linesGap': 2,
@@ -47,7 +47,7 @@ CONFIG = {
         'listItem': {
             'height': 56,
             '1LineBodyOffset': 20,
-            '1LineSupportTextOffset': 14,
+            '1LineSupportTextOffset': 18,
             '2LinesBodyOffset': 11,
             '2LinesSupportTextOffset': 30,
             'linesGap': 4,
