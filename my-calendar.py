@@ -29,7 +29,6 @@ from my_calendar_apple import get_apple_calendar_events
 # ======= Utils
 
 def init():
-    logging.info("Init and Clear...")
     epd = epd4in2_V2.EPD()
     epd.init()
     epd.Clear()
@@ -154,8 +153,10 @@ def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
 
     remaining_events = normalized_events[1]
     eventCount = len(remaining_events)
+    logging.debug(f"Event count: {eventCount}")
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
+        logging.debug(f"Display count: {displayCount}")
         # renderOneLineList(eventListDraw, remaining_events, displayCount)
         renderTwoLinesList(eventListDraw, remaining_events, displayCount, viewport['width'] / 2)
 
