@@ -21,14 +21,14 @@ FILL_WHITE = 1
 CONFIG = {
     'compact': {
         'appBar': {
-            'height': 56,
+            'height': 48,
             'iconSize': 24,
             'paddingLeft': 10,
             'paddingRight': 10,
         },
         'visibleItemCount': 5,
         'listItem': {
-            'height': 48,
+            'height': 36,
             'titleHeight': 16,
             'subtitleHeight': 14,
             'linesGap': 2,
