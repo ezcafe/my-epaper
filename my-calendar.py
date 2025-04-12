@@ -75,9 +75,14 @@ def process_weather_data(data):
         weather_icon_code = data['weather'][0]['icon']  # Get OpenWeatherMap icon code
         weather_icon_text = convert_icon_to_weathericon(weather_icon_code)
 
+        weather_temp_unit = '°'
+        if WEATHER_UNITS == "imperial":
+            weather_temp_unit = "F"
+        weather_temp = f"{current['temp']}{weather_temp_unit}"
+
         # https://openweathermap.org/current
         weather_data = {
-            "temp_current": current['temp'],
+            "temp_current": weather_temp,
             "feels_like": current['feels_like'],
             "humidity": current['humidity'],
             "report": data['weather'][0]['description'],
