@@ -25,7 +25,7 @@ def renderList(draw, items, count):
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
             draw.rectangle((0, itemPosition + (CONFIG['listItem']['height'] - 24) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 24) / 2) + 24), outline = FILL_BLACK)
-            draw.rectangle((64, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
+            draw.rectangle((40, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
 
 def renderTwoLinesList(draw, items, count):
     for j in range(0, count):
