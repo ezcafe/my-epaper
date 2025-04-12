@@ -1,10 +1,8 @@
 # epaper
 
 ## Install libs
-sudo apt install pipx
-pipx install python-dotenv
 
-pip install -r requirements.txt
+sudo apt install python3-caldav
 
 ## Keys
 

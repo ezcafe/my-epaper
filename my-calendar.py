@@ -102,30 +102,15 @@ def renderWeatherAndDate(draw):
 
 def renderTasks(draw):
     # get tasks
-    caldav_url = discover_caldav_calendars()
-    if caldav_url:
-        logging.debug(f"\niCloud CalDAV is accessible. Base URL: {caldav_url}")
-
-        # List calendars
-        calendars = list_calendars()
-        logging.debug("\nCalendars:")
-        for cal in calendars:
-            logging.debug(f"- {cal['name']} ({cal['url']})")
-
-        # # Example: Get events for a specific calendar
-        # calendar_name = "calendar_name"
-        # start_date = datetime.datetime.now()
-        # end_date = start_date + datetime.timedelta(days=7)
-        # events = get_apple_calendar_events(calendar_name, start_date, end_date)
-        # if events:
-        #     logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
-        #     for event in events:
-        #         logging.debug(f"- {event.instance.vevent.summary.value}")
-
-    else:
-        logging.debug("\nFailed to access iCloud CalDAV.")
-
-
+    calendar_name = "QQ Home"
+    start_date = datetime.datetime.now()
+    end_date = start_date + datetime.timedelta(days=1)
+    events = get_apple_calendar_events(calendar_name, start_date, end_date)
+    if events:
+        logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
+        for event in events:
+            logging.debug(f"- {event.instance.vevent.summary.value}")
+            logging.debug(event)
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
