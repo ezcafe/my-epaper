@@ -110,14 +110,9 @@ def renderEvents(draw):
     if calendar_events:
         logging.debug(f"\nEvents in '{calendar_name}' for the next 7 days:")
         for calendar_event in calendar_events:
-            # logging.debug(f"icalendar_component - {event.icalendar_component['DESCRIPTION']}")
-            # logging.debug(f"vevent - {event.instance.vevent}")
-            # logging.debug(f"summary - {event.instance.vevent.summary.value}")
-            # # logging.debug(f"description - {event.instance.vevent.description}")
-            # logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.strftime('%H:%M')}")
-            # endDate = event.instance.vevent.dtend.value
-            # if endDate:
-            #     logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
+            logging.debug(f"icalendar_component - {calendar_event.icalendar_component['DESCRIPTION']}")
+            logging.debug(f"vevent - {calendar_event.instance.vevent}")
+
             for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
