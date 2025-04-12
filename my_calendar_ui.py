@@ -83,7 +83,7 @@ def renderItemDetails(draw, item):
     subtitlePosition = titlePosition + itemConfig['titleHeight'] + itemConfig['linesGap'] * 2
     subtitleText = ''
     if item['subtitle'] is not None:
-        subtitleText += f"Note: '{item['subtitle']}'"
+        subtitleText += f"\nNote: '{item['subtitle']}'"
     if item['location'] is not None:
         subtitleText += f"\nLocation: '{item['location']}'"
 
