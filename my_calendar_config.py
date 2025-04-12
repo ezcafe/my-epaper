@@ -31,10 +31,6 @@ CONFIG = {
         'taskItemCount': 5,
         'listItem': {
             'height': 48,
-            '1LineBodyOffset': 16,
-            '1LineSupportTextOffset': 16,
-            '2LinesBodyOffset': 8,
-            '2LinesSupportTextOffset': 25,
             'linesGap': 2,
         },
     },
@@ -46,10 +42,6 @@ CONFIG = {
         'taskItemCount': 4,
         'listItem': {
             'height': 56,
-            '1LineBodyOffset': 20,
-            '1LineSupportTextOffset': 20,
-            '2LinesBodyOffset': 11,
-            '2LinesSupportTextOffset': 30,
             'linesGap': 4,
         },
     },

@@ -35,10 +35,12 @@ def renderTwoLinesList(draw, items, count):
         itemPosition = j * itemConfig['height'] + CONFIG['appBar']['height']
         itemValue = items[j]
 
-        draw.text((16, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16/2), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
-        draw.text((16, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16 + itemConfig['linesGap']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        titlePosition = itemPosition + (itemConfig['height'] - 16 - itemConfig['linesGap'] - 14) / 2 + 16/2
+        supportTextPosition = itemPosition + (itemConfig['height'] - 16 - itemConfig['linesGap'] - 14) / 2 + 16 + itemConfig['linesGap'] + 14/2
+        draw.text((16, titlePosition), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((16, supportTextPosition), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
         draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)
         if showBorder:
-            draw.line((0, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16/2, viewport['width'], itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16/2), fill = FILL_BLACK)
-            draw.line((0, itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16 + itemConfig['linesGap'], viewport['width'], itemPosition + (itemConfig['height'] - 16 - 14 - itemConfig['linesGap']) / 2 + 16 + itemConfig['linesGap']), fill = FILL_BLACK)
+            draw.line((0, titlePosition, viewport['width'], titlePosition), fill = FILL_BLACK)
+            draw.line((0, supportTextPosition, viewport['width'], supportTextPosition), fill = FILL_BLACK)
             draw.line((16, itemPosition, 16, itemPosition + itemConfig['height']), fill = FILL_BLACK)
