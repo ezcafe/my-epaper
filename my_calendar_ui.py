@@ -20,7 +20,8 @@ def renderList(draw, items, count):
         itemPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         itemValue = items[j]
 
-        draw.text((16, itemPosition + CONFIG['listItem']['titleOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
+        draw.text((0, itemPosition + CONFIG['listItem']['titleOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['body'], fill = FILL_BLACK)
+        draw.text((48, itemPosition + CONFIG['listItem']['titleOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
             draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16) / 2) + 16), outline = FILL_BLACK)
