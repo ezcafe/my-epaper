@@ -84,10 +84,10 @@ def renderItemDetails(draw, item):
     subtitleText = ''
     if item['subtitle'] is not None:
         subtitleText += f"Note: '{item['subtitle']}'"
-    # if item['location'] is not None:
-    #     subtitleText += f"\nLocation: '{item['location']}'"
+    if item['location'] is not None:
+        subtitleText += f"\nLocation: '{item['location']}'"
 
-    draw.text((16, subtitlePosition + itemConfig['subtitleHeight'] / 2), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text((16, subtitlePosition - itemConfig['subtitleHeight'] / 2), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lt')
 
     draw.line((viewport['width'] / 2, appBarHeight, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
 
