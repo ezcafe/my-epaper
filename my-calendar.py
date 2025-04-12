@@ -120,8 +120,8 @@ def renderTasks(draw):
             for component in event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
-                logging.debug(f"summary - {component.get("summary")}")
-                logging.debug(f"description - {component.get("description")}")
+                logging.debug(f"summary - {component.get('summary')}")
+                logging.debug(f"description - {component.get('description')}")
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
