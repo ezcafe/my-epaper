@@ -35,8 +35,8 @@ def renderTwoLinesList(draw, items, count):
         itemPosition = j * itemConfig['height'] + CONFIG['appBar']['height']
         itemValue = items[j]
 
-        titlePosition = itemPosition + (itemConfig['height'] - 16 - itemConfig['linesGap'] - 14) / 2 + 16/2
-        supportTextPosition = itemPosition + (itemConfig['height'] - 16 - itemConfig['linesGap'] - 14) / 2 + 16 + itemConfig['linesGap'] + 14/2
+        titlePosition = itemPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['supportTextHeight']) / 2 + itemConfig['titleHeight']/2
+        supportTextPosition = itemPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['supportTextHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['supportTextHeight']/2
         draw.text((16, titlePosition), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
         draw.text((16, supportTextPosition), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
         draw.line((0, itemPosition + itemConfig['height'], viewport['width'], itemPosition + itemConfig['height']), fill = FILL_BLACK)

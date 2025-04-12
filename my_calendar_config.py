@@ -31,6 +31,8 @@ CONFIG = {
         'taskItemCount': 5,
         'listItem': {
             'height': 48,
+            'titleHeight': 16,
+            'supportTextHeight': 14,
             'linesGap': 2,
         },
     },
@@ -42,6 +44,8 @@ CONFIG = {
         'taskItemCount': 4,
         'listItem': {
             'height': 56,
+            'titleHeight': 16,
+            'supportTextHeight': 14,
             'linesGap': 4,
         },
     },
