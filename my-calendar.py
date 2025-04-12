@@ -153,6 +153,8 @@ def renderEvents(eventDetailsDraw, mainDraw):
         renderItemDetails(eventDetailsDraw, normalized_events[0])
 
     eventCount = len(normalized_events[1])
+    logging.debug(f"Event count: {eventCount}")
+    logging.debug(f"Events: {normalized_events[1]}")
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
         # renderOneLineList(mainDraw, normalized_events[1], displayCount)
