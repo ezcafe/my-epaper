@@ -4,7 +4,7 @@ showBorder = True
 viewport = {'width': 400, 'height': 300}
 
 def renderAppBar(draw, icon, text):
-    iconPosition = ((48 - 24) / 2 + 24/2, (CONFIG['appBar']['height'] - 24) / 2 + 24/2)
+    iconPosition = ((48 - CONFIG['appBar']['iconHeight']) / 2 + CONFIG['appBar']['iconHeight'] / 2, (CONFIG['appBar']['height'] - CONFIG['appBar']['iconHeight']) / 2 + CONFIG['appBar']['iconHeight'] / 2)
     titlePosition = CONFIG['appBar']['height'] / 2
     draw.text(iconPosition, icon, font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
     draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
