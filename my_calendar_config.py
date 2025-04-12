@@ -40,7 +40,7 @@ CONFIG = {
         'listItemHeight': 56,
         'listItemTitleOffset': 20,
         'listItemTitleWithSupportTextOffset': 11,
-        'listItemSupportTextOffset': 29,
+        'listItemSupportTextOffset': 30,
         'listItemLineGap': 4,
     },
 }[UI_MODE]
