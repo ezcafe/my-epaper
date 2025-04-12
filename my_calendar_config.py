@@ -20,6 +20,7 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 FILL_BLACK = 0
+FILL_GRAY = 'gray'
 FILL_WHITE = 1
 
 CONFIG = {
