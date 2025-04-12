@@ -114,6 +114,7 @@ def renderEvents(draw):
             for component in calendar_event.icalendar_instance.walk():
                 if component.name != "VEVENT":
                     continue
+                logging.debug(f"Event: {component}")
                 events.append({
                     "title": component.get("summary"),
                     "subtitle": component.get("description"),
