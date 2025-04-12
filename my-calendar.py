@@ -111,10 +111,10 @@ def renderTasks(draw):
         for event in events:
             logging.debug(f"summary - {event.instance.vevent.summary.value}")
             logging.debug(f"description - {event.instance.vevent.description.value}")
-            logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.dt.strftime("%H:%M")}")
+            logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.dt.strftime('%H:%M')}")
             endDate = event.instance.vevent.dtend.value
             if endDate and endDate.dt:
-                logging.debug(f"dtend - {endDate.dt.strftime("%H:%M")}")
+                logging.debug(f"dtend - {endDate.dt.strftime('%H:%M')}")
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
