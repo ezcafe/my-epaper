@@ -31,7 +31,7 @@ def renderOneLineListItem(draw, item, itemTopPosition):
 
 def renderOneLineList(draw, items, count):
     for j in range(0, count):
-        itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
+        itemTopPosition = j * CONFIG['listItem']['height']
         renderOneLineListItem(draw, items[j], itemTopPosition)
 
 def renderTwoLinesListItem(draw, item, itemTopPosition ):
