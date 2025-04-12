@@ -119,16 +119,16 @@ def renderTasks(draw):
             #     logging.debug(f"dtend - {endDate.strftime('%H:%M')}")
             ical_text = event.data
             logging.debug(f"ical_text - {ical_text}")
-            logging.debug(f"SUMMARY - {ical_text.get('SUMMARY')}")
-            logging.debug(f"DESCRIPTION - {ical_text.get('DESCRIPTION')}")
-            logging.debug(f"DTSTART - {ical_text.get('DTSTART').dt.strftime('%H:%M')}")
-            logging.debug(f"DTEND - {ical_text.get('DTEND').dt.strftime('%H:%M')}")
-            logging.debug(f"LOCATION - {ical_text.get('LOCATION')}")
-            logging.debug(f"UID - {ical_text.get('UID')}")
-            logging.debug(f"SEQUENCE - {ical_text.get('SEQUENCE')}")
-            logging.debug(f"STATUS - {ical_text.get('STATUS')}")
-            logging.debug(f"LAST-MODIFIED - {ical_text.get('LAST-MODIFIED')}")
-            logging.debug(f"CREATED - {ical_text.get('CREATED')}")
+            logging.debug(f"SUMMARY - {event.get('SUMMARY')}")
+            logging.debug(f"DESCRIPTION - {event.get('DESCRIPTION')}")
+            logging.debug(f"DTSTART - {event.get('DTSTART').dt.strftime('%H:%M')}")
+            logging.debug(f"DTEND - {event.get('DTEND').dt.strftime('%H:%M')}")
+            logging.debug(f"LOCATION - {event.get('LOCATION')}")
+            logging.debug(f"UID - {event.get('UID')}")
+            logging.debug(f"SEQUENCE - {event.get('SEQUENCE')}")
+            logging.debug(f"STATUS - {event.get('STATUS')}")
+            logging.debug(f"LAST-MODIFIED - {event.get('LAST-MODIFIED')}")
+            logging.debug(f"CREATED - {event.get('CREATED')}")
 
     tasks = [
         {"title": "Prepare runsheet", "project": "Release 14/4", "due": datetime.datetime.now()},
