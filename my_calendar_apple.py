@@ -56,6 +56,9 @@ def get_apple_calendar_todos(calendar_name, start_date, end_date):
 
     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
+    acceptable_component_types = calendar.get_supported_components()
+    logging
+
     if calendar:
         todos = calendar.search(start=start_date, end=end_date, todo=True, expand=True)
         return todos
