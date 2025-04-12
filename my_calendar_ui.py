@@ -34,11 +34,9 @@ def renderTwoLinesList(draw, items, count):
         itemValue = items[j]
 
         draw.text((16, itemPosition + CONFIG['listItem']['2LinesBodyOffset']), itemValue['title'], font = FONTS['body'], fill = FILL_BLACK)
+        draw.text((16, itemPosition + CONFIG['listItem']['2LinesSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
         draw.line((0, itemPosition + CONFIG['listItem']['height'], viewport['width'], itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
         if showBorder:
-            draw.rectangle((16, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2, 134, itemPosition + ((CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2) + 16), outline = FILL_BLACK)
-
-        draw.text((16, itemPosition + CONFIG['listItem']['2LinesSupportTextOffset']), itemValue['due'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK)
-        if showBorder:
-            draw.rectangle((0, 0, 48, CONFIG['listItem']['height']), outline = 0)
-            draw.rectangle((16, itemPosition + ((CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2) + 16 + CONFIG['listItem']['linesGap'], 134, itemPosition + ((CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2) + 16 + CONFIG['listItem']['linesGap'] + 14), outline = FILL_BLACK)
+            draw.line((0, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2, viewport['width'], itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2), fill = FILL_BLACK)
+            draw.line((0, itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2 + 16 + CONFIG['listItem']['linesGap'], viewport['width'], itemPosition + (CONFIG['listItem']['height'] - 16 - 14 - CONFIG['listItem']['linesGap']) / 2  + 16 + CONFIG['listItem']['linesGap']), fill = FILL_BLACK)
+            draw.line((16, itemPosition, 16, itemPosition + CONFIG['listItem']['height']), fill = FILL_BLACK)
