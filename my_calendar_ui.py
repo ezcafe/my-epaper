@@ -7,13 +7,12 @@ def renderAppBar(draw, icon, text):
     iconPosition = ((48 - 24) / 2 + 24/2, (CONFIG['appBar']['height'] - 24) / 2 + 24/2)
     titlePosition = CONFIG['appBar']['height'] / 2
     draw.text(iconPosition, icon, font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
-    draw.line((0, CONFIG['appBar']['height'], viewport['width'], CONFIG['appBar']['height']), fill = FILL_BLACK)
-
     draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
+    draw.line((0, CONFIG['appBar']['height'], viewport['width'], CONFIG['appBar']['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, CONFIG['appBar']['height'] / 2, viewport['width'], CONFIG['appBar']['height'] / 2), fill = FILL_BLACK)
         draw.line((iconPosition[0], 0, iconPosition[0], CONFIG['appBar']['height']), fill = FILL_BLACK)
-        draw.line((48, CONFIG['appBar']['height'] / 2, 48, CONFIG['appBar']['height']), fill = FILL_BLACK)
+        draw.line((48, 0, 48, CONFIG['appBar']['height']), fill = FILL_BLACK)
 
 def renderOneLineList(draw, items, count):
     itemConfig = CONFIG['listItem']
