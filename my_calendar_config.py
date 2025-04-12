@@ -23,6 +23,8 @@ CONFIG = {
         'appBar': {
             'height': 56,
             'iconSize': 24,
+            'marginLeft': 10,
+            'marginRight': 10,
         },
         'visibleItemCount': 5,
         'listItem': {
