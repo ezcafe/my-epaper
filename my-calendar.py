@@ -138,7 +138,7 @@ def normalize_events(events):
 
     return (selected_event, normalized_events)
 
-def renderEvents(eventDetailsDraw, mainDraw):
+def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
     # get events
     calendar_events = fetch_events()
     processed_events = process_events(calendar_events)
@@ -150,14 +150,14 @@ def renderEvents(eventDetailsDraw, mainDraw):
     selected_event = normalized_events[0]
     if selected_event is not None:
         mainDraw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
-        # renderItemDetails(eventDetailsDraw, selected_event)
+        renderItemDetails(eventDetailsDraw, selected_event)
 
     remaining_events = normalized_events[1]
     eventCount = len(remaining_events)
     if eventCount > 1:
         displayCount = min(eventCount, CONFIG['taskItemCount'])
-        # renderOneLineList(mainDraw, remaining_events, displayCount)
-        renderTwoLinesList(mainDraw, remaining_events, displayCount, viewport['width'] / 2)
+        # renderOneLineList(eventListDraw, remaining_events, displayCount)
+        renderTwoLinesList(eventListDraw, remaining_events, displayCount, viewport['width'] / 2)
 
 try:
     logging.debug("Starting...")
@@ -166,16 +166,20 @@ try:
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     mainDraw = ImageDraw.Draw(mainImage)
 
-    eventDetailsImage = Image.new('1', (math.ceil(epd.width / 2) - 1, epd.height - CONFIG['appBar']['height'] - 1), 255)
+    eventDetailsImage = Image.new('1', math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1, 255)
     eventDetailsDraw = ImageDraw.Draw(eventDetailsImage)
+
+    eventListImage = Image.new('1', math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1, 255)
+    eventListDraw = ImageDraw.Draw(eventListImage)
 
     if 0:
         logging.debug("E-paper refresh")
         epd.init()
 
         renderWeatherAndDate(mainDraw)
-        renderEvents(eventDetailsDraw, mainDraw)
+        renderEvents(mainDraw, eventDetailsDraw, eventListImage)
         mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
+        mainImage.paste(eventListImage, (math.ceil(epd.width / 2), CONFIG['appBar']['height'] + 1))
         epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
@@ -183,8 +187,9 @@ try:
         epd.init_fast(epd.Seconds_1_5S)
 
         renderWeatherAndDate(mainDraw)
-        renderEvents(eventDetailsDraw, mainDraw)
+        renderEvents(mainDraw, eventDetailsDraw, eventListImage)
         mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
+        mainImage.paste(eventListImage, (math.ceil(epd.width / 2), CONFIG['appBar']['height'] + 1))
         epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 
