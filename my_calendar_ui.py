@@ -72,6 +72,8 @@ def renderItemDetails(draw, item):
         dateText = item['timeStart'].strftime('%H:%M')
         if item['timeEnd'] is not None:
             dateText += ' - ' + item['timeEnd'].strftime('%H:%M')
+        if dateText == '00:00 - 00:00':
+            dateText = 'All Day'
         draw.text((16, datePosition + itemConfig['subtitleHeight'] / 2), dateText, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
     else:
         titlePosition = appBarHeight + 16
