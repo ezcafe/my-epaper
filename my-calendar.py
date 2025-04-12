@@ -111,7 +111,8 @@ def renderTasks(draw):
         for event in events:
             logging.debug(f"summary - {event.instance.vevent}")
             logging.debug(f"summary - {event.instance.vevent.summary.value}")
-            logging.debug(f"summary - {event.instance.vevent.description}")
+            if event.instance.vevent.description:
+                logging.debug(f"summary - {event.instance.vevent.description}")
             logging.debug(f"dtstart - {event.instance.vevent.dtstart.value.strftime('%H:%M')}")
             endDate = event.instance.vevent.dtend.value
             if endDate:
