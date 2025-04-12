@@ -15,52 +15,52 @@ def renderAppBar(draw, icon, text):
         draw.line((iconPosition[0], 0, iconPosition[0], CONFIG['appBar']['height']), fill = FILL_BLACK)
         draw.line((48, 0, 48, CONFIG['appBar']['height']), fill = FILL_BLACK)
 
-def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
+def renderOneLineListItem(draw, item, itemTopPosition):
     itemConfig = CONFIG['listItem']
 
-    draw.text((itemLeftPosition + 16, itemTopPosition + itemConfig['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text((16, itemTopPosition + itemConfig['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
         draw.text((viewport['width'] - 16, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
-    draw.line((itemLeftPosition, itemTopPosition + itemConfig['height'], viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
+    draw.line((0, itemTopPosition + itemConfig['height'], viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
     if showBorder:
-        draw.line((itemLeftPosition, itemTopPosition + itemConfig['height'] / 2, viewport['width'], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
-        draw.line((itemLeftPosition + 16, itemTopPosition, itemLeftPosition + 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
+        draw.line((0, itemTopPosition + itemConfig['height'] / 2, viewport['width'], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
+        draw.line((16, itemTopPosition, 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
         if item['timeStart'] is not None:
             draw.line((viewport['width'] - 16, itemTopPosition, viewport['width'] - 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
-def renderOneLineList(draw, items, count, listLeftPosition = 0):
+def renderOneLineList(draw, items, count):
     for j in range(0, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
-        renderOneLineListItem(draw, items[j], itemTopPosition, listLeftPosition)
+        renderOneLineListItem(draw, items[j], itemTopPosition)
 
-def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
+def renderTwoLinesListItem(draw, item, itemTopPosition ):
     itemConfig = CONFIG['listItem']
 
     titlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight']/2
     subtitlePosition = itemTopPosition + (itemConfig['height'] - itemConfig['titleHeight'] - itemConfig['linesGap'] - itemConfig['subtitleHeight']) / 2 + itemConfig['titleHeight'] + itemConfig['linesGap'] + itemConfig['subtitleHeight']/2
-    draw.text((itemLeftPosition + 16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
         draw.text((viewport['width'] - 48/2, itemTopPosition + itemConfig['height'] / 2), item['timeStart'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
     if item['subtitle'] is not None:
-        draw.text((itemLeftPosition + 16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
-    draw.line((itemLeftPosition, itemTopPosition + itemConfig['height'], viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
+        draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+    draw.line((0, itemTopPosition + itemConfig['height'], viewport['width'], itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
     if showBorder:
-        draw.line((itemLeftPosition, titlePosition, viewport['width'], titlePosition), fill = FILL_BLACK)
+        draw.line((0, titlePosition, viewport['width'], titlePosition), fill = FILL_BLACK)
         if item['subtitle'] is not None:
-            draw.line((itemLeftPosition, subtitlePosition, viewport['width'], subtitlePosition), fill = FILL_BLACK)
-        draw.line((itemLeftPosition + 16, itemTopPosition, itemLeftPosition + 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
+            draw.line((0, subtitlePosition, viewport['width'], subtitlePosition), fill = FILL_BLACK)
+        draw.line((16, itemTopPosition, 16, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
         if item['timeStart'] is not None:
             draw.line((viewport['width'] - 48, itemTopPosition + itemConfig['height'] / 2, viewport['width'], itemTopPosition + itemConfig['height'] / 2), fill = FILL_BLACK)
             draw.line((viewport['width'] - 48 / 2, itemTopPosition, viewport['width'] - 48 / 2, itemTopPosition + itemConfig['height']), fill = FILL_BLACK)
 
-def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
+def renderTwoLinesList(draw, items, count):
     for j in range(0, count):
         itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
         if item['subtitle'] is not None:
-            renderTwoLinesListItem(draw, item, itemTopPosition, listLeftPosition)
+            renderTwoLinesListItem(draw, item, itemTopPosition)
         else:
-            renderOneLineListItem(draw, item, itemTopPosition, listLeftPosition)
+            renderOneLineListItem(draw, item, itemTopPosition)
 
 def renderItemDetails(draw, item):
     itemConfig = CONFIG['listItem']
