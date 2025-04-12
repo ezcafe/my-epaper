@@ -88,7 +88,7 @@ def renderItemDetails(draw, item):
 
     draw.multiline_text((16, subtitlePosition), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK)
 
-    draw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
+    draw.line((viewport['width'] / 2 - 1, CONFIG['appBar']['height'], viewport['width'] / 2 - 1, viewport['height']), fill = FILL_BLACK)
 
     if showBorder:
         draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)

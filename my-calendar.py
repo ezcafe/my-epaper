@@ -142,7 +142,7 @@ try:
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
     mainDraw = ImageDraw.Draw(mainImage)
 
-    detailsImage = Image.new('1', (math.ceil(epd.width / 2) + 1, epd.height - CONFIG['appBar']['height'] - 1), 255)
+    detailsImage = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1), 255)
     detailsDraw = ImageDraw.Draw(detailsImage)
 
     if 0:
