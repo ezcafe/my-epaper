@@ -30,7 +30,7 @@ def renderOneLineListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
 
 def renderOneLineList(draw, items, count, listLeftPosition = 0):
     for j in range(1, count):
-        itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
+        itemTopPosition = (j - 1) * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         renderOneLineListItem(draw, items[j], itemTopPosition, listLeftPosition)
 
 def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
@@ -55,7 +55,7 @@ def renderTwoLinesListItem(draw, item, itemTopPosition, itemLeftPosition = 0):
 
 def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
     for j in range(1, count):
-        itemTopPosition = j * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
+        itemTopPosition = (j - 1) * CONFIG['listItem']['height'] + CONFIG['appBar']['height']
         item = items[j]
         if item['subtitle'] is not None:
             renderTwoLinesListItem(draw, item, itemTopPosition, listLeftPosition)
@@ -63,14 +63,15 @@ def renderTwoLinesList(draw, items, count, listLeftPosition = 0):
             renderOneLineListItem(draw, item, itemTopPosition, listLeftPosition)
 
 def renderItemDetails(draw, item):
+    appBarHeight = CONFIG['appBar']['height']
     itemConfig = CONFIG['listItem']
 
-    datePosition = 16
+    datePosition = appBarHeight + 16
     if item['date'] is not None:
         titlePosition = datePosition + itemConfig['subtitleHeight'] + itemConfig['linesGap']
         draw.text((16, datePosition), item['date'].strftime('%H:%M'), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'mm')
     else:
-        titlePosition = 16
+        titlePosition = appBarHeight + 16
 
     draw.text((16, titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
 
@@ -78,7 +79,7 @@ def renderItemDetails(draw, item):
     if item['subtitle'] is not None:
         draw.text((16, subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
 
-    draw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
+    draw.line((viewport['width'] / 2, appBarHeight, viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
 
     if showBorder:
         draw.line((16, 0, 16, viewport['height']), fill = FILL_BLACK)
