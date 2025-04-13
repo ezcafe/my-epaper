@@ -117,3 +117,28 @@ def renderItemDetails(draw, item):
         draw.line((item_config['paddingLeft'], titlePosition + item_config['titleHeight'] / 2, draw_size[0], titlePosition + item_config['titleHeight'] / 2), fill = FILL_BLACK)
         if item['subtitle'] is not None or item['location'] is not None:
             draw.line((item_config['paddingLeft'], subtitlePosition + item_config['subtitleHeight'] / 2, draw_size[0], subtitlePosition + item_config['subtitleHeight'] / 2), fill = FILL_BLACK)
+
+def renderCalendar(draw, time, text, weather_data):
+    calendar_config = CONFIG['calendar']
+    draw_size = draw.im.size
+    middlePoint = draw_size[0] / 2
+
+    iconPosition = draw_size[0] - calendar_config['paddingRight']
+    datePosition = calendar_config['paddingTop'] + calendar_config['dateHeight'] / 2
+    monthPosition = datePosition + calendar_config['dateHeight'] / 2 + calendar_config['linesGap'] + calendar_config['monthHeight'] / 2
+    separatorPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap']
+    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 2
+
+    draw.text((iconPosition, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rb')
+    draw.text((middlePoint, datePosition), time.strftime('%d'), font = FONTS['title'], fill = FILL_BLACK, anchor = 'mm')
+    draw.text((middlePoint, monthPosition), time.strftime('%A'), font = FONTS['body'], fill = FILL_BLACK, anchor = 'mm')
+    draw.line((0, separatorPosition, draw_size[0], monthPosition + calendar_config['linesGap']), fill = FILL_BLACK)
+    draw.multiline_text((middlePoint, textPosition), text, font = FONTS['support_text'], fill = FILL_BLACK)
+
+    if showBorder:
+        draw.line((middlePoint, 0, middlePoint, draw_size[1]), fill = FILL_BLACK)
+        draw.line((draw_size[0] - calendar_config['paddingRight'], 0, draw_size[0] - calendar_config['paddingRight'], draw_size[1]), fill = FILL_BLACK)
+        draw.line((calendar_config['paddingTop'], 0, calendar_config['paddingTop'], draw_size[0]), fill = FILL_BLACK)
+        draw.line((0, datePosition, draw_size[0], datePosition), fill = FILL_BLACK)
+        draw.line((0, monthPosition, draw_size[0], monthPosition), fill = FILL_BLACK)
+        draw.line((0, textPosition, draw_size[0], textPosition), fill = FILL_BLACK)

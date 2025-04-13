@@ -6,36 +6,41 @@ import logging
 
 APPLE_ID = os.getenv('APPLE_ID')
 APPLE_PASSWORD = os.getenv('APPLE_PASSWORD')
-CALENDAR_URL = 'https://caldav.icloud.com'  # We'll use the base URL
+APPLE_CALENDAR_NAME = os.getenv('APPLE_CALENDAR_NAME')
+APPLE_CALENDAR_URL = 'https://caldav.icloud.com'  # We'll use the base URL
 
 def get_caldav_client():
-    return caldav.DAVClient(url=CALENDAR_URL, username=APPLE_ID, password=APPLE_PASSWORD)
+    return caldav.DAVClient(url=APPLE_CALENDAR_URL, username=APPLE_ID, password=APPLE_PASSWORD)
 
-def discover_caldav_calendars():
-    try:
-        client = get_caldav_client()
-        principal = client.principal()
-        logging.debug(f"Principal URL: {principal.url}")
+# def discover_caldav_calendars():
+#     try:
+#         client = get_caldav_client()
+#         principal = client.principal()
+#         logging.debug(f"Principal URL: {principal.url}")
 
-        calendars = principal.calendars()
+#         calendars = principal.calendars()
 
-        if calendars:
-            logging.debug("Available calendars:")
-            for calendar in calendars:
-                logging.debug(f"- {calendar.name} (URL: {calendar.url})")
-        else:
-            logging.debug("No calendars found.")
+#         if calendars:
+#             logging.debug("Available calendars:")
+#             for calendar in calendars:
+#                 logging.debug(f"- {calendar.name} (URL: {calendar.url})")
+#         else:
+#             logging.debug("No calendars found.")
 
-        return CALENDAR_URL
+#         return APPLE_CALENDAR_URL
 
-    except caldav.lib.error.AuthorizationError as e:
-        logging.debug(f"Authorization failed: {e}")
-    except Exception as e:
-        logging.debug(f"An error occurred: {e}")
+#     except caldav.lib.error.AuthorizationError as e:
+#         logging.debug(f"Authorization failed: {e}")
+#     except Exception as e:
+#         logging.debug(f"An error occurred: {e}")
 
-    return None
+#     return None
 
-def get_apple_calendar_events(calendar_name, start_date, end_date):
+def fetch_apple_calendar_events(selected_date):
+    calendar_name = APPLE_CALENDAR_NAME
+    calendar_start_date = selected_date
+    calendar_end_date = selected_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
+
     client = get_caldav_client()
     principal = client.principal()
     calendars = principal.calendars()
@@ -43,17 +48,11 @@ def get_apple_calendar_events(calendar_name, start_date, end_date):
     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
     if calendar:
-        events = calendar.search(start=start_date, end=end_date, event=True, expand=True)
+        events = calendar.search(start=calendar_start_date, end=calendar_end_date, event=True, expand=True)
         return events
     else:
         logging.debug(f"Calendar '{calendar_name}' not found.")
         return None
-
-def fetch_apple_calendar_events():
-    calendar_name = "QQ Home"
-    calendar_start_date = datetime.now()
-    calendar_end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
-    return get_apple_calendar_events(calendar_name, calendar_start_date, calendar_end_date)
 
 def process_apple_calendar_events(calendar_events):
     processed_events = []
@@ -69,6 +68,11 @@ def process_apple_calendar_events(calendar_events):
                     "timeEnd": component.get("dtend").dt,
                     "location": component.get("location")
                 })
+    return processed_events
+
+def get_apple_calendar_events(calendar_name, start_date, end_date):
+    events = fetch_apple_calendar_events(start_date, end_date)
+    processed_events = process_apple_calendar_events(events)
     return processed_events
 
 # def get_apple_calendar_todos(calendar_name, start_date, end_date):
@@ -92,64 +96,64 @@ def process_apple_calendar_events(calendar_events):
 #         logging.debug(f"Calendar '{calendar_name}' not found.")
 #         return None
 
-def add_event_to_calendar(calendar_name, summary, start_time, end_time):
-    client = get_caldav_client()
-    principal = client.principal()
-    calendars = principal.calendars()
+# def add_event_to_calendar(calendar_name, summary, start_time, end_time):
+#     client = get_caldav_client()
+#     principal = client.principal()
+#     calendars = principal.calendars()
 
-    calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
+#     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
-    if calendar:
-        event = calendar.save_event(
-            dtstart=start_time,
-            dtend=end_time,
-            summary=summary
-        )
-        return True
-    else:
-        logging.debug(f"Calendar '{calendar_name}' not found.")
-        return False
+#     if calendar:
+#         event = calendar.save_event(
+#             dtstart=start_time,
+#             dtend=end_time,
+#             summary=summary
+#         )
+#         return True
+#     else:
+#         logging.debug(f"Calendar '{calendar_name}' not found.")
+#         return False
 
-def update_event_in_calendar(calendar_name, event_uid, summary, start_time, end_time):
-    client = get_caldav_client()
-    principal = client.principal()
-    calendars = principal.calendars()
+# def update_event_in_calendar(calendar_name, event_uid, summary, start_time, end_time):
+#     client = get_caldav_client()
+#     principal = client.principal()
+#     calendars = principal.calendars()
 
-    calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
+#     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
-    if calendar:
-        event = calendar.event(event_uid)
-        event.load()
-        event.instance.vevent.summary.value = summary
-        event.instance.vevent.dtstart.value = start_time
-        event.instance.vevent.dtend.value = end_time
-        event.save()
-        return True
-    else:
-        logging.debug(f"Calendar '{calendar_name}' not found.")
-        return False
+#     if calendar:
+#         event = calendar.event(event_uid)
+#         event.load()
+#         event.instance.vevent.summary.value = summary
+#         event.instance.vevent.dtstart.value = start_time
+#         event.instance.vevent.dtend.value = end_time
+#         event.save()
+#         return True
+#     else:
+#         logging.debug(f"Calendar '{calendar_name}' not found.")
+#         return False
 
-def delete_event_from_calendar(calendar_name, event_uid):
-    client = get_caldav_client()
-    principal = client.principal()
-    calendars = principal.calendars()
+# def delete_event_from_calendar(calendar_name, event_uid):
+#     client = get_caldav_client()
+#     principal = client.principal()
+#     calendars = principal.calendars()
 
-    calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
+#     calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
 
-    if calendar:
-        event = calendar.event(event_uid)
-        event.delete()
-        return True
-    else:
-        logging.debug(f"Calendar '{calendar_name}' not found.")
-        return False
+#     if calendar:
+#         event = calendar.event(event_uid)
+#         event.delete()
+#         return True
+#     else:
+#         logging.debug(f"Calendar '{calendar_name}' not found.")
+#         return False
 
-def list_calendars():
-    client = get_caldav_client()
-    principal = client.principal()
-    calendars = principal.calendars()
+# def list_calendars():
+#     client = get_caldav_client()
+#     principal = client.principal()
+#     calendars = principal.calendars()
 
-    return [{'name': cal.name, 'url': cal.url} for cal in calendars]
+#     return [{'name': cal.name, 'url': cal.url} for cal in calendars]
 
 # # Example usage
 # if __name__ == "__main__":

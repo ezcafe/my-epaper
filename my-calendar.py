@@ -24,7 +24,7 @@ import math
 from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
 from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
-from my_calendar_weather import fetch_weather_data, process_weather_data
+from my_calendar_weather import get_weather_data
 
 # ======= Utils
 
@@ -53,8 +53,7 @@ def go_to_sleep(epd):
 
 def renderWeatherAndDate(draw):
     # get weather
-    data = fetch_weather_data()
-    weather_data = process_weather_data(data)
+    weather_data = get_weather_data()
 
     # get date
     currentDate = datetime.now()
@@ -63,36 +62,36 @@ def renderWeatherAndDate(draw):
     # render date
     renderAppBar(draw, weather_data, date)
 
-def normalize_events(events):
+def select_events(events):
     selected_event = None
-    normalized_events = []
+    remaining_events = []
     for event in events:
         if event['timeStart'] is None or event['timeStart'].strftime('%H:%M') != '00:00' or event['timeEnd'] is None or event['timeEnd'].strftime('%H:%M') != '00:00':
             selected_event = event
         else:
-            normalized_events.append(event)
+            remaining_events.append(event)
 
     if selected_event is None:
         selected_event = events[0]
-        normalized_events.pop(0)
+        remaining_events.pop(0)
 
-    return (selected_event, normalized_events)
+    return (selected_event, remaining_events)
 
 def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
     # get events
     calendar_events = fetch_apple_calendar_events()
     processed_events = process_apple_calendar_events(calendar_events)
-    normalized_events = normalize_events(processed_events)
+    remaining_events = select_events(processed_events)
 
     # render events
     viewport = {'width': 400, 'height': 300}
 
-    selected_event = normalized_events[0]
+    selected_event = remaining_events[0]
     if selected_event is not None:
         mainDraw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
         renderItemDetails(eventDetailsDraw, selected_event)
 
-    remaining_events = normalized_events[1]
+    remaining_events = remaining_events[1]
     eventCount = len(remaining_events)
     logging.debug(f"Event count: {eventCount}")
     if eventCount > 0:
@@ -100,6 +99,30 @@ def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
         logging.debug(f"Display count: {displayCount}")
         renderOneLineList(eventListDraw, remaining_events, displayCount)
         # renderTwoLinesList(eventListDraw, remaining_events, displayCount)
+
+def fetch_data():
+    current_date = datetime.now()
+
+    # Fetch calendar events
+    calendar_events = fetch_apple_calendar_events(current_date)
+    processed_events = process_apple_calendar_events(calendar_events)
+    selected_event, remaining_events = select_events(processed_events)
+
+    # Fetch weather data
+    weather_data = get_weather_data()
+
+    return current_date, selected_event, remaining_events, weather_data
+
+def renderUI(mainDraw, eventDetailsDraw, eventListDraw):
+    data = fetch_data()
+    current_date, selected_event, remaining_events, weather_data = data
+
+    renderWeatherAndDate(mainDraw)
+    renderEvents(mainDraw, eventDetailsDraw, eventListDraw)
+
+def mergeImages(mainImage, eventDetailsImage, eventListImage):
+    mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
+    mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
 
 try:
     logging.debug("Starting...")
@@ -117,21 +140,15 @@ try:
     if 0:
         logging.debug("E-paper refresh")
         epd.init()
-
-        renderWeatherAndDate(mainDraw)
-        renderEvents(mainDraw, eventDetailsDraw, eventListDraw)
-        mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
-        mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
+        renderUI(mainDraw, eventDetailsDraw, eventListDraw)
+        mergeImages(mainImage, eventDetailsImage, eventListImage)
         epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
         logging.debug("E-paper refreshes quickly")
         epd.init_fast(epd.Seconds_1_5S)
-
-        renderWeatherAndDate(mainDraw)
-        renderEvents(mainDraw, eventDetailsDraw, eventListDraw)
-        mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
-        mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
+        renderUI(mainDraw, eventDetailsDraw, eventListDraw)
+        mergeImages(mainImage, eventDetailsImage, eventListImage)
         epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 

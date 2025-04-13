@@ -35,6 +35,14 @@ CONFIG = {
             'paddingLeft': 5,
             'paddingRight': 5,
         },
+        'calendar': {
+            'dateHeight': 24,
+            'monthHeight': 16,
+            'linesGap': 4,
+            'iconSize': 24,
+            'paddingRight': 16,
+            'paddingTop': 16,
+        },
     },
     'normal': {
         'appBar': {
@@ -51,6 +59,14 @@ CONFIG = {
             'linesGap': 4,
             'paddingLeft': 16,
             'paddingRight': 16,
+        },
+        'calendar': {
+            'dateHeight': 24,
+            'monthHeight': 16,
+            'linesGap': 4,
+            'iconSize': 24,
+            'paddingRight': 16,
+            'paddingTop': 16,
         },
     },
 }[UI_MODE]

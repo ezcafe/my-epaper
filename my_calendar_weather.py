@@ -73,5 +73,11 @@ def process_weather_data(data):
         logging.error(f"Error processing weather data: {e}")
         raise
 
-
-
+def get_weather_data():
+    try:
+        weather_data = fetch_weather_data()
+        processed_weather_data = process_weather_data(weather_data)
+        return processed_weather_data
+    except Exception as e:
+        logging.error(f"Error getting weather data: {e}")
+        return None
