@@ -3,7 +3,7 @@ import math
 from PIL import Image, ImageDraw
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = False
+showBorder = True
 
 def renderAppBar(draw, current_date, weather_data):
     app_bar_config = CONFIG['appBar']
@@ -165,11 +165,13 @@ def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
     iconPosition = viewport_width - calendar_config['paddingRight']
     datePosition = calendar_config['paddingTop'] + calendar_config['dateHeight'] / 2
     monthPosition = datePosition + calendar_config['dateHeight'] / 2 + calendar_config['linesGap'] + calendar_config['monthHeight'] / 2
-    textPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap'] * 10
+    separatorPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap'] * 5
+    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 5
 
     mainDraw.text((iconPosition, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
     mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['calendar_date'], fill = FILL_BLACK, anchor = 'mm')
     mainDraw.text((middlePoint, monthPosition), current_date.strftime('%A').upper(), font = FONTS['calendar_month'], fill = FILL_BLACK, anchor = 'mm')
+    mainDraw.line((middlePoint - 30, separatorPosition, middlePoint + 30, separatorPosition), fill = FILL_BLACK)
     mainDraw.multiline_text((middlePoint, textPosition), extra_text, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'ms')
 
     if showBorder:
