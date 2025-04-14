@@ -34,7 +34,7 @@ CONFIG = {
             'linesGap': 2,
             'paddingLeft': 5,
             'paddingRight': 5,
-            'paddingTop': 5,
+            'paddingTop': 8,
         },
         'calendar': {
             'dateHeight': 100,
