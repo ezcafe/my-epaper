@@ -96,33 +96,33 @@ def get_time_difference(date1, date2):
 def get_extra_text(current_date):
     extra_text = ""
 
-    """
-    Parse SPECIAL_DAYS environment variable and return time until the next special day.
-    """
     try:
         special_days = json.loads(SPECIAL_DAYS)
+        sorted_days = []
 
         for name, date_str in special_days:
-            logging.debug(f"Special day: {name} - {date_str}")
             # Handle day-only (e.g., "25") or full date (e.g., "22/12")
             if "/" in date_str:
-                logging.debug("Full date")
                 day, month = map(int, date_str.split("/"))
                 special_date = datetime(current_date.year, month, day)
-                logging.debug(f"Special date: {special_date}")
                 # Adjust for past dates in the current year
                 if special_date < current_date:
                     special_date = special_date.replace(year=current_date.year + 1)
             else:
-                logging.debug("Day only")
                 special_date = current_date.replace(day=int(date_str))
-                logging.debug(f"Special date: {special_date}")
                 if special_date < current_date:
                     special_date = special_date.replace(month=current_date.month + 1)
 
-            # Calculate time difference
+            sorted_days.append((name, special_date))
+
+        # Sort special days by their time difference from the current date
+        sorted_days.sort(key=lambda x: x[1] - current_date)
+
+        # Generate the extra text for top 5 special days
+        for name, special_date in sorted_days[:3]:  # Limit to top 5
             time_difference = get_time_difference(current_date, special_date)
             extra_text += f"{name} in {time_difference}\n"
+
     except Exception as e:
         logging.error(f"Error parsing SPECIAL_DAYS: {e}")
 
