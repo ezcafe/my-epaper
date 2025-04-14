@@ -103,15 +103,20 @@ def get_extra_text(current_date):
         special_days = json.loads(SPECIAL_DAYS)
 
         for name, date_str in special_days:
+            logging.debug(f"Special day: {name} - {date_str}")
             # Handle day-only (e.g., "25") or full date (e.g., "22/12")
             if "/" in date_str:
+                logging.debug("Full date")
                 day, month = map(int, date_str.split("/"))
                 special_date = datetime(current_date.year, month, day)
+                logging.debug(f"Special date: {special_date}")
                 # Adjust for past dates in the current year
                 if special_date < current_date:
                     special_date = special_date.replace(year=current_date.year + 1)
             else:
+                logging.debug("Day only")
                 special_date = current_date.replace(day=int(date_str))
+                logging.debug(f"Special date: {special_date}")
                 if special_date < current_date:
                     special_date = special_date.replace(month=current_date.month + 1)
 
