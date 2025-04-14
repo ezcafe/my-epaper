@@ -67,7 +67,7 @@ CONFIG = {
             'linesGap': 4,
             'iconSize': 24,
             'paddingRight': 16,
-            'paddingTop': 16,
+            'paddingTop': 36,
             'specialDayCount': 3,
         },
     },
