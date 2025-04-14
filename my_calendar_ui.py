@@ -7,7 +7,7 @@ showBorder = False
 
 def renderAppBar(draw, current_date, weather_data):
     app_bar_config = CONFIG['appBar']
-    draw_size = draw.im.size
+    viewport_width, viewport_height = draw.im.size
     iconPosition = ((48 - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2, (app_bar_config['height'] - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2)
     titlePosition = app_bar_config['height'] / 2
     draw.text(iconPosition, weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
@@ -22,7 +22,7 @@ def renderAppBar(draw, current_date, weather_data):
 
 def renderOneLineListItem(draw, item, itemTopPosition):
     item_config = CONFIG['listItem']
-    draw_size = draw.im.size
+    viewport_width, viewport_height = draw.im.size
 
     draw.text((item_config['paddingLeft'], itemTopPosition + item_config['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
@@ -46,7 +46,7 @@ def renderOneLineList(draw, items):
 
 def renderTwoLinesListItem(draw, item, itemTopPosition ):
     item_config = CONFIG['listItem']
-    draw_size = draw.im.size
+    viewport_width, viewport_height = draw.im.size
 
     titlePosition = itemTopPosition + (item_config['height'] - item_config['titleHeight'] - item_config['linesGap'] - item_config['subtitleHeight']) / 2 + item_config['titleHeight']/2
     subtitlePosition = itemTopPosition + (item_config['height'] - item_config['titleHeight'] - item_config['linesGap'] - item_config['subtitleHeight']) / 2 + item_config['titleHeight'] + item_config['linesGap'] + item_config['subtitleHeight']/2
@@ -105,7 +105,7 @@ def renderItemDetails(draw, item):
         return
 
     item_config = CONFIG['listItem']
-    draw_size = draw.im.size
+    viewport_width, viewport_height = draw.im.size
 
     datePosition = item_config['paddingLeft']
     if item['timeStart'] is not None:
