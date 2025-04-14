@@ -26,6 +26,9 @@ from my_calendar_apple import fetch_apple_calendar_events, process_apple_calenda
 from my_calendar_weather import get_weather_data
 
 SPECIAL_DAYS = os.getenv('SPECIAL_DAYS', '[]')
+QTEST = os.getenv('QTEST')
+
+logging.debug(f"QTEST: {QTEST}")
 
 # ======= Utils
 
