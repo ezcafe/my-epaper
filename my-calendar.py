@@ -15,15 +15,14 @@ import logging
 from waveshare_epd import epd4in2_V2
 import time
 import json
-from PIL import Image, ImageDraw
+from PIL import Image
 import traceback
-
 
 logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime, timedelta
 
-from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
+from my_calendar_config import CONFIG
 from my_calendar_ui import renderEventUI, renderCalendarUI
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import get_weather_data
