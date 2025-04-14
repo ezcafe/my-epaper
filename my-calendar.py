@@ -72,6 +72,24 @@ def fetch_data():
 
     return current_date, selected_event, remaining_events, weather_data
 
+def get_time_difference(date1, date2):
+    """
+    Calculate the difference between two dates.
+    If the difference is less than 1 day, return the difference in hours or minutes.
+    """
+    delta = date2 - date1
+    days = delta.days
+    seconds = delta.total_seconds()
+
+    if days >= 1:
+        return f"{days} day(s)"
+    elif seconds >= 3600:
+        hours = seconds // 3600
+        return f"{int(hours)} hour(s)"
+    else:
+        minutes = seconds // 60
+        return f"{int(minutes)} minute(s)"
+
 def renderUI(mainImage):
     data = fetch_data()
     current_date, selected_event, remaining_events, weather_data = data
@@ -82,7 +100,8 @@ def renderUI(mainImage):
         renderEventUI(mainImage, data)
     else:
         logging.debug("Rendering Calendar UI")
-        renderCalendarUI(mainImage, current_date, 'TODO', weather_data)
+        extra_text = f"Payday in {get_time_difference(current_date, current_date.replace(day=25))}"
+        renderCalendarUI(mainImage, current_date, extra_text, weather_data)
 
 try:
     logging.debug("Starting...")

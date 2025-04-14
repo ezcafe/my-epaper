@@ -3,7 +3,7 @@ import math
 from PIL import Image, ImageDraw
 from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
-showBorder = True
+showBorder = False
 
 def renderAppBar(draw, current_date, weather_data):
     app_bar_config = CONFIG['appBar']
