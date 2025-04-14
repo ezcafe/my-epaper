@@ -33,13 +33,16 @@ openweathermap_to_weathericons = {
 
 # Fetch weather data
 def fetch_weather_data():
-    WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
-    url = f"{WEATHER_BASE_URL}?lat={WEATHER_LATITUDE}&lon={WEATHER_LONGITUDE}&units={WEATHER_UNITS}&appid={WEATHER_API_KEY}"
     try:
-        response = requests.get(url)
+        WEATHER_BASE_URL = 'https://api.openweathermap.org/data/2.5/weather'
+        url = f"{WEATHER_BASE_URL}?lat={WEATHER_LATITUDE}&lon={WEATHER_LONGITUDE}&units={WEATHER_UNITS}&appid={WEATHER_API_KEY}"
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
         logging.debug("Weather data fetched successfully.")
         return response.json()
+    except requests.Timeout:
+        logging.error("Request timed out while fetching weather data.")
+        raise
     except requests.RequestException as e:
         logging.error(f"Failed to fetch weather data: {e}")
         raise
@@ -48,37 +51,33 @@ def fetch_weather_data():
 def process_weather_data(data):
     try:
         logging.debug(data)
-        current = data['main']
+        weather = data.get('weather', [{}])[0]
+        current = data.get('main', {})
 
-        weather_icon_code = data['weather'][0]['icon']  # Get OpenWeatherMap icon code
-        weather_icon_text = openweathermap_to_weathericons.get(weather_icon_code, "?")  # Default to "?" if not found
+        weather_icon_code = weather.get('icon', '')
+        weather_icon_text = openweathermap_to_weathericons.get(weather_icon_code, "?")
 
-        weather_temp_unit = '°'
-        if WEATHER_UNITS == "imperial":
-            weather_temp_unit = "F"
-        weather_temp = f"{math.floor(current['temp'])}{weather_temp_unit}"
+        weather_temp_unit = "F" if WEATHER_UNITS == "imperial" else "°"
+        weather_temp = f"{math.floor(current.get('temp', 0))}{weather_temp_unit}"
 
-        # https://openweathermap.org/current
         weather_data = {
             "temp_current": weather_temp,
-            "feels_like": current['feels_like'],
-            "humidity": current['humidity'],
-            "report": data['weather'][0]['description'],
+            "feels_like": current.get('feels_like', 0),
+            "humidity": current.get('humidity', 0),
+            "report": weather.get('description', 'N/A'),
             "icon_code": weather_icon_text,
-            "temp_max": current['temp_max'],
-            "temp_min": current['temp_min'],
+            "temp_max": current.get('temp_max', 0),
+            "temp_min": current.get('temp_min', 0),
         }
         logging.debug("Weather data processed successfully.")
         return weather_data
-    except KeyError as e:
+    except Exception as e:
         logging.error(f"Error processing weather data: {e}")
         raise
 
 def get_weather_data():
     try:
-        weather_data = fetch_weather_data()
-        processed_weather_data = process_weather_data(weather_data)
-        return processed_weather_data
+        return process_weather_data(fetch_weather_data())
     except Exception as e:
         logging.error(f"Error getting weather data: {e}")
         return None
