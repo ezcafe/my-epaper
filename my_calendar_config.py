@@ -37,7 +37,7 @@ CONFIG = {
         },
         'calendar': {
             'dateHeight': 100,
-            'monthHeight': 24,
+            'monthHeight': 22,
             'linesGap': 4,
             'iconSize': 24,
             'paddingRight': 16,
@@ -62,7 +62,7 @@ CONFIG = {
         },
         'calendar': {
             'dateHeight': 100,
-            'monthHeight': 24,
+            'monthHeight': 22,
             'linesGap': 4,
             'iconSize': 24,
             'paddingRight': 16,
@@ -77,6 +77,6 @@ FONTS = {
     'body': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16),
     'support_text': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14),
     'calendar_date': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 100),
-    'calendar_month': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24),
+    'calendar_month': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22),
     'weather': ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 24)
 }

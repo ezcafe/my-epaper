@@ -12,6 +12,7 @@ if os.path.exists(libdir):
 import logging
 from waveshare_epd import epd4in2_V2
 import time
+import json
 from PIL import Image, ImageDraw
 import traceback
 
@@ -23,6 +24,8 @@ from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LON
 from my_calendar_ui import renderEventUI, renderCalendarUI
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import get_weather_data
+
+SPECIAL_DAYS = os.getenv('SPECIAL_DAYS', '[[Payday, 25], [Birthday, 22/12]]')
 
 # ======= Utils
 
@@ -90,6 +93,36 @@ def get_time_difference(date1, date2):
         minutes = seconds // 60
         return f"{int(minutes)} minute(s)"
 
+def get_extra_text(current_date):
+    extra_text = ""
+
+    """
+    Parse SPECIAL_DAYS environment variable and return time until the next special day.
+    """
+    try:
+        special_days = json.loads(SPECIAL_DAYS)
+
+        for name, date_str in special_days:
+            # Handle day-only (e.g., "25") or full date (e.g., "22/12")
+            if "/" in date_str:
+                day, month = map(int, date_str.split("/"))
+                special_date = datetime(current_date.year, month, day)
+                # Adjust for past dates in the current year
+                if special_date < current_date:
+                    special_date = special_date.replace(year=current_date.year + 1)
+            else:
+                special_date = current_date.replace(day=int(date_str))
+                if special_date < current_date:
+                    special_date = special_date.replace(month=current_date.month + 1)
+
+            # Calculate time difference
+            time_difference = get_time_difference(current_date, special_date)
+            extra_text += f"{name} in {time_difference}\n"
+    except Exception as e:
+        logging.error(f"Error parsing SPECIAL_DAYS: {e}")
+
+    return extra_text
+
 def renderUI(mainImage):
     data = fetch_data()
     current_date, selected_event, remaining_events, weather_data = data
@@ -100,7 +133,7 @@ def renderUI(mainImage):
         renderEventUI(mainImage, data)
     else:
         logging.debug("Rendering Calendar UI")
-        extra_text = f"Payday in {get_time_difference(current_date, current_date.replace(day=25))}"
+        extra_text = get_extra_text(current_date)
         renderCalendarUI(mainImage, current_date, extra_text, weather_data)
 
 try:

@@ -166,7 +166,7 @@ def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
     datePosition = calendar_config['paddingTop'] + calendar_config['dateHeight'] / 2
     monthPosition = datePosition + calendar_config['dateHeight'] / 2 + calendar_config['linesGap'] + calendar_config['monthHeight'] / 2
     separatorPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap'] * 3
-    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 7
+    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 9
 
     mainDraw.text((iconPosition, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
     mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['calendar_date'], fill = FILL_BLACK, anchor = 'mm')
