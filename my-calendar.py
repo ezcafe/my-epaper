@@ -19,10 +19,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime, timedelta
 
-import math
-
 from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
-from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList, renderCalendar
+from my_calendar_ui import renderEventUI, renderCalendarUI
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import get_weather_data
 
@@ -74,56 +72,34 @@ def fetch_data():
 
     return current_date, selected_event, remaining_events, weather_data
 
-def renderUI(mainDraw, eventDetailsDraw, eventListDraw):
-    current_date, selected_event, remaining_events, weather_data = fetch_data()
-
-    renderAppBar(mainDraw, current_date, weather_data)
-
-    viewport_width, viewport_height = mainDraw.im.size
-    mainDraw.line(
-        (viewport_width / 2, CONFIG['appBar']['height'], viewport_width / 2, viewport_height),
-        fill=FILL_BLACK
-    )
+def renderUI(mainImage):
+    data = fetch_data()
+    current_date, selected_event, remaining_events, weather_data = data
 
     logging.debug(f"selected_event: {selected_event}")
     if selected_event:
-        logging.debug("render events")
-        renderItemDetails(eventDetailsDraw, selected_event)
-        renderOneLineList(eventListDraw, remaining_events)
-        # renderTwoLinesList(eventListDraw, remaining_events)
+        logging.debug("Rendering Event UI")
+        renderEventUI(mainImage, data)
     else:
-        logging.debug("render calendar")
-        renderCalendar(mainDraw, current_date, 'TODO', weather_data)
-
-def mergeImages(mainImage, eventDetailsImage, eventListImage):
-    mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
-    mainImage.paste(eventListImage, (math.ceil(epd.width / 2) + 1, CONFIG['appBar']['height'] + 1))
+        logging.debug("Rendering Calendar UI")
+        renderCalendarUI(mainImage, current_date, 'TODO', weather_data)
 
 try:
     logging.debug("Starting...")
     epd = init()
 
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-    mainDraw = ImageDraw.Draw(mainImage)
-
-    eventDetailsImage = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1), 255)
-    eventDetailsDraw = ImageDraw.Draw(eventDetailsImage)
-
-    eventListImage = Image.new('1', (math.ceil(epd.width / 2), epd.height - CONFIG['appBar']['height'] - 1), 255)
-    eventListDraw = ImageDraw.Draw(eventListImage)
 
     if 0:
         logging.debug("E-paper refresh")
         epd.init()
-        renderUI(mainDraw, eventDetailsDraw, eventListDraw)
-        mergeImages(mainImage, eventDetailsImage, eventListImage)
+        renderUI(mainImage)
         epd.display(epd.getbuffer(mainImage))
         time.sleep(2)
     else:
         logging.debug("E-paper refreshes quickly")
         epd.init_fast(epd.Seconds_1_5S)
-        renderUI(mainDraw, eventDetailsDraw, eventListDraw)
-        mergeImages(mainImage, eventDetailsImage, eventListImage)
+        renderUI(mainImage)
         epd.display_Fast(epd.getbuffer(mainImage))
         time.sleep(2)
 
