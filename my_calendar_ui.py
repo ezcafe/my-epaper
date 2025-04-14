@@ -107,7 +107,7 @@ def renderItemDetails(draw, item):
     item_config = CONFIG['listItem']
     viewport_width, viewport_height = draw.im.size
 
-    datePosition = item_config['paddingLeft']
+    datePosition = item_config['paddingTop']
     if item['timeStart'] is not None:
         titlePosition = datePosition + item_config['subtitleHeight'] + item_config['linesGap']
         draw.text((item_config['paddingLeft'], datePosition + item_config['subtitleHeight'] / 2), formatItemDetailsTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
