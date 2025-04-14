@@ -10,9 +10,10 @@ UI_MODE = 'compact'  # 'compact' or 'normal'
 
 import sys
 import os
-picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
-if os.path.exists(libdir):
+base_dir = os.path.dirname(os.path.realpath(__file__))
+picdir = os.path.join(base_dir, 'pic')
+libdir = os.path.join(base_dir, 'lib')
+if os.path.isdir(libdir):
     sys.path.append(libdir)
 
 FILL_BLACK = 0
@@ -76,11 +77,15 @@ CONFIG = {
 }[UI_MODE]
 
 from PIL import ImageFont
+
+def load_font(file_name, size):
+    return ImageFont.truetype(os.path.join(picdir, file_name), size)
+
 FONTS = {
-    'headline': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22),
-    'body': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16),
-    'support_text': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14),
-    'calendar_date': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 100),
-    'calendar_month': ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 22),
-    'weather': ImageFont.truetype(os.path.join(picdir, 'weathericons-regular-webfont.ttf'), 24)
+    'headline': load_font('Font.ttc', 22),
+    'body': load_font('Font.ttc', 16),
+    'support_text': load_font('Font.ttc', 14),
+    'calendar_date': load_font('Font.ttc', 100),
+    'calendar_month': load_font('Font.ttc', 22),
+    'weather': load_font('weathericons-regular-webfont.ttf', 24),
 }

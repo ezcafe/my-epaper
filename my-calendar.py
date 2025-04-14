@@ -4,9 +4,10 @@
 # ======= Import
 import sys
 import os
-picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
-if os.path.exists(libdir):
+base_dir = os.path.dirname(os.path.realpath(__file__))
+picdir = os.path.join(base_dir, 'pic')
+libdir = os.path.join(base_dir, 'lib')
+if os.path.isdir(libdir):
     sys.path.append(libdir)
 
 from dotenv import dotenv_values
