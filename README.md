@@ -27,10 +27,10 @@ Use calendar name in iCloud section as your APPLE_CALENDAR_NAME
 
 ### Update information
 
-Add these lines to ~/.bashrc
+Update above values to .env file
 
-export APPLE_ID='your_apple_id@icloud.com'
-export APPLE_PASSWORD='your_app_specific_password'
-export APPLE_CALENDAR_NAME = 'your_calendar_name'
-export WEATHER_API_KEY='your_api_key'
-export SPECIAL_DAYS='[["Payday", "25"], ["Birthday", "20/02"], ["Travel", "26/1"]]'
+APPLE_ID='your_apple_id@icloud.com'
+APPLE_PASSWORD='your_app_specific_password'
+APPLE_CALENDAR_NAME = 'your_calendar_name'
+WEATHER_API_KEY='your_api_key'
+SPECIAL_DAYS='[["Payday", "25"], ["Birthday", "20/02"], ["Travel", "26/1"], ["New Year", "1/1"]]'

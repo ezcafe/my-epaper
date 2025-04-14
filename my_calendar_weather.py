@@ -1,11 +1,12 @@
 import logging
 import math
-import os
 
+from dotenv import dotenv_values
 import requests
 from my_calendar_config import WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
 
-WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
+env_config = dotenv_values(".env")
+WEATHER_API_KEY = env_config.get('WEATHER_API_KEY', '')
 
 # https://erikflowers.github.io/weather-icons/
 # Mapping OpenWeatherMap icon codes to weathericons-regular-webfont text

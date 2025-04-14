@@ -1,12 +1,14 @@
-import os
 import caldav
 from caldav.elements import dav, cdav
 from datetime import datetime, timedelta
+from dotenv import dotenv_values
 import logging
 
-APPLE_ID = os.getenv('APPLE_ID')
-APPLE_PASSWORD = os.getenv('APPLE_PASSWORD')
-APPLE_CALENDAR_NAME = os.getenv('APPLE_CALENDAR_NAME')
+env_config = dotenv_values(".env")
+APPLE_ID = env_config.get('APPLE_ID', '')
+APPLE_PASSWORD = env_config.get('APPLE_PASSWORD', '')
+APPLE_CALENDAR_NAME = env_config.get('APPLE_CALENDAR_NAME', '')
+
 APPLE_CALENDAR_URL = 'https://caldav.icloud.com'  # We'll use the base URL
 
 def get_caldav_client():

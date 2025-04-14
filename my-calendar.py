@@ -17,7 +17,7 @@ import json
 from PIL import Image, ImageDraw
 import traceback
 
-env_config = dotenv_values(".env")
+
 logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime, timedelta
@@ -27,9 +27,8 @@ from my_calendar_ui import renderEventUI, renderCalendarUI
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import get_weather_data
 
-SPECIAL_DAYS = os.getenv('SPECIAL_DAYS', '[]')
-
-logging.debug(f"QTEST: {env_config['QTEST']}")
+env_config = dotenv_values(".env")
+SPECIAL_DAYS = env_config.get('SPECIAL_DAYS', '[]')
 
 # ======= Utils
 
