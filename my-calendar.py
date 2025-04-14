@@ -118,8 +118,9 @@ def get_extra_text(current_date):
         # Sort special days by their time difference from the current date
         sorted_days.sort(key=lambda x: x[1] - current_date)
 
-        # Generate the extra text for top 5 special days
-        for name, special_date in sorted_days[:3]:  # Limit to top 5
+        # Generate the extra text for top 3 special days
+        specialDayCount = CONFIG['calendar']['specialDayCount']
+        for name, special_date in sorted_days[:specialDayCount]:  # Limit to top 3
             time_difference = get_time_difference(current_date, special_date)
             extra_text += f"{name} in {time_difference}\n"
 

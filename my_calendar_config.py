@@ -42,6 +42,7 @@ CONFIG = {
             'iconSize': 24,
             'paddingRight': 16,
             'paddingTop': 16,
+            'specialDayCount': 3,
         },
     },
     'normal': {
@@ -67,6 +68,7 @@ CONFIG = {
             'iconSize': 24,
             'paddingRight': 16,
             'paddingTop': 16,
+            'specialDayCount': 3,
         },
     },
 }[UI_MODE]
