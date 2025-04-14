@@ -9,6 +9,7 @@ libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
 
+from dotenv import dotenv_values
 import logging
 from waveshare_epd import epd4in2_V2
 import time
@@ -16,6 +17,7 @@ import json
 from PIL import Image, ImageDraw
 import traceback
 
+env_config = dotenv_values(".env")
 logging.basicConfig(level=logging.DEBUG)
 
 from datetime import datetime, timedelta
@@ -26,9 +28,8 @@ from my_calendar_apple import fetch_apple_calendar_events, process_apple_calenda
 from my_calendar_weather import get_weather_data
 
 SPECIAL_DAYS = os.getenv('SPECIAL_DAYS', '[]')
-QTEST = os.getenv('QTEST')
 
-logging.debug(f"QTEST: {QTEST}")
+logging.debug(f"QTEST: {env_config['QTEST']}")
 
 # ======= Utils
 

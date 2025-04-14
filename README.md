@@ -3,6 +3,7 @@
 ## Install libs
 
 sudo apt install python3-caldav
+sudo apt install python3-dotenv
 
 ## Keys
 
