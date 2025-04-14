@@ -85,11 +85,14 @@ def renderUI(mainDraw, eventDetailsDraw, eventListDraw):
         fill=FILL_BLACK
     )
 
+    logging.debug(f"selected_event: {selected_event}")
     if selected_event:
+        logging.debug("render events")
         renderItemDetails(eventDetailsDraw, selected_event)
         renderOneLineList(eventListDraw, remaining_events)
         # renderTwoLinesList(eventListDraw, remaining_events)
     else:
+        logging.debug("render calendar")
         renderCalendar(mainDraw, current_date, 'TODO', weather_data)
 
 def mergeImages(mainImage, eventDetailsImage, eventListImage):
