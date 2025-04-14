@@ -169,8 +169,8 @@ def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
     textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 2
 
     mainDraw.text((iconPosition, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rt')
-    mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['title'], fill = FILL_BLACK, anchor = 'mm')
-    mainDraw.text((middlePoint, monthPosition), current_date.strftime('%A'), font = FONTS['body'], fill = FILL_BLACK, anchor = 'mm')
+    mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['calendar_date'], fill = FILL_BLACK, anchor = 'mm')
+    mainDraw.text((middlePoint, monthPosition), current_date.strftime('%A'), font = FONTS['calendar_month'], fill = FILL_BLACK, anchor = 'mm')
     mainDraw.line((0, separatorPosition, viewport_width, separatorPosition), fill = FILL_BLACK)
     mainDraw.multiline_text((middlePoint, textPosition), extra_text, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'ms')
 
