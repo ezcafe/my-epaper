@@ -149,20 +149,11 @@ try:
     logging.debug("Starting...")
     epd = init()
 
+    epd.init_fast(epd.Seconds_1_5S)
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-
-    if 1:
-        logging.debug("E-paper refresh")
-        epd.init()
-        renderUI(mainImage)
-        epd.display(epd.getbuffer(mainImage))
-        time.sleep(2)
-    else:
-        logging.debug("E-paper refreshes quickly")
-        epd.init_fast(epd.Seconds_1_5S)
-        renderUI(mainImage)
-        epd.display_Fast(epd.getbuffer(mainImage))
-        time.sleep(2)
+    renderUI(mainImage)
+    epd.display_Fast(epd.getbuffer(mainImage))
+    time.sleep(2)
 
     go_to_sleep(epd)
 
