@@ -151,7 +151,7 @@ try:
 
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
 
-    if 0:
+    if 1:
         logging.debug("E-paper refresh")
         epd.init()
         renderUI(mainImage)
