@@ -3,13 +3,13 @@ from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
 showBorder = False
 
-def renderAppBar(draw, weather_data, text):
+def renderAppBar(draw, current_date, weather_data):
     app_bar_config = CONFIG['appBar']
     draw_size = draw.im.size
     iconPosition = ((48 - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2, (app_bar_config['height'] - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2)
     titlePosition = app_bar_config['height'] / 2
     draw.text(iconPosition, weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
-    draw.text((48, titlePosition), text, font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text((48, titlePosition), current_date.strftime('%A, %d/%m'), font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
     draw.text((draw_size[0] - app_bar_config['paddingRight'], titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, app_bar_config['height'], draw_size[0], app_bar_config['height']), fill = FILL_BLACK)
     if showBorder:
@@ -32,8 +32,13 @@ def renderOneLineListItem(draw, item, itemTopPosition):
         if item['timeStart'] is not None:
             draw.line((draw_size[0] - item_config['paddingRight'], itemTopPosition, draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height']), fill = FILL_BLACK)
 
-def renderOneLineList(draw, items, count):
-    for j in range(0, count):
+def renderOneLineList(draw, items):
+    if len(items) == 0:
+        return
+
+    displayCount = min(len(items), CONFIG['visibleItemCount'])
+
+    for j in range(0, displayCount):
         itemTopPosition = j * CONFIG['listItem']['height']
         renderOneLineListItem(draw, items[j], itemTopPosition)
 
@@ -58,8 +63,13 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
             draw.line((draw_size[0] - 48, itemTopPosition + item_config['height'] / 2, draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), fill = FILL_BLACK)
             draw.line((draw_size[0] - item_config['paddingRight'], itemTopPosition, draw_size[0] - item_config['paddingRight'], itemTopPosition + item_config['height']), fill = FILL_BLACK)
 
-def renderTwoLinesList(draw, items, count):
-    for j in range(0, count):
+def renderTwoLinesList(draw, items):
+    if len(items) == 0:
+        return
+
+    displayCount = min(len(items), CONFIG['visibleItemCount'])
+
+    for j in range(0, displayCount):
         itemTopPosition = j * CONFIG['listItem']['height']
         item = items[j]
         if item['subtitle'] is not None:
@@ -89,6 +99,9 @@ def formatItemDetailsTime(timeStart, timeEnd):
     return timeText
 
 def renderItemDetails(draw, item):
+    if item is None:
+        return
+
     item_config = CONFIG['listItem']
     draw_size = draw.im.size
 
@@ -118,7 +131,7 @@ def renderItemDetails(draw, item):
         if item['subtitle'] is not None or item['location'] is not None:
             draw.line((item_config['paddingLeft'], subtitlePosition + item_config['subtitleHeight'] / 2, draw_size[0], subtitlePosition + item_config['subtitleHeight'] / 2), fill = FILL_BLACK)
 
-def renderCalendar(draw, time, text, weather_data):
+def renderCalendar(draw, current_date, extra_text, weather_data):
     calendar_config = CONFIG['calendar']
     draw_size = draw.im.size
     middlePoint = draw_size[0] / 2
@@ -130,10 +143,10 @@ def renderCalendar(draw, time, text, weather_data):
     textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 2
 
     draw.text((iconPosition, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rb')
-    draw.text((middlePoint, datePosition), time.strftime('%d'), font = FONTS['title'], fill = FILL_BLACK, anchor = 'mm')
-    draw.text((middlePoint, monthPosition), time.strftime('%A'), font = FONTS['body'], fill = FILL_BLACK, anchor = 'mm')
+    draw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['title'], fill = FILL_BLACK, anchor = 'mm')
+    draw.text((middlePoint, monthPosition), current_date.strftime('%A'), font = FONTS['body'], fill = FILL_BLACK, anchor = 'mm')
     draw.line((0, separatorPosition, draw_size[0], monthPosition + calendar_config['linesGap']), fill = FILL_BLACK)
-    draw.multiline_text((middlePoint, textPosition), text, font = FONTS['support_text'], fill = FILL_BLACK)
+    draw.multiline_text((middlePoint, textPosition), extra_text, font = FONTS['support_text'], fill = FILL_BLACK)
 
     if showBorder:
         draw.line((middlePoint, 0, middlePoint, draw_size[1]), fill = FILL_BLACK)

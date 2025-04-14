@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 import math
 
 from my_calendar_config import CONFIG, FILL_BLACK, WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
-from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList
+from my_calendar_ui import renderAppBar, renderItemDetails, renderOneLineList, renderTwoLinesList, renderCalendar
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import get_weather_data
 
@@ -51,54 +51,15 @@ def go_to_sleep(epd):
 
 # ======= Render
 
-def renderWeatherAndDate(draw):
-    # get weather
-    weather_data = get_weather_data()
-
-    # get date
-    currentDate = datetime.now()
-    date = currentDate.strftime('%A, %d/%m')
-
-    # render date
-    renderAppBar(draw, weather_data, date)
-
 def select_events(events):
-    selected_event = None
-    remaining_events = []
-    for event in events:
-        if event['timeStart'] is None or event['timeStart'].strftime('%H:%M') != '00:00' or event['timeEnd'] is None or event['timeEnd'].strftime('%H:%M') != '00:00':
-            selected_event = event
-        else:
-            remaining_events.append(event)
+    remaining_events = [event for event in events if not (
+        event['timeStart'] and event['timeStart'].strftime('%H:%M') == '00:00' and
+        event['timeEnd'] and event['timeEnd'].strftime('%H:%M') == '00:00'
+    )]
 
-    if selected_event is None:
-        selected_event = events[0]
-        remaining_events.pop(0)
+    selected_event = remaining_events.pop(0) if remaining_events else (events[0] if events else None)
 
-    return (selected_event, remaining_events)
-
-def renderEvents(mainDraw, eventDetailsDraw, eventListDraw):
-    # get events
-    calendar_events = fetch_apple_calendar_events()
-    processed_events = process_apple_calendar_events(calendar_events)
-    remaining_events = select_events(processed_events)
-
-    # render events
-    viewport = {'width': 400, 'height': 300}
-
-    selected_event = remaining_events[0]
-    if selected_event is not None:
-        mainDraw.line((viewport['width'] / 2, CONFIG['appBar']['height'], viewport['width'] / 2, viewport['height']), fill = FILL_BLACK)
-        renderItemDetails(eventDetailsDraw, selected_event)
-
-    remaining_events = remaining_events[1]
-    eventCount = len(remaining_events)
-    logging.debug(f"Event count: {eventCount}")
-    if eventCount > 0:
-        displayCount = min(eventCount, CONFIG['visibleItemCount'])
-        logging.debug(f"Display count: {displayCount}")
-        renderOneLineList(eventListDraw, remaining_events, displayCount)
-        # renderTwoLinesList(eventListDraw, remaining_events, displayCount)
+    return selected_event, remaining_events
 
 def fetch_data():
     current_date = datetime.now()
@@ -114,11 +75,22 @@ def fetch_data():
     return current_date, selected_event, remaining_events, weather_data
 
 def renderUI(mainDraw, eventDetailsDraw, eventListDraw):
-    data = fetch_data()
-    current_date, selected_event, remaining_events, weather_data = data
+    current_date, selected_event, remaining_events, weather_data = fetch_data()
 
-    renderWeatherAndDate(mainDraw)
-    renderEvents(mainDraw, eventDetailsDraw, eventListDraw)
+    renderAppBar(mainDraw, current_date, weather_data)
+
+    viewport_width, viewport_height = mainDraw.im.size
+    mainDraw.line(
+        (viewport_width / 2, CONFIG['appBar']['height'], viewport_width / 2, viewport_height),
+        fill=FILL_BLACK
+    )
+
+    if selected_event:
+        renderItemDetails(eventDetailsDraw, selected_event)
+        renderOneLineList(eventListDraw, remaining_events)
+        # renderTwoLinesList(eventListDraw, remaining_events)
+    else:
+        renderCalendar(mainDraw, current_date, 'TODO', weather_data)
 
 def mergeImages(mainImage, eventDetailsImage, eventListImage):
     mainImage.paste(eventDetailsImage, (0, CONFIG['appBar']['height'] + 1))
