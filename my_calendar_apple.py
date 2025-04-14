@@ -12,7 +12,11 @@ APPLE_CALENDAR_NAME = env_config.get('APPLE_CALENDAR_NAME', '')
 APPLE_CALENDAR_URL = 'https://caldav.icloud.com'  # We'll use the base URL
 
 def get_caldav_client():
-    return caldav.DAVClient(url=APPLE_CALENDAR_URL, username=APPLE_ID, password=APPLE_PASSWORD)
+    try:
+        return caldav.DAVClient(url=APPLE_CALENDAR_URL, username=APPLE_ID, password=APPLE_PASSWORD)
+    except Exception as e:
+        logging.error(f"Failed to create CalDAV client: {e}")
+        raise
 
 # def discover_caldav_calendars():
 #     try:
@@ -39,43 +43,55 @@ def get_caldav_client():
 #     return None
 
 def fetch_apple_calendar_events(selected_date):
-    calendar_name = APPLE_CALENDAR_NAME
-    calendar_start_date = selected_date
-    calendar_end_date = selected_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1,microseconds=-1)
+    try:
+        calendar_start_date = selected_date
+        calendar_end_date = selected_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
 
-    client = get_caldav_client()
-    principal = client.principal()
-    calendars = principal.calendars()
+        client = get_caldav_client()
+        principal = client.principal()
+        calendars = principal.calendars()
 
-    calendar = next((cal for cal in calendars if cal.name == calendar_name), None)
+        calendar = next((cal for cal in calendars if cal.name == APPLE_CALENDAR_NAME), None)
 
-    if calendar:
-        events = calendar.search(start=calendar_start_date, end=calendar_end_date, event=True, expand=True)
-        return events
-    else:
-        logging.debug(f"Calendar '{calendar_name}' not found.")
-        return None
+        if not calendar:
+            logging.warning(f"Calendar '{APPLE_CALENDAR_NAME}' not found.")
+            return []
+
+        return calendar.search(start=calendar_start_date, end=calendar_end_date, event=True, expand=True)
+
+    except caldav.lib.error.AuthorizationError as e:
+        logging.error(f"Authorization failed: {e}")
+    except Exception as e:
+        logging.error(f"An error occurred while fetching calendar events: {e}")
+
+    return []
 
 def process_apple_calendar_events(calendar_events):
     processed_events = []
-    if calendar_events:
-        for calendar_event in calendar_events:
-            for component in calendar_event.icalendar_instance.walk():
-                if component.name != "VEVENT":
-                    continue
-                processed_events.append({
-                    "title": component.get("summary"),
-                    "subtitle": component.get("description"),
-                    "timeStart": component.get("dtstart").dt,
-                    "timeEnd": component.get("dtend").dt,
-                    "location": component.get("location")
-                })
+
+    if not calendar_events:
+        return processed_events
+
+    for event in calendar_events:
+        vevents = [comp for comp in event.icalendar_instance.walk() if comp.name == "VEVENT"]
+        for vevent in vevents:
+            processed_events.append({
+                "title": vevent.get("summary"),
+                "subtitle": vevent.get("description"),
+                "timeStart": vevent.get("dtstart").dt,
+                "timeEnd": vevent.get("dtend").dt,
+                "location": vevent.get("location")
+            })
+
     return processed_events
 
 def get_apple_calendar_events(calendar_name, start_date, end_date):
-    events = fetch_apple_calendar_events(start_date, end_date)
-    processed_events = process_apple_calendar_events(events)
-    return processed_events
+    try:
+        events = fetch_apple_calendar_events(start_date)
+        return process_apple_calendar_events(events)
+    except Exception as e:
+        logging.error(f"Error retrieving events for calendar '{calendar_name}': {e}")
+        return []
 
 # def get_apple_calendar_todos(calendar_name, start_date, end_date):
 #     client = get_caldav_client()
