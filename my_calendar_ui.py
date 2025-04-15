@@ -217,7 +217,7 @@ def renderCalendarUI(mainImage, current_date, extra_text):
     mainDraw.text((middlePoint, positions["date"]), current_date.strftime('%d'), font=FONTS['calendar_date'], fontmode='L', fill=FILL_BLACK, anchor='mm')
     mainDraw.text((middlePoint, positions["month"]), current_date.strftime('%A').upper(), font=FONTS['calendar_month'], fontmode='L', fill=FILL_BLACK, anchor='mm')
     mainDraw.line((middlePoint - 30, positions["separator"], middlePoint + 30, positions["separator"]), fill=FILL_BLACK)
-    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['subtitle'], fill=FILL_BLACK, anchor='ms', align='center')
+    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['subtitle'], fontmode='L', fill=FILL_BLACK, anchor='ms', align='center')
 
     if showBorder:
         border_lines = [
