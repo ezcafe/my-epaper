@@ -2,8 +2,8 @@
 
 ## Install libs
 
-sudo apt install python3-caldav
-sudo apt install python3-dotenv
+sudo apt-get update
+sudo apt-get install python3-pip, python3-pil, python3-caldav, python3-dotenv
 
 ## Keys
 

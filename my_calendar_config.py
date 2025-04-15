@@ -40,7 +40,7 @@ CONFIG = {
         'calendar': {
             'dateHeight': 100,
             'monthHeight': 22,
-            'linesGap': 4,
+            'linesGap': 6,
             'iconSize': 24,
             'paddingRight': 16,
             'paddingTop': 36,
@@ -67,7 +67,7 @@ CONFIG = {
         'calendar': {
             'dateHeight': 100,
             'monthHeight': 22,
-            'linesGap': 4,
+            'linesGap': 6,
             'iconSize': 24,
             'paddingRight': 16,
             'paddingTop': 36,
