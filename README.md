@@ -64,7 +64,7 @@ crontab -e
 
 then add this (update calendar every 30 mins)
 
-*/30 * * * * venv/bin/python $HOME/my-epaper/my-calendar.py
+*/30 * * * * python3 $HOME/my-epaper/my-calendar.py
 
 To view schedule list
 
