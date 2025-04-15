@@ -34,8 +34,8 @@ SPECIAL_DAYS = env_config.get('SPECIAL_DAYS', '[]')
 
 def init():
     epd = epd4in2_V2.EPD()
-    epd.init()
-    epd.Clear()
+    # epd.init()
+    # epd.Clear()
     return epd
 
 def on_exit():
