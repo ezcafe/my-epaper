@@ -180,7 +180,6 @@ def renderWeatherUI(mainImage, weather_data):
     viewport_width, _ = mainDraw.im.size
     app_bar_config = CONFIG['appBar']
 
-
     iconPositionX = viewport_width - CONFIG['calendar']['paddingRight']
     iconPositionY = (app_bar_config['height'] - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2
     weatherText = weather_data['temp_current']
