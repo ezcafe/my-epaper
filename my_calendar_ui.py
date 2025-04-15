@@ -170,7 +170,7 @@ def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
 
     weatherText = f"{weather_data['temp_current']}"
     weatherTextWidth = mainDraw.textlength(weatherText, font=FONTS['body'])
-    mainDraw.text((iconPosition - 2 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
+    mainDraw.text((iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
     mainDraw.text((iconPosition, calendar_config['paddingTop']), weatherText, font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
 
     mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['calendar_date'], fill = FILL_BLACK, anchor = 'mm')
