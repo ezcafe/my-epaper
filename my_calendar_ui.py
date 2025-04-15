@@ -153,22 +153,24 @@ def renderEventUI(mainImage, current_date):
 def renderWeatherUI(mainImage, weather_data):
     mainDraw = ImageDraw.Draw(mainImage)
     viewport_width, _ = mainDraw.im.size
-    calendar_config = CONFIG['calendar']
+    app_bar_config = CONFIG['appBar']
 
-    iconPosition = viewport_width - calendar_config['paddingRight']
+
+    iconPositionX = viewport_width - CONFIG['calendar']['paddingRight']
+    iconPositionY = (app_bar_config['height'] - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2
     weatherText = weather_data['temp_current']
     weatherTextWidth = mainDraw.textlength(weatherText, font=FONTS['body'])
 
     # Draw weather icon and text
     mainDraw.text(
-        (iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']),
+        (iconPositionX - 3 - weatherTextWidth, iconPositionY),
         weather_data['icon_code'],
         font=FONTS['weather'],
         fill=FILL_BLACK,
         anchor='rm'
     )
     mainDraw.text(
-        (iconPosition, calendar_config['paddingTop']),
+        (iconPositionX , iconPositionY),
         weatherText,
         font=FONTS['body'],
         fill=FILL_BLACK,
