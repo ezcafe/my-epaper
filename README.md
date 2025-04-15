@@ -34,3 +34,17 @@ APPLE_PASSWORD='your_app_specific_password'
 APPLE_CALENDAR_NAME = 'your_calendar_name'
 WEATHER_API_KEY='your_api_key'
 SPECIAL_DAYS='[["Payday", "25"], ["Birthday", "20/02"], ["Travel", "26/1"], ["New Year", "1/1"]]'
+
+## Auto run
+
+To make my-calendar run on each boot automatically, you can use crontab. Do not use sudo for this
+
+crontab -e
+
+then add this (update calendar every 30 mins)
+
+*/30 * * * * venv/bin/python $HOME/my-epaper/my-calendar.py
+
+To view schedule list
+
+crontab -l
