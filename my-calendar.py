@@ -23,8 +23,8 @@ logging.basicConfig(level=logging.DEBUG)
 from datetime import datetime, timedelta
 
 from my_calendar_config import CONFIG
-from my_calendar_ui import renderEventUI, renderCalendarUI, renderCalendarWeatherUI
-from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
+from my_calendar_ui import renderEventUI, renderEventListUI, renderCalendarUI, renderWeatherUI
+from my_calendar_apple import get_apple_calendar_events
 from my_calendar_weather import get_weather_data
 
 env_config = dotenv_values(".env")
@@ -64,16 +64,6 @@ def select_events(events):
     selected_event = remaining_events.pop(0) if remaining_events else (events[0] if events else None)
 
     return selected_event, remaining_events
-
-def fetch_data():
-    current_date = datetime.now()
-
-    # Fetch calendar events
-    calendar_events = fetch_apple_calendar_events(current_date)
-    processed_events = process_apple_calendar_events(calendar_events)
-    selected_event, remaining_events = select_events(processed_events)
-
-    return current_date, selected_event, remaining_events
 
 def get_time_difference(date1, date2):
     """
@@ -130,19 +120,28 @@ def get_extra_text(current_date):
     return extra_text
 
 def renderUI(epd):
-    data = fetch_data()
-    current_date, selected_event, remaining_events = data
+    current_date = datetime.now()
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
 
     if selected_event:
-        renderEventUI(mainImage, data)
+        renderEventUI(mainImage, current_date)
+        epd.display_Fast(epd.getbuffer(mainImage))
+
+        time.sleep(2)
+        start_date = current_date
+        end_date = current_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
+        calendar_events = get_apple_calendar_events(start_date, end_date)
+        selected_event, remaining_events = select_events(calendar_events)
+        renderEventListUI(mainImage, selected_event, remaining_events)
+        epd.display_Partial(epd.getbuffer(mainImage))
     else:
         extra_text = get_extra_text(current_date)
         renderCalendarUI(mainImage, current_date, extra_text)
         epd.display_Fast(epd.getbuffer(mainImage))
-        time.sleep(2)
-        renderCalendarWeatherUI(mainImage, get_weather_data())
-        epd.display_Partial(epd.getbuffer(mainImage))
+
+    time.sleep(2)
+    renderWeatherUI(mainImage, get_weather_data())
+    epd.display_Partial(epd.getbuffer(mainImage))
 
 try:
     logging.debug("Starting...")

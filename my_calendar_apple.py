@@ -42,11 +42,8 @@ def get_caldav_client():
 
 #     return None
 
-def fetch_apple_calendar_events(selected_date):
+def fetch_apple_calendar_events(start_date, end_date):
     try:
-        calendar_start_date = selected_date
-        calendar_end_date = selected_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
-
         client = get_caldav_client()
         principal = client.principal()
         calendars = principal.calendars()
@@ -57,7 +54,7 @@ def fetch_apple_calendar_events(selected_date):
             logging.warning(f"Calendar '{APPLE_CALENDAR_NAME}' not found.")
             return []
 
-        return calendar.search(start=calendar_start_date, end=calendar_end_date, event=True, expand=True)
+        return calendar.search(start=start_date, end=end_date, event=True, expand=True)
 
     except caldav.lib.error.AuthorizationError as e:
         logging.error(f"Authorization failed: {e}")
@@ -85,12 +82,11 @@ def process_apple_calendar_events(calendar_events):
 
     return processed_events
 
-def get_apple_calendar_events(calendar_name, start_date, end_date):
+def get_apple_calendar_events(start_date, end_date):
     try:
-        events = fetch_apple_calendar_events(start_date)
-        return process_apple_calendar_events(events)
+        return process_apple_calendar_events(fetch_apple_calendar_events(start_date, end_date))
     except Exception as e:
-        logging.error(f"Error retrieving events for calendar '{calendar_name}': {e}")
+        logging.error(f"Error retrieving events for calendar '{APPLE_CALENDAR_NAME}': {e}")
         return []
 
 # def get_apple_calendar_todos(calendar_name, start_date, end_date):

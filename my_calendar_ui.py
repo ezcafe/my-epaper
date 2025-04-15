@@ -5,21 +5,6 @@ from my_calendar_config import CONFIG, FILL_BLACK, FONTS
 
 showBorder = False
 
-def renderAppBar(draw, current_date, weather_data):
-    app_bar_config = CONFIG['appBar']
-    viewport_width, viewport_height = draw.im.size
-    iconPosition = ((48 - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2, (app_bar_config['height'] - app_bar_config['iconSize']) / 2 + app_bar_config['iconSize'] / 2)
-    titlePosition = app_bar_config['height'] / 2
-    draw.text(iconPosition, weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'mm')
-    draw.text((48, titlePosition), current_date.strftime('%A, %d/%m'), font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
-    draw.text((viewport_width - app_bar_config['paddingRight'], titlePosition), weather_data['temp_current'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
-    draw.line((0, app_bar_config['height'], viewport_width, app_bar_config['height']), fill = FILL_BLACK)
-    if showBorder:
-        draw.line((0, app_bar_config['height'] / 2, viewport_width, app_bar_config['height'] / 2), fill = FILL_BLACK)
-        draw.line((iconPosition[0], 0, iconPosition[0], app_bar_config['height']), fill = FILL_BLACK)
-        draw.line((48, 0, 48, app_bar_config['height']), fill = FILL_BLACK)
-        draw.line((viewport_width - app_bar_config['paddingRight'], 0, viewport_width - app_bar_config['paddingRight'], app_bar_config['height']), fill = FILL_BLACK)
-
 def renderOneLineListItem(draw, item, itemTopPosition):
     item_config = CONFIG['listItem']
     viewport_width, viewport_height = draw.im.size
@@ -133,11 +118,8 @@ def renderItemDetails(draw, item):
         if item['subtitle'] is not None or item['location'] is not None:
             draw.line((item_config['paddingLeft'], subtitlePosition + item_config['subtitleHeight'] / 2, viewport_width, subtitlePosition + item_config['subtitleHeight'] / 2), fill = FILL_BLACK)
 
-def renderEventUI(mainImage, data):
+def renderEventListUI(mainImage, selected_event, remaining_events):
     mainDraw = ImageDraw.Draw(mainImage)
-    current_date, selected_event, remaining_events, weather_data = data
-
-    renderAppBar(mainDraw, current_date, weather_data)
 
     viewport_width, viewport_height = mainDraw.im.size
     mainDraw.line(
@@ -156,7 +138,19 @@ def renderEventUI(mainImage, data):
     # renderTwoLinesList(eventListDraw, remaining_events)
     mainImage.paste(eventListImage, (math.ceil(viewport_width / 2) + 1, CONFIG['appBar']['height'] + 1))
 
-def renderCalendarWeatherUI(mainImage, weather_data):
+def renderEventUI(mainImage, current_date):
+    mainDraw = ImageDraw.Draw(mainImage)
+    app_bar_config = CONFIG['appBar']
+    viewport_width, viewport_height = mainDraw.im.size
+    titlePosition = app_bar_config['height'] / 2
+    mainDraw.text((app_bar_config['paddingLeft'], titlePosition), current_date.strftime('%A, %d/%m'), font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
+    mainDraw.line((0, app_bar_config['height'], viewport_width, app_bar_config['height']), fill = FILL_BLACK)
+    if showBorder:
+        mainDraw.line((0, app_bar_config['height'] / 2, viewport_width, app_bar_config['height'] / 2), fill = FILL_BLACK)
+        mainDraw.line((48, 0, 48, app_bar_config['height']), fill = FILL_BLACK)
+        mainDraw.line((viewport_width - app_bar_config['paddingRight'], 0, viewport_width - app_bar_config['paddingRight'], app_bar_config['height']), fill = FILL_BLACK)
+
+def renderWeatherUI(mainImage, weather_data):
     mainDraw = ImageDraw.Draw(mainImage)
     viewport_width, _ = mainDraw.im.size
     calendar_config = CONFIG['calendar']
