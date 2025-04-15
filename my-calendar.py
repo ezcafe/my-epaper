@@ -140,6 +140,7 @@ def renderUI(epd):
         extra_text = get_extra_text(current_date)
         renderCalendarUI(mainImage, current_date, extra_text)
         epd.display_Fast(epd.getbuffer(mainImage))
+        time.sleep(2)
         renderCalendarWeatherUI(mainImage, get_weather_data())
         epd.display_Partial(epd.getbuffer(mainImage))
 
