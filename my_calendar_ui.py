@@ -168,7 +168,7 @@ def renderEventUI(mainImage, current_date):
     app_bar_config = CONFIG['appBar']
     viewport_width, viewport_height = mainDraw.im.size
     titlePosition = app_bar_config['height'] / 2
-    mainDraw.text((app_bar_config['paddingLeft'], titlePosition), current_date.strftime('%A, %d/%m'), font = FONTS['headline'], fill = FILL_BLACK, anchor = 'lm')
+    mainDraw.text((app_bar_config['paddingLeft'], titlePosition), current_date.strftime('%A, %d/%m'), font = FONTS['headline'], fontmode='L', fill = FILL_BLACK, anchor = 'lm')
     mainDraw.line((0, app_bar_config['height'], viewport_width, app_bar_config['height']), fill = FILL_BLACK)
     if showBorder:
         mainDraw.line((0, app_bar_config['height'] / 2, viewport_width, app_bar_config['height'] / 2), fill = FILL_BLACK)
@@ -190,6 +190,7 @@ def renderWeatherUI(mainImage, weather_data):
         (iconPositionX - 3 - weatherTextWidth, iconPositionY),
         weather_data['icon_code'],
         font=FONTS['weather'],
+        fontmode='L',
         fill=FILL_BLACK,
         anchor='rm'
     )
@@ -197,6 +198,7 @@ def renderWeatherUI(mainImage, weather_data):
         (iconPositionX , iconPositionY),
         weatherText,
         font=FONTS['body'],
+        fontmode='L',
         fill=FILL_BLACK,
         anchor='rm'
     )
@@ -217,7 +219,7 @@ def renderCalendarUI(mainImage, current_date, extra_text):
     mainDraw.text((middlePoint, positions["date"]), current_date.strftime('%d'), font=FONTS['calendar_date'], fontmode='L', fill=FILL_BLACK, anchor='mm')
     mainDraw.text((middlePoint, positions["month"]), current_date.strftime('%A').upper(), font=FONTS['calendar_month'], fontmode='L', fill=FILL_BLACK, anchor='mm')
     mainDraw.line((middlePoint - 30, positions["separator"], middlePoint + 30, positions["separator"]), fill=FILL_BLACK)
-    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['subtitle'], fontmode='L', fill=FILL_BLACK, anchor='ms', align='center')
+    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['subtitle'], fill=FILL_BLACK, anchor='ms', align='center')
 
     if showBorder:
         border_lines = [
