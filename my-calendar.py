@@ -27,7 +27,9 @@ from my_calendar_ui import renderEventUI, renderEventListUI, renderCalendarUI, r
 from my_calendar_apple import get_apple_calendar_events
 from my_calendar_weather import get_weather_data
 
-env_config = dotenv_values(".env")
+env_file = os.path.join(base_dir, '.env')
+env_config = dotenv_values(env_file)
+
 SPECIAL_DAYS = env_config.get('SPECIAL_DAYS', '[]')
 
 # ======= Utils

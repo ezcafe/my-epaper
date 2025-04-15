@@ -66,6 +66,8 @@ then add this (update calendar every 30 mins)
 
 */30 * * * * python3 $HOME/my-epaper/my-calendar.py
 
+Replace $HOME/my-epaper/my-calendar.py with your real path
+
 To view schedule list
 
 crontab -l

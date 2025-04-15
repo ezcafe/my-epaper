@@ -1,11 +1,15 @@
 import logging
 import math
+import os
 
 from dotenv import dotenv_values
 import requests
 from my_calendar_config import WEATHER_LATITUDE, WEATHER_LONGITUDE, WEATHER_UNITS
 
-env_config = dotenv_values(".env")
+base_dir = os.path.dirname(os.path.realpath(__file__))
+env_file = os.path.join(base_dir, '.env')
+env_config = dotenv_values(env_file)
+
 WEATHER_API_KEY = env_config.get('WEATHER_API_KEY', '')
 
 # https://erikflowers.github.io/weather-icons/

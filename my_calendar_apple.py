@@ -1,10 +1,14 @@
+import os
 import caldav
 from caldav.elements import dav, cdav
 from datetime import datetime, timedelta
 from dotenv import dotenv_values
 import logging
 
-env_config = dotenv_values(".env")
+base_dir = os.path.dirname(os.path.realpath(__file__))
+env_file = os.path.join(base_dir, '.env')
+env_config = dotenv_values(env_file)
+
 APPLE_ID = env_config.get('APPLE_ID', '')
 APPLE_PASSWORD = env_config.get('APPLE_PASSWORD', '')
 APPLE_CALENDAR_NAME = env_config.get('APPLE_CALENDAR_NAME', '')
