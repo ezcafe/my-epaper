@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.DEBUG)
 from datetime import datetime, timedelta
 
 from my_calendar_config import CONFIG
-from my_calendar_ui import renderEventUI, renderCalendarUI
+from my_calendar_ui import renderEventUI, renderCalendarUI, renderCalendarWeatherUI
 from my_calendar_apple import fetch_apple_calendar_events, process_apple_calendar_events
 from my_calendar_weather import get_weather_data
 
@@ -73,10 +73,7 @@ def fetch_data():
     processed_events = process_apple_calendar_events(calendar_events)
     selected_event, remaining_events = select_events(processed_events)
 
-    # Fetch weather data
-    weather_data = get_weather_data()
-
-    return current_date, selected_event, remaining_events, weather_data
+    return current_date, selected_event, remaining_events
 
 def get_time_difference(date1, date2):
     """
@@ -134,27 +131,24 @@ def get_extra_text(current_date):
 
 def renderUI(mainImage):
     data = fetch_data()
-    current_date, selected_event, remaining_events, weather_data = data
+    current_date, selected_event, remaining_events = data
+    mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
 
-    logging.debug(f"selected_event: {selected_event}")
     if selected_event:
-        logging.debug("Rendering Event UI")
         renderEventUI(mainImage, data)
     else:
-        logging.debug("Rendering Calendar UI")
         extra_text = get_extra_text(current_date)
-        renderCalendarUI(mainImage, current_date, extra_text, weather_data)
+        renderCalendarUI(mainImage, current_date, extra_text)
+        epd.display_Fast(epd.getbuffer(mainImage))
+        renderCalendarWeatherUI(mainImage, get_weather_data())
+        epd.display_Partial(epd.getbuffer(mainImage))
 
 try:
     logging.debug("Starting...")
     epd = init()
-
     epd.init_fast(epd.Seconds_1_5S)
-    mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-    renderUI(mainImage)
-    epd.display_Fast(epd.getbuffer(mainImage))
+    renderUI()
     time.sleep(2)
-
     go_to_sleep(epd)
 
 except IOError as e:

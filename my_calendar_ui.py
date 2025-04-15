@@ -156,7 +156,18 @@ def renderEventUI(mainImage, data):
     # renderTwoLinesList(eventListDraw, remaining_events)
     mainImage.paste(eventListImage, (math.ceil(viewport_width / 2) + 1, CONFIG['appBar']['height'] + 1))
 
-def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
+def renderCalendarWeatherUI(mainImage, weather_data):
+    mainDraw = ImageDraw.Draw(mainImage)
+    viewport_width, viewport_height = mainDraw.im.size
+    calendar_config = CONFIG['calendar']
+
+    iconPosition = viewport_width - calendar_config['paddingRight']
+    weatherText = f"{weather_data['temp_current']}"
+    weatherTextWidth = mainDraw.textlength(weatherText, font=FONTS['body'])
+    mainDraw.text((iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
+    mainDraw.text((iconPosition, calendar_config['paddingTop']), weatherText, font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
+
+def renderCalendarUI(mainImage, current_date, extra_text):
     mainDraw = ImageDraw.Draw(mainImage)
     viewport_width, viewport_height = mainDraw.im.size
     middlePoint = viewport_width / 2
@@ -168,10 +179,9 @@ def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
     separatorPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap'] * 3
     textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 7
 
-    weatherText = f"{weather_data['temp_current']}"
-    weatherTextWidth = mainDraw.textlength(weatherText, font=FONTS['body'])
-    mainDraw.text((iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
-    mainDraw.text((iconPosition, calendar_config['paddingTop']), weatherText, font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
+    # weatherTextWidth = mainDraw.textlength('?', font=FONTS['body'])
+    # mainDraw.text((iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
+    mainDraw.text((iconPosition, calendar_config['paddingTop']), '?', font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
 
     mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['calendar_date'], fill = FILL_BLACK, anchor = 'mm')
     mainDraw.text((middlePoint, monthPosition), current_date.strftime('%A').upper(), font = FONTS['calendar_month'], fill = FILL_BLACK, anchor = 'mm')
