@@ -1,5 +1,26 @@
 # epaper
 
+## Hardware
+
+### Wiring between Raspberry PI and E-Ink Display
+
+Raspberry Pi                    E Ink Display
+3.3V (Pin 1)       ------->     VCC
+GND  (Pin 6)       ------->     GND
+MOSI (Pin 19)      ------->     DIN (SDA)
+SCLK (Pin 23)      ------->     CLK (SCL)
+CE0  (Pin 24)      ------->     CS
+GPIO (Pin 22)      ------->     DC  (D/C)
+GPIO (Pin 11)      ------->     RST (RES)
+GPIO (Pin 18)      ------->     BUSY
+
+### Enable Raspberry Pi I2C and SPI
+
+sudo raspi-config
+
+Select the 3 Interface Options option.
+Select "I4 SPI" and "I5 I2C"
+
 ## Install libs
 
 sudo apt-get update
