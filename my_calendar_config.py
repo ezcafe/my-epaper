@@ -84,7 +84,7 @@ def load_font(file_name, size):
 FONTS = {
     'headline': load_font('Font.ttc', 22),
     'body': load_font('Font.ttc', 16),
-    'support_text': load_font('Font.ttc', 14),
+    'subtitle': load_font('Font.ttc', 14),
     'calendar_date': load_font('Font.ttc', 100),
     'calendar_month': load_font('Font.ttc', 22),
     'weather': load_font('weathericons-regular-webfont.ttf', 24),

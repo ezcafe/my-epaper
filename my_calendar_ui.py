@@ -11,7 +11,7 @@ def renderOneLineListItem(draw, item, itemTopPosition):
 
     draw.text((item_config['paddingLeft'], itemTopPosition + item_config['height'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((viewport_width - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
+        draw.text((viewport_width - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['subtitle'], fill = FILL_BLACK, anchor = 'rm')
     draw.line((0, itemTopPosition + item_config['height'], viewport_width, itemTopPosition + item_config['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, itemTopPosition + item_config['height'] / 2, viewport_width, itemTopPosition + item_config['height'] / 2), fill = FILL_BLACK)
@@ -37,9 +37,9 @@ def renderTwoLinesListItem(draw, item, itemTopPosition ):
     subtitlePosition = itemTopPosition + (item_config['height'] - item_config['titleHeight'] - item_config['linesGap'] - item_config['subtitleHeight']) / 2 + item_config['titleHeight'] + item_config['linesGap'] + item_config['subtitleHeight']/2
     draw.text((item_config['paddingLeft'], titlePosition), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
     if item['timeStart'] is not None:
-        draw.text((viewport_width - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'rm')
+        draw.text((viewport_width - item_config['paddingRight'], itemTopPosition + item_config['height'] / 2), formatListItemTime(item['timeStart'], item['timeEnd']), font = FONTS['subtitle'], fill = FILL_BLACK, anchor = 'rm')
     if item['subtitle'] is not None:
-        draw.text((item_config['paddingLeft'], subtitlePosition), item['subtitle'], font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
+        draw.text((item_config['paddingLeft'], subtitlePosition), item['subtitle'], font = FONTS['subtitle'], fill = FILL_BLACK, anchor = 'lm')
     draw.line((0, itemTopPosition + item_config['height'], viewport_width, itemTopPosition + item_config['height']), fill = FILL_BLACK)
     if showBorder:
         draw.line((0, titlePosition, viewport_width, titlePosition), fill = FILL_BLACK)
@@ -86,37 +86,62 @@ def formatItemDetailsTime(timeStart, timeEnd):
     return timeText
 
 def renderItemDetails(draw, item):
-    if item is None:
+    if not item:
         return
 
     item_config = CONFIG['listItem']
     viewport_width, viewport_height = draw.im.size
 
-    datePosition = item_config['paddingTop']
-    if item['timeStart'] is not None:
-        titlePosition = datePosition + item_config['subtitleHeight'] + item_config['linesGap']
-        draw.text((item_config['paddingLeft'], datePosition + item_config['subtitleHeight'] / 2), formatItemDetailsTime(item['timeStart'], item['timeEnd']), font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'lm')
-    else:
-        titlePosition = datePosition
+    date_position = item_config['paddingTop']
+    title_position = date_position
+    if item.get('timeStart'):
+        draw.text(
+            (item_config['paddingLeft'], date_position + item_config['subtitleHeight'] / 2),
+            formatItemDetailsTime(item['timeStart'], item.get('timeEnd')),
+            font=FONTS['subtitle'],
+            fill=FILL_BLACK,
+            anchor='lm'
+        )
+        title_position += item_config['subtitleHeight'] + item_config['linesGap']
 
-    draw.text((item_config['paddingLeft'], titlePosition + item_config['titleHeight'] / 2), item['title'], font = FONTS['body'], fill = FILL_BLACK, anchor = 'lm')
+    draw.text(
+        (item_config['paddingLeft'], title_position + item_config['titleHeight'] / 2),
+        item['title'],
+        font=FONTS['body'],
+        fill=FILL_BLACK,
+        anchor='lm'
+    )
 
-    subtitlePosition = titlePosition + item_config['titleHeight'] + item_config['linesGap'] *3
-    subtitleText = ''
-    if item['subtitle'] is not None:
-        subtitleText += f"Note: '{item['subtitle']}'"
-    if item['location'] is not None:
-        subtitleText += f"\nLocation: '{item['location']}'"
+    subtitle_position = title_position + item_config['titleHeight'] + item_config['linesGap'] * 3
+    subtitle_text = "\n".join(filter(None, [
+        f"Note: '{item['subtitle']}'" if item.get('subtitle') else None,
+        f"Location: '{item['location']}'" if item.get('location') else None
+    ]))
 
-    draw.multiline_text((item_config['paddingLeft'], subtitlePosition), subtitleText, font = FONTS['support_text'], fill = FILL_BLACK)
+    if subtitle_text:
+        draw.multiline_text(
+            (item_config['paddingLeft'], subtitle_position),
+            subtitle_text,
+            font=FONTS['subtitle'],
+            fill=FILL_BLACK
+        )
 
     if showBorder:
-        draw.line((item_config['paddingLeft'], 0, item_config['paddingLeft'], viewport_height), fill = FILL_BLACK)
-        if item['timeStart'] is not None:
-            draw.line((item_config['paddingLeft'], datePosition + item_config['subtitleHeight'] / 2, viewport_width, datePosition + item_config['subtitleHeight'] / 2), fill = FILL_BLACK)
-        draw.line((item_config['paddingLeft'], titlePosition + item_config['titleHeight'] / 2, viewport_width, titlePosition + item_config['titleHeight'] / 2), fill = FILL_BLACK)
-        if item['subtitle'] is not None or item['location'] is not None:
-            draw.line((item_config['paddingLeft'], subtitlePosition + item_config['subtitleHeight'] / 2, viewport_width, subtitlePosition + item_config['subtitleHeight'] / 2), fill = FILL_BLACK)
+        draw.line((item_config['paddingLeft'], 0, item_config['paddingLeft'], viewport_height), fill=FILL_BLACK)
+        if item.get('timeStart'):
+            draw.line(
+                (item_config['paddingLeft'], date_position + item_config['subtitleHeight'] / 2, viewport_width, date_position + item_config['subtitleHeight'] / 2),
+                fill=FILL_BLACK
+            )
+        draw.line(
+            (item_config['paddingLeft'], title_position + item_config['titleHeight'] / 2, viewport_width, title_position + item_config['titleHeight'] / 2),
+            fill=FILL_BLACK
+        )
+        if subtitle_text:
+            draw.line(
+                (item_config['paddingLeft'], subtitle_position + item_config['subtitleHeight'] / 2, viewport_width, subtitle_position + item_config['subtitleHeight'] / 2),
+                fill=FILL_BLACK
+            )
 
 def renderEventListUI(mainImage, selected_event, remaining_events):
     mainDraw = ImageDraw.Draw(mainImage)
@@ -193,7 +218,7 @@ def renderCalendarUI(mainImage, current_date, extra_text):
     mainDraw.text((middlePoint, positions["date"]), current_date.strftime('%d'), font=FONTS['calendar_date'], fill=FILL_BLACK, anchor='mm')
     mainDraw.text((middlePoint, positions["month"]), current_date.strftime('%A').upper(), font=FONTS['calendar_month'], fill=FILL_BLACK, anchor='mm')
     mainDraw.line((middlePoint - 30, positions["separator"], middlePoint + 30, positions["separator"]), fill=FILL_BLACK)
-    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['support_text'], fill=FILL_BLACK, anchor='ms', align='center')
+    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['subtitle'], fill=FILL_BLACK, anchor='ms', align='center')
 
     if showBorder:
         border_lines = [
