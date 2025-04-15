@@ -123,23 +123,28 @@ def renderUI(epd):
     current_date = datetime.now()
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
 
-    start_date = current_date
-    end_date = current_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
-    calendar_events = get_apple_calendar_events(start_date, end_date)
-    selected_event, remaining_events = select_events(calendar_events)
+    try:
+        # Fetch calendar events
+        start_date = current_date
+        end_date = current_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
+        calendar_events = get_apple_calendar_events(start_date, end_date)
+        selected_event, remaining_events = select_events(calendar_events)
 
-    if selected_event:
-        renderEventUI(mainImage, current_date)
-        renderEventListUI(mainImage, selected_event, remaining_events)
-        epd.display_Fast(epd.getbuffer(mainImage))
-    else:
-        extra_text = get_extra_text(current_date)
-        renderCalendarUI(mainImage, current_date, extra_text)
+        if selected_event:
+            renderEventUI(mainImage, current_date)
+            renderEventListUI(mainImage, selected_event, remaining_events)
+        else:
+            extra_text = get_extra_text(current_date)
+            renderCalendarUI(mainImage, current_date, extra_text)
+
         epd.display_Fast(epd.getbuffer(mainImage))
 
-    time.sleep(2)
-    renderWeatherUI(mainImage, get_weather_data())
-    epd.display_Partial(epd.getbuffer(mainImage))
+        # Fetch weather data
+        renderWeatherUI(mainImage, get_weather_data())
+        epd.display_Partial(epd.getbuffer(mainImage))
+
+    except Exception as e:
+        logging.error(f"Error in renderUI: {e}")
 
 try:
     logging.debug("Starting...")
