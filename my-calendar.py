@@ -129,7 +129,7 @@ def get_extra_text(current_date):
 
     return extra_text
 
-def renderUI(mainImage):
+def renderUI(epd):
     data = fetch_data()
     current_date, selected_event, remaining_events = data
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
@@ -147,7 +147,7 @@ try:
     logging.debug("Starting...")
     epd = init()
     epd.init_fast(epd.Seconds_1_5S)
-    renderUI()
+    renderUI(epd)
     time.sleep(2)
     go_to_sleep(epd)
 
