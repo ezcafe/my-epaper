@@ -57,17 +57,20 @@ def process_weather_data(data):
         weather_icon_code = weather.get('icon', '')
         weather_icon_text = openweathermap_to_weathericons.get(weather_icon_code, "?")
 
-        weather_temp_unit = "F" if WEATHER_UNITS == "imperial" else "°"
-        weather_temp = f"{math.floor(current.get('temp', 0))}{weather_temp_unit}"
+        temp_unit = "F" if WEATHER_UNITS == "imperial" else "°"
+        temp_current = f"{math.floor(current.get('temp', 0))}{temp_unit}"
+        feels_like = f"{math.floor(current.get('feels_like', 0))}{temp_unit}"
+        temp_max = f"{math.floor(current.get('temp_max', 0))}{temp_unit}"
+        temp_min = f"{math.floor(current.get('temp_min', 0))}{temp_unit}"
 
         weather_data = {
-            "temp_current": weather_temp,
-            "feels_like": current.get('feels_like', 0),
+            "temp_current": temp_current,
+            "feels_like": feels_like,
             "humidity": current.get('humidity', 0),
             "report": weather.get('description', 'N/A'),
             "icon_code": weather_icon_text,
-            "temp_max": current.get('temp_max', 0),
-            "temp_min": current.get('temp_min', 0),
+            "temp_max": temp_max,
+            "temp_min": temp_min,
         }
         logging.debug("Weather data processed successfully.")
         return weather_data
