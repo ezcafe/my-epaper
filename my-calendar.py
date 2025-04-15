@@ -123,17 +123,15 @@ def renderUI(epd):
     current_date = datetime.now()
     mainImage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
 
+    start_date = current_date
+    end_date = current_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
+    calendar_events = get_apple_calendar_events(start_date, end_date)
+    selected_event, remaining_events = select_events(calendar_events)
+
     if selected_event:
         renderEventUI(mainImage, current_date)
-        epd.display_Fast(epd.getbuffer(mainImage))
-
-        time.sleep(2)
-        start_date = current_date
-        end_date = current_date.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1, microseconds=-1)
-        calendar_events = get_apple_calendar_events(start_date, end_date)
-        selected_event, remaining_events = select_events(calendar_events)
         renderEventListUI(mainImage, selected_event, remaining_events)
-        epd.display_Partial(epd.getbuffer(mainImage))
+        epd.display_Fast(epd.getbuffer(mainImage))
     else:
         extra_text = get_extra_text(current_date)
         renderCalendarUI(mainImage, current_date, extra_text)
