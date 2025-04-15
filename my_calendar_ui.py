@@ -158,14 +158,28 @@ def renderEventUI(mainImage, data):
 
 def renderCalendarWeatherUI(mainImage, weather_data):
     mainDraw = ImageDraw.Draw(mainImage)
-    viewport_width, viewport_height = mainDraw.im.size
+    viewport_width, _ = mainDraw.im.size
     calendar_config = CONFIG['calendar']
 
     iconPosition = viewport_width - calendar_config['paddingRight']
-    weatherText = f"{weather_data['temp_current']}"
+    weatherText = weather_data['temp_current']
     weatherTextWidth = mainDraw.textlength(weatherText, font=FONTS['body'])
-    mainDraw.text((iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
-    mainDraw.text((iconPosition, calendar_config['paddingTop']), weatherText, font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
+
+    # Draw weather icon and text
+    mainDraw.text(
+        (iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']),
+        weather_data['icon_code'],
+        font=FONTS['weather'],
+        fill=FILL_BLACK,
+        anchor='rm'
+    )
+    mainDraw.text(
+        (iconPosition, calendar_config['paddingTop']),
+        weatherText,
+        font=FONTS['body'],
+        fill=FILL_BLACK,
+        anchor='rm'
+    )
 
 def renderCalendarUI(mainImage, current_date, extra_text):
     mainDraw = ImageDraw.Draw(mainImage)
@@ -173,25 +187,26 @@ def renderCalendarUI(mainImage, current_date, extra_text):
     middlePoint = viewport_width / 2
     calendar_config = CONFIG['calendar']
 
-    iconPosition = viewport_width - calendar_config['paddingRight']
-    datePosition = calendar_config['paddingTop'] + calendar_config['dateHeight'] / 2
-    monthPosition = datePosition + calendar_config['dateHeight'] / 2 + calendar_config['monthHeight'] / 2
-    separatorPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap'] * 3
-    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 7
+    positions = {
+        "date": calendar_config['paddingTop'] + calendar_config['dateHeight'] / 2,
+        "month": calendar_config['paddingTop'] + calendar_config['dateHeight'] + calendar_config['monthHeight'] / 2,
+        "separator": calendar_config['paddingTop'] + calendar_config['dateHeight'] + calendar_config['monthHeight'] + calendar_config['linesGap'] * 3,
+        "text": calendar_config['paddingTop'] + calendar_config['dateHeight'] + calendar_config['monthHeight'] + calendar_config['linesGap'] * 10,
+    }
 
-    # weatherTextWidth = mainDraw.textlength('?', font=FONTS['body'])
-    # mainDraw.text((iconPosition - 3 - weatherTextWidth, calendar_config['paddingTop']), weather_data['icon_code'], font = FONTS['weather'], fill = FILL_BLACK, anchor = 'rm')
-    mainDraw.text((iconPosition, calendar_config['paddingTop']), '?', font = FONTS['body'], fill = FILL_BLACK, anchor = 'rm')
-
-    mainDraw.text((middlePoint, datePosition), current_date.strftime('%d'), font = FONTS['calendar_date'], fill = FILL_BLACK, anchor = 'mm')
-    mainDraw.text((middlePoint, monthPosition), current_date.strftime('%A').upper(), font = FONTS['calendar_month'], fill = FILL_BLACK, anchor = 'mm')
-    mainDraw.line((middlePoint - 30, separatorPosition, middlePoint + 30, separatorPosition), fill = FILL_BLACK)
-    mainDraw.multiline_text((middlePoint, textPosition), extra_text, font = FONTS['support_text'], fill = FILL_BLACK, anchor = 'ms', align = 'center')
+    mainDraw.text((middlePoint, positions["date"]), current_date.strftime('%d'), font=FONTS['calendar_date'], fill=FILL_BLACK, anchor='mm')
+    mainDraw.text((middlePoint, positions["month"]), current_date.strftime('%A').upper(), font=FONTS['calendar_month'], fill=FILL_BLACK, anchor='mm')
+    mainDraw.line((middlePoint - 30, positions["separator"], middlePoint + 30, positions["separator"]), fill=FILL_BLACK)
+    mainDraw.multiline_text((middlePoint, positions["text"]), extra_text, font=FONTS['support_text'], fill=FILL_BLACK, anchor='ms', align='center')
 
     if showBorder:
-        mainDraw.line((middlePoint, 0, middlePoint, viewport_height), fill = FILL_BLACK)
-        mainDraw.line((viewport_width - calendar_config['paddingRight'], 0, viewport_width - calendar_config['paddingRight'], viewport_height), fill = FILL_BLACK)
-        mainDraw.line((calendar_config['paddingTop'], 0, calendar_config['paddingTop'], viewport_width), fill = FILL_BLACK)
-        mainDraw.line((0, datePosition, viewport_width, datePosition), fill = FILL_BLACK)
-        mainDraw.line((0, monthPosition, viewport_width, monthPosition), fill = FILL_BLACK)
-        mainDraw.line((0, textPosition, viewport_width, textPosition), fill = FILL_BLACK)
+        border_lines = [
+            ((middlePoint, 0), (middlePoint, viewport_height)),
+            ((viewport_width - calendar_config['paddingRight'], 0), (viewport_width - calendar_config['paddingRight'], viewport_height)),
+            ((calendar_config['paddingTop'], 0), (calendar_config['paddingTop'], viewport_width)),
+            ((0, positions["date"]), (viewport_width, positions["date"])),
+            ((0, positions["month"]), (viewport_width, positions["month"])),
+            ((0, positions["text"]), (viewport_width, positions["text"])),
+        ]
+        for start, end in border_lines:
+            mainDraw.line((*start, *end), fill=FILL_BLACK)
