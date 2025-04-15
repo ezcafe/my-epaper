@@ -166,7 +166,7 @@ def renderCalendarUI(mainImage, current_date, extra_text, weather_data):
     datePosition = calendar_config['paddingTop'] + calendar_config['dateHeight'] / 2
     monthPosition = datePosition + calendar_config['dateHeight'] / 2 + calendar_config['monthHeight'] / 2
     separatorPosition = monthPosition + calendar_config['monthHeight'] / 2 + calendar_config['linesGap'] * 3
-    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 8
+    textPosition = separatorPosition + 1 + calendar_config['linesGap'] * 7
 
     weatherText = f"{weather_data['temp_current']}/{weather_data['temp_max']}"
     weatherTextWidth = mainDraw.textlength(weatherText, font=FONTS['body'])
